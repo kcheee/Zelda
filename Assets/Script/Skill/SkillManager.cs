@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static CoolTimer;
 
 
 public class SkillManager : MonoBehaviour
@@ -58,7 +59,9 @@ public class SkillManager : MonoBehaviour
         yield return new WaitForSeconds(0.8f);
         Instantiate(bomb, firePosition.position, CameraRotation.rotation);
         skill_state = Skill_state.None;
-
+        // 스킬 쿨타임
+        CoolTimer.instance.on_Btn();
+        CoolTimer.instance.cooltime = CoolTimer.CoolTime.skill_cooltime;
 
     }
 
@@ -69,79 +72,47 @@ public class SkillManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.K))
+        if (CoolTimer.instance.cooltime == CoolTimer.CoolTime.None)
         {
-            // 스킬 창을 열었을 때 시간 느려짐
-            if (!flag) Time.timeScale = 0.3f;
-            // 밑에 아이스발판 기술을 사용할 때 시간 돌아오고 스킬 발동
-            if (Input.GetKeyDown(KeyCode.P))
+            if (Input.GetKey(KeyCode.K))
             {
-                // 스킬 패널 false
-                SkillUI.instance.Skillpanel.SetActive(false);
-                Time.timeScale = 1f;    // 타임스케일 돌아옴
-                flag = true;
+                if (!flag)
+                    Time.timeScale = 0.3f;
 
-                // 플레이어 스킬과 겹치는거 방지하기 위해 y값 살짝 올림.
-                transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-                // transform.up 힘
-                rb.AddForce(transform.up * 8, ForceMode.Impulse);
-                // 스킬 발동
-                Instantiate(iceskill, new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z)
-                    , transform.rotation);
-            }
+                #region 아이스 발판
+                if (Input.GetKeyDown(KeyCode.P))
+                {
+                    SkillUI.instance.Skillpanel.SetActive(false);
+                    flag = true; Time.timeScale = 1;
 
-            // 폭탄 던지기.
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                Time.timeScale = 1f;
-                flag = true;
-                transform.eulerAngles = new Vector3(0, CameraRotation.eulerAngles.y, 0);
-                // 스킬 패널 false
-                SkillUI.instance.Skillpanel.SetActive(false);
-                StartCoroutine(Bomb());
+                    // 스킬 쿨타임
+                    CoolTimer.instance.cooltime = CoolTimer.CoolTime.skill_cooltime;
+
+                    transform.position = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
+                    rb.AddForce(transform.up * 8, ForceMode.Impulse);
+                    Instantiate(iceskill, new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z)
+                        , transform.rotation);
+                }
+                #endregion
+
+                #region 폭탄
+                if (Input.GetKeyDown(KeyCode.O))
+                {
+                    // 스킬 패널 지움
+                    SkillUI.instance.Skillpanel.SetActive(false);
+                    flag = true; Time.timeScale = 1;
+                    //Debug.Log(CameraRotation.eulerAngles.y);
+                    transform.eulerAngles = new Vector3(0, CameraRotation.eulerAngles.y, 0);
+                    // 폭탄
+                    StartCoroutine(Bomb());
+                }
+                #endregion
             }
         }
-        if (Input.GetKeyUp(KeyCode.K))
-        {
-            SkillUI.instance.Skillpanel.SetActive(false);
-            Time.timeScale = 1f; flag = false;
-
-            if (!flag)
-                Time.timeScale = 0.3f;
-
-            #region 아이스 발판
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                SkillUI.instance.Skillpanel.SetActive(false);
-                flag = true; Time.timeScale = 1;
-
-                transform.position = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
-                rb.AddForce(transform.up * 8, ForceMode.Impulse);
-                Instantiate(iceskill, new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z)
-                    , transform.rotation);
-            }
-            #endregion
-
-            #region 폭탄
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                // 스킬 패널 지움
-                SkillUI.instance.Skillpanel.SetActive(false);
-                flag = true; Time.timeScale = 1;
-                //Debug.Log(CameraRotation.eulerAngles.y);
-                transform.eulerAngles = new Vector3(0, CameraRotation.eulerAngles.y, 0);
-                // 폭탄
-                StartCoroutine(Bomb());
-            }
-            #endregion
-        }
-
         if (Input.GetKeyUp(KeyCode.K))
         {
             SkillUI.instance.Skillpanel.SetActive(false);
             flag = false; Time.timeScale = 1;
-
         }
-
     }
 }
