@@ -48,6 +48,10 @@ public class Bocoblin : MonoBehaviour
 
     // 내비게이션
 
+    // 점프
+    public float jumpPower = 1;
+    public float gravity = -9.8f;
+    float yVelocity;
 
     // 플레이어(링크)
     GameObject link;
@@ -105,10 +109,14 @@ public class Bocoblin : MonoBehaviour
         {
             // 링크를 보며 놀란다(1초)
             print("저건... 링크!!");
+
+            // 점프를 한다
+
             // 현재시간을 흐르게 한다.
             currentTime += Time.deltaTime;
+
             // 다 놀랐으면 
-            if (currentTime > 1)
+            if (currentTime > 2)
             {
                 // 상태를 Move 로 변환한다.
                 state = BocoblinState.Move;
