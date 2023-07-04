@@ -2,37 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//기본 - 이동
-//일반공격
-// 강공격
-//대쉬 // 대쉬+ 공격
-//러쉬
+//기본 - 이동 (wasd
+//일반공격 (left control
+// 강공격 (left ALT
+//대쉬 달리기 (left shift
+//활 상태 ( x
+//가드 ( z
+//러쉬 
 
-//가드
 //피격 - 사망
-//기본
-//활 상태
 
 public class ZeldaMove : MonoBehaviour
 {
     public float speed = 5f;
     private float NORMALspeed = 1f;
     private float RUNspeed = 4f;
-    private float DASHspeed = 30f;
+    private float DASHspeed = 15f;
 
     private float DASHstack = 0;
     private int ATTACKstack = 0;
     private int CHARGEDstack = 0;
     public int HEAITHstack = 12;
-    
+
     public bool Candash = false;
     public bool isdashing = false;
 
     public float gravity = -9.81f;
 
+    int IDLE = 0;
     int MOVE = 1;
     int ATTACK = 2;
-    int DASH = 4;
     int CHARGED = 5;
     int HIT = 6;
     int GUARD = 7;
@@ -53,22 +52,22 @@ public class ZeldaMove : MonoBehaviour
 
     void Start()
     {
-        state = MOVE;
+        state = IDLE;
+        //state = MOVE;
         speed = NORMALspeed;
         //Enemy = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
     void Update()
     {
-
+        if (state == IDLE)
+        {
+            UpdateIdle();
+        }
         if (state == MOVE)
         {
             UpdateMove();
         }
-        //if (state == DASH)
-        //{
-        //    UpdateDash();
-        //}
         if (state == ATTACK)
         {
             UpdateAttack();
@@ -92,31 +91,32 @@ public class ZeldaMove : MonoBehaviour
 
 
     }
-    //private void UpdateIdle()
-    //{
+    private void UpdateIdle()
+    {
 
-    //    //공격키 -> 공격상태 전환
-    //    //이동키 -> 이동상태 전환
-    //    //피격시 -> 피격상태 전환
-    //    //강공격시 -> 강공격상태 전환
+        //아니면 걍 여기서 키 입력 없을시 애니메이션 출력이 좀더 쉽고 코드 단축이 되려나..
+        this.Playeranimator.SetTrigger("Idle");
 
-    //    //대기 애니메이션
-    //    //if(Input.)
-    //}
+        //if(Input.anykey)
+        //공격키 -> 공격상태 전환
+        //이동키 -> 이동상태 전환
+        //피격시 -> 피격상태 전환
+        //강공격시 -> 강공격상태 전환
+
+        //대기 애니메이션
+        //if(Input.)
+    }
+    #region move
     private void UpdateMove()
     {
-        //이동
-        //if(!Input.anyKey)
-        //{
-        //    //대기 애니메이션;
-        //아니면 걍 여기서 키 입력 없을시 애니메이션 출력이 좀더 쉽고 코드 단축이 되려나..
-        //}
+
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         Vector3 dir = new Vector3(h, 0, v);
         dir.y = 0;
         dir.Normalize();
         transform.position += dir * speed * Time.deltaTime;
+        this.Playeranimator.SetTrigger("run");
 
         //yvelocity += gravity * Time.deltaTime;
         //이동애니메이션
@@ -125,6 +125,7 @@ public class ZeldaMove : MonoBehaviour
             DASHstack += Time.deltaTime;
             if (DASHstack <= 0.3f)
             {
+                this.Playeranimator.SetTrigger("dash");
                 speed = DASHspeed;
                 print("speed");
                 return;
@@ -134,25 +135,14 @@ public class ZeldaMove : MonoBehaviour
                 speed = RUNspeed;
                 print("n");
             }
-            
+
             Debug.Log(DASHstack);
         }
-        if(Input.GetKeyUp(KeyCode.LeftShift))
+        if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             DASHstack = 0;
             speed = NORMALspeed;
         }
-
-            //if (DASHstack >= 0.3f)
-            //{
-            //    speed = RUNspeed;
-            //    print("l");
-            //}
-
-
-        //else if (Input.GetKeyUp(KeyCode.LeftShift))
-        //{
-        //}
         //공격
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
@@ -164,12 +154,12 @@ public class ZeldaMove : MonoBehaviour
         {
             state = CHARGED;
         }
-        if(Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             state = BOW;
         }
 
-        ////가드
+        //가드
         if (Input.GetKeyDown(KeyCode.Z))
         {
             state = GUARD;
@@ -180,6 +170,7 @@ public class ZeldaMove : MonoBehaviour
 
 
     }
+    #endregion 
     //private void UpdateDash()
     //{
     //    if ( Candash == true)
@@ -194,7 +185,7 @@ public class ZeldaMove : MonoBehaviour
     //        {
     //            isdashing = true;
     //            currentTime += Time.deltaTime;
-                
+
     //        }
     //    }
     //    if (Input.GetKeyDown(KeyCode.A))
@@ -310,14 +301,14 @@ public class ZeldaMove : MonoBehaviour
     //    //피격 애니메이션 끝내고 나서야 공격, 혹은 달리기 가능 (짧음)
     //    //스택 누적,
     //    //키입력이 없을 경우 IDLE
-
     //    HEAITHstack--;
+    //    state = MOVE; 
     //    //피격 애니메이션
     //    if (HEAITHstack == 0)
     //    {
     //        //죽는 애니메이션, 효과
     //        Destroy(this.gameObject, 3f);
-    //    }
+    //}
 
 
 
@@ -328,6 +319,10 @@ public class ZeldaMove : MonoBehaviour
         //가드
         //피격 상태 전환 불가, idle, run, attack 상태 전환가능
         //가드키 누를시 어떤 상태든 해당 상태로 변환.
+        //if (Input.GetKeyDown(KeyCode.Z))
+        //{
+            
+        //}
 
     }
     //private void UpdateRush()
@@ -354,12 +349,6 @@ public class ZeldaMove : MonoBehaviour
     //활
     private void UpdateBow()
     {
-        //활 공격, 줌인,
+        //활 공격, 줌인
     }
 }
-
-        ////점프
-        ////if(cc.isGrounded && Input.GetButtonDown("Jump"))
-        ////{
-        ////    //yvelocity = jumpPower;
-        ////}
