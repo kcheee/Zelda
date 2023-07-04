@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
     public float speed = 10;
     Rigidbody rb;
+    public GameObject link;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +33,7 @@ public class Bullet : MonoBehaviour
         {
            
             // 내 앞방향으로 힘을 10 가하고 싶다.
-            otherRB.AddForce(transform.forward * otherRB.mass * 2 + transform.up * otherRB.mass * 8, ForceMode.Impulse);   // Forcemode.~~ : 힘을 주는 방법
+            otherRB.AddForce(link.transform.forward * 5 + transform.up * 8, ForceMode.Impulse);   // Forcemode.~~ : 힘을 주는 방법
         }
 
 

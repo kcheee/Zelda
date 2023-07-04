@@ -29,13 +29,13 @@ public class Moblin : MonoBehaviour
 
     // 상태
     public MoblinState state;
-
     // 상태 열거
     public enum MoblinState
     {
         Idle, Move, Dodge, Attack, Damaged, Die
     }
 
+    #region 변수
     // 이동속도
     public float speed = 5;
 
@@ -51,8 +51,6 @@ public class Moblin : MonoBehaviour
     float currentTime;
     public float waitTime;
 
-    // 내비게이션
-
     // 플레이어(링크)
     GameObject link;
 
@@ -62,13 +60,14 @@ public class Moblin : MonoBehaviour
 
     // 리지드바디
     Rigidbody rb;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
     {
+        currentHP = maxHP;
         link = GameObject.Find("Link");
         rb = GetComponent<Rigidbody>();
-        currentHP = maxHP;
     }
 
     // Update is called once per frame
@@ -112,6 +111,11 @@ public class Moblin : MonoBehaviour
             print("저건... 링크!!");
             // 현재시간을 흐르게 한다.
             currentTime += Time.deltaTime;
+            // 링크의 위치벡터를 구해서
+            // 발밑을 바라볼 때 몸이 돌아가는 문제를 예방하기 위해 X 로테이션을 0으로 고정한다. 
+            Vector3 dir = new Vector3(link.transform.position.x, 0, link.transform.position.z);
+            // 링크가 있는 곳을 바라본다.
+            transform.LookAt(dir);
             // 다 놀랐으면 
             if (currentTime > 1)
             {
@@ -142,12 +146,6 @@ public class Moblin : MonoBehaviour
         // 만약 링크와의 거리가 공격거리보다 멀면 
         else if (distance > attackDistance)
         {
-            // transform.LookAt(new Vector3(rink.transform.position.x,0,rink.transform.position.z));
-            // 링크의 위치벡터를 구해서
-            // 발밑을 바라볼 때 몸이 돌아가는 문제를 예방하기 위해 X 로테이션을 0으로 고정한다. 
-            Vector3 dir = new Vector3(link.transform.position.x, 0, link.transform.position.z);
-            // 링크가 있는 곳을 바라본다.
-            transform.LookAt(dir);
             // 링크와의 방향을 구해서
             Vector3 linkDir = link.transform.position - transform.position;
             linkDir.y = 0;
@@ -229,7 +227,6 @@ public class Moblin : MonoBehaviour
             anim.SetTrigger("Attack1");
             print("111111111111111111111111111111");
             currentTime = 0;
-            state = MoblinState.Idle;
         }
 
         // 3-2. 공격시간이 됐다 그리고 현재 체력이 최대체력의 반 이상이라면
@@ -240,7 +237,6 @@ public class Moblin : MonoBehaviour
             // 내려찍은 도끼가 1초동안 빠지지않아야한다.
             print("2222222222222222222222222222222");
             currentTime = 0;
-            state = MoblinState.Idle;
         }
 
         // 3-3. 공격시간이 됐다 그리고 현재 체력이 최대체력의 반 미만이라면
@@ -251,7 +247,6 @@ public class Moblin : MonoBehaviour
             // 이때에는 링크의 공격을 무시한다
             print("333333333333333333333333333333333333333");
             currentTime = 0;
-            state = MoblinState.Idle;
         }
     }
 
