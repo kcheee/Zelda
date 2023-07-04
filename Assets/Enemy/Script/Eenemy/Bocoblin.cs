@@ -92,8 +92,7 @@ public class Bocoblin : MonoBehaviour
         else if (state == BocoblinState.Die)
         {
             UpdateDie();
-        }
-        Debug.Log(state);
+        }     
     }
 
     private void UpdateIdle()
@@ -104,7 +103,7 @@ public class Bocoblin : MonoBehaviour
         if (distance < detectDistance)
         {
             // 링크를 보며 놀란다(1초)
-            print("저건... 링크!!");
+            //print("저건... 링크!!");
             // 현재시간을 흐르게 한다.
             currentTime += Time.deltaTime;
             // 다 놀랐으면 
@@ -188,7 +187,7 @@ public class Bocoblin : MonoBehaviour
             // 버프 애니메이션을 중단하고
             anim.SetBool("Buff", false);
 
-            print("도망간다~~~~");
+            //print("도망간다~~~~");
 
             // 상태를 Idle 로 전환한다.
             state = BocoblinState.Idle;
