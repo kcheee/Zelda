@@ -6,7 +6,8 @@ public class ArrowMove : MonoBehaviour
 {
     public float speed = 10;
     Rigidbody rb;
-    
+    public GameObject effect;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -26,7 +27,9 @@ public class ArrowMove : MonoBehaviour
         
         if (otherRB != null)
         {
-            otherRB.AddForce(transform.forward * otherRB.mass * 20, ForceMode.Impulse);
+            GameObject arrowEffect = Instantiate(effect);
+            //otherRB.AddForce(transform.forward * otherRB.mass * 5, ForceMode.Impulse);
+            Destroy(arrowEffect, 0.5f);
         }
         Destroy(this.gameObject);
     }

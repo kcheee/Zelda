@@ -24,6 +24,8 @@ public class ZeldaMove : MonoBehaviour
     private int CHARGEDstack = 0;
     public int HEAITHstack = 12;
 
+    private float IDLEstack = 0f;
+
     public bool Candash = false;
     public bool isdashing = false;
 
@@ -52,18 +54,18 @@ public class ZeldaMove : MonoBehaviour
 
     void Start()
     {
-        state = IDLE;
-        //state = MOVE;
+        //state = IDLE;
+        state = MOVE;
         speed = NORMALspeed;
         //Enemy = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
     void Update()
     {
-        if (state == IDLE)
-        {
-            UpdateIdle();
-        }
+        //if (state == IDLE)
+        //{
+        //    UpdateIdle();
+        //}
         if (state == MOVE)
         {
             UpdateMove();
@@ -91,25 +93,40 @@ public class ZeldaMove : MonoBehaviour
 
 
     }
-    private void UpdateIdle()
-    {
+    //private void UpdateIdle()
+    //{
 
-        //아니면 걍 여기서 키 입력 없을시 애니메이션 출력이 좀더 쉽고 코드 단축이 되려나..
-        this.Playeranimator.SetTrigger("Idle");
+    //    //아니면 걍 여기서 키 입력 없을시 애니메이션 출력이 좀더 쉽고 코드 단축이 되려나..
+    //    this.Playeranimator.SetTrigger("Idle");
 
-        //if(Input.anykey)
-        //공격키 -> 공격상태 전환
-        //이동키 -> 이동상태 전환
-        //피격시 -> 피격상태 전환
-        //강공격시 -> 강공격상태 전환
+    //    //if(Input.anykey)
+    //    //공격키 -> 공격상태 전환
+    //    //이동키 -> 이동상태 전환
+    //    //피격시 -> 피격상태 전환
+    //    //강공격시 -> 강공격상태 전환
 
-        //대기 애니메이션
-        //if(Input.)
-    }
+    //    //대기 애니메이션
+    //    //if(Input.)
+    //}
     #region move
     private void UpdateMove()
     {
+        //키 누르는게 없으면 idle 상태로 전환.
 
+        //if (!Input.anyKey)
+        //{
+        //    IDLEstack += Time.deltaTime;
+        //    if (IDLEstack >= 0.3f)
+        //    {
+        //        this.Playeranimator.SetBool("Idle", true);
+        //        Debug.Log(IDLEstack);
+        //    }
+        //    else
+        //    {
+        //        this.Playeranimator.SetBool("Idle", false);
+        //    }
+        //        IDLEstack = 0;
+        //}
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         Vector3 dir = new Vector3(h, 0, v);
@@ -117,7 +134,7 @@ public class ZeldaMove : MonoBehaviour
         dir.Normalize();
         transform.position += dir * speed * Time.deltaTime;
         this.Playeranimator.SetTrigger("run");
-
+        
         //yvelocity += gravity * Time.deltaTime;
         //이동애니메이션
         if (Input.GetKey(KeyCode.LeftShift))
@@ -127,7 +144,7 @@ public class ZeldaMove : MonoBehaviour
             {
                 this.Playeranimator.SetTrigger("dash");
                 speed = DASHspeed;
-                print("speed");
+               
                 return;
             }
             if (DASHstack >= 0.3f)
@@ -154,11 +171,11 @@ public class ZeldaMove : MonoBehaviour
         {
             state = CHARGED;
         }
+        //활
         if (Input.GetKeyDown(KeyCode.X))
         {
             state = BOW;
         }
-
         //가드
         if (Input.GetKeyDown(KeyCode.Z))
         {

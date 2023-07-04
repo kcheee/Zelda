@@ -10,12 +10,12 @@ public class PlayerBow : MonoBehaviour
 {
     List<GameObject> arrowObjectPool;
     int bulletObjectPoolCount = 5;
-    public static List<GameObject> deActiveBulletObjectPool;
-    public Transform bulletParent;
+    public static List<GameObject> deActiveArrowObjectPool;
+    //public Transform bulletParent;
 
-    public List<GameObject> DeActiveBulletObjectPool
+    public List<GameObject> DeActiveArrowObjectPool
     {
-        get { return deActiveBulletObjectPool; }
+        get { return deActiveArrowObjectPool; }
     }
 
     public GameObject arrowFactory;
@@ -30,16 +30,16 @@ public class PlayerBow : MonoBehaviour
     {
         // 태어날 때 화살을 미리 만들어서 화살목록에 등록하고 비활성화 해놓고
         arrowObjectPool = new List<GameObject>();
-        deActiveBulletObjectPool = new List<GameObject>();
+        deActiveArrowObjectPool = new List<GameObject>();
 
         for (int i = 0; i < bulletObjectPoolCount; i++)
         {
             GameObject arrow = Instantiate(arrowFactory);
             // bullet의 부모 = bulletParent
-            arrow.transform.parent = bulletParent;
+            //arrow.transform.parent = bulletParent;
             arrow.SetActive(false);
             arrowObjectPool.Add(arrow);
-            deActiveBulletObjectPool.Add(arrow);
+            deActiveArrowObjectPool.Add(arrow);
         }
     }
 
@@ -75,7 +75,7 @@ public class PlayerBow : MonoBehaviour
     void MakeArrow()
     {
         // 화살이 만들어질 때 화살목록에서 비활성화된 화살을 하나 가져와서 활성화 하고싶다.
-        GameObject arrow = GetBulletFromObjectPool();
+        GameObject arrow = GetArrowFromObjectPool();
         if (arrow != null)
         {
             // 총구위치에 배치하고싶다.
@@ -83,16 +83,16 @@ public class PlayerBow : MonoBehaviour
             arrow.transform.up = firePosition.up;
         }
     }
-    GameObject GetBulletFromObjectPool()
+    GameObject GetArrowFromObjectPool()
     {
         // 만약 비활성목록에 크기가 0보다 크다면
-        if (DeActiveBulletObjectPool.Count > 0)
+        if (DeActiveArrowObjectPool.Count > 0)
         {
             // 비활성목록의 0번째 항목을 반환하고싶다.
-            GameObject arrow = DeActiveBulletObjectPool[0];
+            GameObject arrow = DeActiveArrowObjectPool[0];
             arrow.SetActive(true);
             // 목록에서 bullet를 지우고싶다.
-            DeActiveBulletObjectPool.Remove(arrow);
+            DeActiveArrowObjectPool.Remove(arrow);
             return arrow;
         }
         // 그렇지 않다면 null을 반환하고싶다.
