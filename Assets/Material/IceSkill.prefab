@@ -107,6 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4663434555921693914}
   - component: {fileID: 4663434555921693915}
+  - component: {fileID: -7348813459286654038}
   m_Layer: 0
   m_Name: IceSkill
   m_TagString: Untagged
@@ -123,7 +124,7 @@ Transform:
   m_GameObject: {fileID: 4663434555921693913}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.1, z: 1}
+  m_LocalScale: {x: 2, y: 0.2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4663434555050360073}
@@ -142,3 +143,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e08efcd8a645c7147a201475500dfda3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &-7348813459286654038
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4663434555921693913}
+  m_Material: {fileID: 13400000, guid: a6db04581b9346a40ae99de9d4fba38a, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

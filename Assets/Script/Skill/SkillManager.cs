@@ -35,7 +35,6 @@ public class SkillManager : MonoBehaviour
     public Bomb bomb;
     public Transform CameraRotation;    // 카메라 회전 값 가져옴. 폭탄 화살 던질때 사용.
 
-
     Rigidbody rb;
 
     public Transform firePosition;
@@ -44,7 +43,6 @@ public class SkillManager : MonoBehaviour
     {
         skill_state = Skill_state.None;
         rb = GetComponent<Rigidbody>();
-        skill_state = Skill_state.None;
     }
     // 폭탄 스킬.
 
@@ -84,11 +82,11 @@ public class SkillManager : MonoBehaviour
                 flag = true;
 
                 // 플레이어 스킬과 겹치는거 방지하기 위해 y값 살짝 올림.
-                transform.position = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
+                transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
                 // transform.up 힘
                 rb.AddForce(transform.up * 8, ForceMode.Impulse);
                 // 스킬 발동
-                Instantiate(iceskill, new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z)
+                Instantiate(iceskill, new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z)
                     , transform.rotation);
             }
 
