@@ -27,6 +27,7 @@ public class Camera_rotate : MonoBehaviour
         // Input를 vector2로 받음.
         Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         moveInput.Normalize();
+
         // 이동이 있는것을 체크.
         bool isMove = moveInput.magnitude != 0;
         if (isMove)
@@ -57,6 +58,7 @@ public class Camera_rotate : MonoBehaviour
         Vector3 camAngle = CameraArm.rotation.eulerAngles;
         float x = camAngle.x - mouseDelta.y;
 
+        // 각도 제한.
         if (x < 180)
             x = Mathf.Clamp(x, -1, 70);
         else

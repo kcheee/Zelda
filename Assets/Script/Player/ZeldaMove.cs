@@ -47,13 +47,14 @@ public class ZeldaMove : MonoBehaviour
     float yvelocity;
 
     CharacterController cc;
-    public GameObject Enemy;
-    public Animator Playeranimator;
+
+    //public GameObject Enemy;
+    //public Animator Playeranimator;
 
     void Start()
     {
-        state = IDLE;
-        //state = MOVE;
+        //state = IDLE;
+        state = MOVE;
         speed = NORMALspeed;
         //Enemy = GameObject.FindGameObjectsWithTag("Enemy");
     }
@@ -95,7 +96,7 @@ public class ZeldaMove : MonoBehaviour
     {
 
         //아니면 걍 여기서 키 입력 없을시 애니메이션 출력이 좀더 쉽고 코드 단축이 되려나..
-        this.Playeranimator.SetTrigger("Idle");
+        //this.Playeranimator.SetTrigger("Idle");
 
         //if(Input.anykey)
         //공격키 -> 공격상태 전환
@@ -116,7 +117,7 @@ public class ZeldaMove : MonoBehaviour
         dir.y = 0;
         dir.Normalize();
         transform.position += dir * speed * Time.deltaTime;
-        this.Playeranimator.SetTrigger("run");
+        //this.Playeranimator.SetTrigger("run");
 
         //yvelocity += gravity * Time.deltaTime;
         //이동애니메이션
@@ -125,7 +126,7 @@ public class ZeldaMove : MonoBehaviour
             DASHstack += Time.deltaTime;
             if (DASHstack <= 0.3f)
             {
-                this.Playeranimator.SetTrigger("dash");
+                //this.Playeranimator.SetTrigger("dash");
                 speed = DASHspeed;
                 print("speed");
                 return;
