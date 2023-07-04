@@ -22,15 +22,16 @@ public class SkillUI : MonoBehaviour
     }
     private void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.K))
+        // 쿨타임이 지나있으면 스킬창 열림.
+        if (CoolTimer.instance.cooltime == CoolTimer.CoolTime.None)
         {
-            // 스킬창 열려있으면 닫고 닫혀있으면 열림.
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                // 스킬창 열려있으면 닫고 닫혀있으면 열림.
                 if (!Skillpanel.activeSelf)
                     Skillpanel.SetActive(true);
-           
+            }
         }
-
         #region CrossHair Onoff
         // CrossHair Onoff
         if (SkillManager.instance.skill_state == SkillManager.Skill_state.skill_bomb)
