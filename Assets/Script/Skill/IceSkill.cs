@@ -14,9 +14,9 @@ public class IceSkill : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.localScale.magnitude < 3f)
+        if (transform.localScale.magnitude < 6f)
         {
-            transform.localScale += new Vector3(0, 1f, 0) * Time.deltaTime * 10;
+            transform.localScale += new Vector3(0, 2f, 0) * Time.deltaTime * 10;
         }
         else
         {

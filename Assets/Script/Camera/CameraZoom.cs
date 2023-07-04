@@ -31,13 +31,13 @@ public class CameraZoom : MonoBehaviour
         if (SkillManager.instance.skill_state == SkillManager.Skill_state.skill_bomb && !flag)
         {
             StartCoroutine(ZoomCamera(transform.localPosition, ZoomPo));
-            Debug.Log("한번만실행");
+
             flag = true;
         }
         if (SkillManager.instance.skill_state == SkillManager.Skill_state.None && flag)
         {
             StartCoroutine(ZoomCamera(transform.localPosition, fristPo));
-            Debug.Log("한번만실행1");
+
             flag = false;
         }
 

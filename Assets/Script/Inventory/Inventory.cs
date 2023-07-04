@@ -41,7 +41,7 @@ public class Inventory : MonoBehaviour
         get => slotCnt; set
         {
             slotCnt = value;
-            onslotCountChange.Invoke(slotCnt);
+            onslotCountChange.Invoke(slotCnt);  // 메서드 실행
         }
     }
     private void Start()
