@@ -8,6 +8,7 @@ public class Camera_rotate : MonoBehaviour
     public Transform CameraArm;
     private float StartY = -3f;
     float flag = 0;
+    float speed = 5;
 
     private void Start()
     {
@@ -15,11 +16,29 @@ public class Camera_rotate : MonoBehaviour
     }
     private void Update()
     {
-       
+       //transform.position= new Vector3(characterBody.position.x,0,characterBody.position.z);
         LookAround();
         Move();
 
     }
+
+    #region 대쉬 어택 기술을 위한 코루틴
+    float ti;
+    IEnumerator DashAttack()
+    {
+
+        while (ti < 2)  // 2초동안 실행
+        {
+            speed = 12;
+            Debug.Log("실행");
+            ti += 0.02f;
+            yield return new WaitForSeconds(0.02f);
+        }
+        ti = 0;
+        speed = 5;
+        yield return null;
+    }
+    #endregion
 
     private void Move()
     {
@@ -46,9 +65,15 @@ public class Camera_rotate : MonoBehaviour
 
             // 이 오브젝트를 움직임   
 
-            transform.position += moveDir * Time.deltaTime * 5;
+            transform.position += moveDir * Time.deltaTime * speed;
             //transform.position = new Vector3(transform.position.x, characterBody.transform.localPosition.y, transform.position.z);
         }
+        // 대쉬어택 테스트
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            StartCoroutine(DashAttack());
+        }
+
     }
 
     void LookAround()

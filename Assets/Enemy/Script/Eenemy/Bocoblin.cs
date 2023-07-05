@@ -144,7 +144,7 @@ public class Bocoblin : MonoBehaviour
             transform.LookAt(dir);
 
             // 링크를 보며 놀란다
-            print("����... ��ũ!!");
+            //print("����... ��ũ!!");
 
             // 다 놀랐으면 현재시간을 흐르게 한다.
 
