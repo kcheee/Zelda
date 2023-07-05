@@ -2094,10 +2094,10 @@ MonoBehaviour:
   speed: 3
   runSpeed: 8
   detectDistance: 15
-  attackPossibleDistance: 8
-  attackDistance: 3
+  attackPossibleDistance: 7
+  attackDistance: 2
   dodgePos: {fileID: 2105014243}
-  waitTime: 2
+  waitTime: 1
   currentHP: 0
   maxHP: 1
 --- !u!1 &5370673831626872962
