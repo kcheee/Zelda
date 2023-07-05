@@ -72,6 +72,7 @@ public class Bocoblin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
         if (state == BocoblinState.Idle)
         {
             UpdateIdle();
@@ -107,10 +108,10 @@ public class Bocoblin : MonoBehaviour
         #region Ray
         // 아래방향으로 Ray 를 발사한다.
         Ray ray = new Ray(gameObject.transform.position, gameObject.transform.up * -1);
-
+       
         // Ray 가 충돌한 것이 바닥이면서 그 거리가 10cm 이상이 되면
         if (Physics.Raycast(ray, out hitinfo))
-        {
+        { 
             if (hitinfo.distance > 1)
             {
                 // 상태를 Air 로 변환한다.

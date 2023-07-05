@@ -30,7 +30,7 @@ public class Camera_rotate : MonoBehaviour
         while (ti < 2)  // 2초동안 실행
         {
             speed = 12;
-            Debug.Log("실행");
+            //Debug.Log("실행");
             ti += 0.02f;
             yield return new WaitForSeconds(0.02f);
         }
