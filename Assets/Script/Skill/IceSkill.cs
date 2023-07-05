@@ -5,6 +5,11 @@ using UnityEngine;
 public class IceSkill : MonoBehaviour
 {
 
+    private void OnEnable()
+    {
+        // 스킬 쿨타임 UI On
+        CoolTimer.instance.on_Btn();
+    }
     IEnumerator delay()
     {
         yield return new WaitForSeconds(2);
@@ -16,11 +21,28 @@ public class IceSkill : MonoBehaviour
     {
         if (transform.localScale.magnitude < 6f)
         {
-            transform.localScale += new Vector3(0, 2f, 0) * Time.deltaTime * 10;
+            transform.localScale += new Vector3(0, 1.5f, 0) * Time.deltaTime * 10;
         }
         else
         {
         StartCoroutine(delay());
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Collider[] cols = Physics.OverlapBox(collision.transform.position, new Vector3(3.2f,4,3.2f));
+        Debug.Log(collision.gameObject);
+        for (int i = 0; i < cols.Length; i++)
+        {
+            // 폭탄 반경에 있는 오브젝트 rigidbody 가져옴
+            if (cols[i].name.Contains("Capsule"))
+            {
+                Debug.Log(i + " : " + cols[i]);
+                Rigidbody rigid = cols[i].GetComponent<Rigidbody>();
+                // (폭발의 힘, 영향이 미치는 구의 중심, 영향이 미치는 구의 반경, 위로 솟구치는 힘)
+                rigid.AddExplosionForce(300, this.transform.position, 10, 30);
+            }
         }
     }
 }
