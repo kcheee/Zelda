@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static CoolTimer;
@@ -35,6 +36,7 @@ public class SkillManager : MonoBehaviour
     public IceSkill iceskill;
     public Bomb bomb;
     public Transform CameraRotation;    // 카메라 회전 값 가져옴. 폭탄 화살 던질때 사용.
+    public 
 
     Rigidbody rb;
 
@@ -43,7 +45,7 @@ public class SkillManager : MonoBehaviour
     private void Start()
     {
         skill_state = Skill_state.None;
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponentInParent<Rigidbody>();
     }
     // 폭탄 스킬.
 
@@ -65,13 +67,12 @@ public class SkillManager : MonoBehaviour
 
     }
 
-
-
     // Time.scale 조절하는 불변수
     bool flag = false;
     // Update is called once per frame
     void Update()
-    {
+    {     
+        // 스킬 창 스킬
         if (CoolTimer.instance.cooltime == CoolTimer.CoolTime.None)
         {
             if (Input.GetKey(KeyCode.K))
@@ -89,7 +90,7 @@ public class SkillManager : MonoBehaviour
                     CoolTimer.instance.cooltime = CoolTimer.CoolTime.skill_cooltime;
 
                     transform.position = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
-                    rb.AddForce(transform.up * 8, ForceMode.Impulse);
+                    rb.AddForce(transform.up * 10, ForceMode.Impulse);
                     Instantiate(iceskill, new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z)
                         , transform.rotation);
                 }
@@ -113,6 +114,18 @@ public class SkillManager : MonoBehaviour
         {
             SkillUI.instance.Skillpanel.SetActive(false);
             flag = false; Time.timeScale = 1;
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        // 대쉬할때 보코블린 튕겨나가는 코드
+        if (collision.collider.name.Contains("Boco"))
+        {
+            Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+            Debug.Log(rb);
+            rb.AddForce(Vector3.up * 10 + -transform.forward * 15, ForceMode.Impulse);
+            //rb.velocity=GMrb.velocity*2.1f;
+            
         }
     }
 }

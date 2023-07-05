@@ -11,7 +11,7 @@ public class Bomb : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        rb.AddForce(transform.forward * 10, ForceMode.Impulse);
+        rb.AddForce(transform.forward * 20, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -24,7 +24,7 @@ public class Bomb : MonoBehaviour
         for (int i = 0; i < cols.Length; i++)
         {       
             // ÆøÅº ¹Ý°æ¿¡ ÀÖ´Â ¿ÀºêÁ§Æ® rigidbody °¡Á®¿È
-            if (cols[i].name.Contains("Capsule"))
+            if (cols[i].name.Contains("Boco"))
             {
                 Debug.Log(i + " : " + cols[i]);
                 Rigidbody rigid = cols[i].GetComponent<Rigidbody>();

@@ -115,8 +115,7 @@ public class Bocoblin : MonoBehaviour
         else if (state == BocoblinState.Die)
         {
             UpdateDie();
-        }
-        Debug.Log(state);
+        }     
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -165,13 +164,13 @@ public class Bocoblin : MonoBehaviour
         // 만약 링크와의 거리가 감지 거리보다 가까우면
         if (distance < detectDistance)
         {
+
             // 링크가 있는 방향을 찾는다.
             Vector3 dir = new Vector3(link.transform.position.x, 0, link.transform.position.z);
 
             // 그 방향을 바라본다.
             transform.LookAt(dir);
 
-            // 현재시간을 흐르게 한다.
             currentTime += Time.deltaTime;
             
             // 2초가 지나면
