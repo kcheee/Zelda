@@ -18,6 +18,7 @@ public class ZeldaMove : MonoBehaviour
     private float NORMALspeed = 1f;
     private float RUNspeed = 4f;
     private float DASHspeed = 15f;
+    private float rotationspeed = 10f;
 
     private float DASHstack = 0;
     private int ATTACKstack = 0;
@@ -54,18 +55,14 @@ public class ZeldaMove : MonoBehaviour
 
     void Start()
     {
-        //state = IDLE;
         state = MOVE;
         speed = NORMALspeed;
+        IDLEstack = 0.3f;
         //Enemy = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
     void Update()
     {
-        //if (state == IDLE)
-        //{
-        //    UpdateIdle();
-        //}
         if (state == MOVE)
         {
             UpdateMove();
@@ -86,11 +83,6 @@ public class ZeldaMove : MonoBehaviour
         {
             UpdateGuard();
         }
-        if (state == BOW)
-        {
-            UpdateBow();
-        }
-
 
     }
     //private void UpdateIdle()
@@ -112,29 +104,29 @@ public class ZeldaMove : MonoBehaviour
     private void UpdateMove()
     {
         //키 누르는게 없으면 idle 상태로 전환.
-
-        //if (!Input.anyKey)
-        //{
-        //    IDLEstack += Time.deltaTime;
-        //    if (IDLEstack >= 0.3f)
-        //    {
-        //        this.Playeranimator.SetBool("Idle", true);
-        //        Debug.Log(IDLEstack);
-        //    }
-        //    else
-        //    {
-        //        this.Playeranimator.SetBool("Idle", false);
-        //    }
-        //        IDLEstack = 0;
-        //}
+        if (!Input.anyKey) //누르는게 없을시.
+        {
+            IDLEstack += Time.deltaTime; //누르는 시간 계산
+            if (IDLEstack >= 0.3f)
+            {
+                this.Playeranimator.SetBool("Idle",true);
+            }
+            else
+            {
+                IDLEstack = 0;
+                this.Playeranimator.SetBool("Idle", false);
+            }
+            Debug.Log(IDLEstack);
+        }
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         Vector3 dir = new Vector3(h, 0, v);
         dir.y = 0;
         dir.Normalize();
         transform.position += dir * speed * Time.deltaTime;
-        this.Playeranimator.SetTrigger("run");
-        
+        transform.Rotate(Vector3.up * h * rotationspeed * Time.deltaTime);
+        this.Playeranimator.SetTrigger("move"); // 움직임
+
         //yvelocity += gravity * Time.deltaTime;
         //이동애니메이션
         if (Input.GetKey(KeyCode.LeftShift))
@@ -142,23 +134,24 @@ public class ZeldaMove : MonoBehaviour
             DASHstack += Time.deltaTime;
             if (DASHstack <= 0.3f)
             {
-                this.Playeranimator.SetTrigger("dash");
-                speed = DASHspeed;
-               
+                this.Playeranimator.SetTrigger("dash"); // 대쉬 애니메이션
+                speed = DASHspeed; //대쉬 스피드로 변환.
+
                 return;
             }
             if (DASHstack >= 0.3f)
             {
-                speed = RUNspeed;
+                speed = RUNspeed; //달리기 스피드
                 print("n");
             }
 
             Debug.Log(DASHstack);
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
+        if (!Input.GetKey(KeyCode.LeftShift))
         {
             DASHstack = 0;
-            speed = NORMALspeed;
+            speed = NORMALspeed; //정상 스피드
+            this.Playeranimator.SetTrigger("move"); //이동 애니메이션
         }
         //공격
         if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -170,11 +163,6 @@ public class ZeldaMove : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
             state = CHARGED;
-        }
-        //활
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            state = BOW;
         }
         //가드
         if (Input.GetKeyDown(KeyCode.Z))
@@ -338,7 +326,7 @@ public class ZeldaMove : MonoBehaviour
         //가드키 누를시 어떤 상태든 해당 상태로 변환.
         //if (Input.GetKeyDown(KeyCode.Z))
         //{
-            
+
         //}
 
     }
@@ -363,9 +351,5 @@ public class ZeldaMove : MonoBehaviour
     //    //몸에 공격 맞을 시, hit 상태로 전환되며 피격 애니메이션과 함께 목숨 스택 차감.
     //}
 
-    //활
-    private void UpdateBow()
-    {
-        //활 공격, 줌인
-    }
 }
+
