@@ -2,21 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-/// <summary>
-/// ÅÂ¾î³¯ ¶§ ´ë±âÇÑ´Ù.
-/// ¸µÅ©°¡ °¨Áö°Å¸® ³»·Î ´Ù°¡¿À¸é ¦i¾Æ°£´Ù.
-/// ¸µÅ©°¡ °ø°İ°Å¸® ³»·Î ´Ù°¡¿À¸é °ø°İ½Ã°£ÀÌ µÉ ¶§±îÁö °ø°İÁØºñ¸¦ ÇÑ´Ù.
-/// °ø°İ½Ã°£ÀÌ µÇ¸é ¸µÅ©¸¦ °ø°İÇÑ´Ù.
-/// °ø°İÀ» ÇÑ µÚ °ø°İ µô·¹ÀÌ ½Ã°£µ¿¾È ±â´Ù¸°´Ù.
-/// ¹İº¹
-/// °ø°İ ½Ã°£ÀÌ µÇ±â Àü¿¡ ¸µÅ©°¡ °ø°İ °Å¸®º¸´Ù ¸Ö¾îÁö¸é ´ë±âÇÏ°Å³ª ¦i¾Æ°£´Ù.
-/// °ø°İ ½Ã°£ÀÌ µÇ±â Àü¿¡ ¸µÅ©°¡ °ø°İÇØ¼­ ÇÇ°İÇÏ¸é ´ë±â ÇÏ°Å³ª ¦i¾Æ°¡°Å³ª ´Ù½Ã °ø°İ ÁØºñ¸¦ ÇÑ´Ù.
-/// ¸µÅ©ÀÇ °ø°İÀ» ¸ÂÀ¸¸é µÚ·Î ³¯¾Æ°£´Ù.
-/// Ã¼·ÂÀÌ 0ÀÌ ¾Æ´Ï¶ó¸é ´Ù½Ã ÀÏ¾î³ª°í,
-/// º¸ÄÚºí¸°ÀÇ Ã¼·ÂÀÌ 0ÀÌ µÇ¸é Á×°í ½Í´Ù.
-/// </summary>
-
+#region ëª©í‘œ
+// íƒœì–´ë‚  ë•Œ ëŒ€ê¸°í•œë‹¤.
+// ë§í¬ê°€ ê°ì§€ê±°ë¦¬ ë‚´ë¡œ ë‹¤ê°€ì˜¤ë©´ ì«’ì•„ê°„ë‹¤.
+// ë§í¬ê°€ ê³µê²©ê±°ë¦¬ ë‚´ë¡œ ë‹¤ê°€ì˜¤ë©´ ê³µê²©ì‹œê°„ì´ ë  ë•Œê¹Œì§€ ê³µê²©ì¤€ë¹„ë¥¼ í•œë‹¤.
+// ê³µê²©ì‹œê°„ì´ ë˜ë©´ ë§í¬ë¥¼ ê³µê²©í•œë‹¤.
+// ê³µê²©ì„ í•œ ë’¤ ê³µê²© ë”œë ˆì´ ì‹œê°„ë™ì•ˆ ê¸°ë‹¤ë¦°ë‹¤.
+// ë°˜ë³µ
+// ê³µê²© ì‹œê°„ì´ ë˜ê¸° ì „ì— ë§í¬ê°€ ê³µê²© ê±°ë¦¬ë³´ë‹¤ ë©€ì–´ì§€ë©´ ëŒ€ê¸°í•˜ê±°ë‚˜ ì«’ì•„ê°„ë‹¤.
+// ê³µê²© ì‹œê°„ì´ ë˜ê¸° ì „ì— ë§í¬ê°€ ê³µê²©í•´ì„œ í”¼ê²©í•˜ë©´ ëŒ€ê¸° í•˜ê±°ë‚˜ ì«’ì•„ê°€ê±°ë‚˜ ë‹¤ì‹œ ê³µê²© ì¤€ë¹„ë¥¼ í•œë‹¤.
+// ë§í¬ì˜ ê³µê²©ì„ ë§ìœ¼ë©´ ë’¤ë¡œ ë‚ ì•„ê°„ë‹¤.
+// ì²´ë ¥ì´ 0ì´ ì•„ë‹ˆë¼ë©´ ë‹¤ì‹œ ì¼ì–´ë‚˜ê³ ,
+// ë³´ì½”ë¸”ë¦°ì˜ ì²´ë ¥ì´ 0ì´ ë˜ë©´ ì£½ê³  ì‹¶ë‹¤.
+#endregion
 
 public class Bocoblin : MonoBehaviour
 {
@@ -26,60 +26,67 @@ public class Bocoblin : MonoBehaviour
         instance = this;
     }
 
-    // »óÅÂ
+    // ìƒíƒœ
     public BocoblinState state;
-    // »óÅÂ ¿­°Å
+    // ìƒíƒœ ì—´ê±°
     public enum BocoblinState
     {
-        Idle, Move, Attack, Damaged, Die
+        Idle, Move, Air, Dodge, Attack, Damaged, Die
     }
 
-    // ÀÌµ¿¼Óµµ
+    // ì´ë™ì†ë„
     public float speed = 5;
 
-    // °Å¸®
+    // ê±°ë¦¬
     float distance;
     public float detectDistance;
+    public float attackPossibleDistance;
     public float attackDistance;
 
-    // ½Ã°£
+    // ì‹œê°„
     float currentTime;
     public float waitTime;
 
-    // ³»ºñ°ÔÀÌ¼Ç
-
-
-    // ÇÃ·¹ÀÌ¾î(¸µÅ©)
+    // í”Œë ˆì´ì–´(ë§í¬)
     GameObject link;
 
-    // ¾Ö´Ï¸ŞÀÌ¼Ç
+    // ì• ë‹ˆë©”ì´ì…˜
     Animator anim;
 
-    // Ã¼·Â
+    // ì²´ë ¥
     public int currentHP;
     public int maxHP = 10;
     Rigidbody rb;
 
+    RaycastHit hitinfo;
+
     // Start is called before the first frame update
     void Start()
     {
-        link = GameObject.Find("Link");
         currentHP = maxHP;
-        anim = gameObject.GetComponentInChildren<Animator>();
+        link = GameObject.Find("Link");
         rb = GetComponent<Rigidbody>();
+        anim = gameObject.GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Debug.Log(state);
-        if(state == BocoblinState.Idle)
+        if (state == BocoblinState.Idle)
         {
             UpdateIdle();
         }
         else if (state == BocoblinState.Move)
         {
             UpdateMove();
+        }
+        else if (state == BocoblinState.Air)
+        {
+            UpdateAir();
+        }
+        else if(state == BocoblinState.Dodge)
+        {
+            UpdateDodge();
         }
         else if (state == BocoblinState.Attack)
         {
@@ -95,23 +102,59 @@ public class Bocoblin : MonoBehaviour
         }     
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        #region Ray
+        // ì•„ë˜ë°©í–¥ìœ¼ë¡œ Ray ë¥¼ ë°œì‚¬í•œë‹¤.
+        Ray ray = new Ray(gameObject.transform.position, gameObject.transform.up * -1);
+
+        // Ray ê°€ ì¶©ëŒí•œ ê²ƒì´ ë°”ë‹¥ì´ë©´ì„œ ê·¸ ê±°ë¦¬ê°€ 10cm ì´ìƒì´ ë˜ë©´
+        if (Physics.Raycast(ray, out hitinfo))
+        {
+            if (hitinfo.distance > 1)
+            {
+                // ìƒíƒœë¥¼ Air ë¡œ ë³€í™˜í•œë‹¤.
+                state = BocoblinState.Air;
+            }
+        }
+        #endregion
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            if (currentHP <= 0)
+            {
+                // ìƒíƒœë¥¼ Die ë¡œ ì „í™˜í•œë‹¤.
+                state = BocoblinState.Die;
+            }
+            return;
+        }
+    }
+
     private void UpdateIdle()
     {
-        // ¸µÅ©¿ÍÀÇ °Å¸®¸¦ ±¸ÇÑ´Ù.
+        // ë§í¬ì™€ì˜ ê±°ë¦¬ë¥¼ êµ¬í•œë‹¤.
         distance = Vector3.Distance(link.transform.position, transform.position);
-        // ¸¸¾à ¸µÅ©¿ÍÀÇ °Å¸®°¡ °¨Áö °Å¸®º¸´Ù °¡±î¿ì¸é
+        // ë§Œì•½ ë§í¬ì™€ì˜ ê±°ë¦¬ê°€ ê°ì§€ ê±°ë¦¬ë³´ë‹¤ ê°€ê¹Œìš°ë©´
         if (distance < detectDistance)
         {
-            // ¸µÅ©¸¦ º¸¸ç ³î¶õ´Ù(1ÃÊ)
-            //print("Àú°Ç... ¸µÅ©!!");
-            // ÇöÀç½Ã°£À» Èå¸£°Ô ÇÑ´Ù.
+
+            // ë§í¬ê°€ ìˆëŠ” ë°©í–¥ì„ ì°¾ëŠ”ë‹¤.
+            Vector3 dir = new Vector3(link.transform.position.x, 0, link.transform.position.z);
+
+            // ê·¸ ë°©í–¥ì„ ë°”ë¼ë³¸ë‹¤.
+            transform.LookAt(dir);
+
+            // ë§í¬ë¥¼ ë³´ë©° ë†€ë€ë‹¤
+            print("ï¿½ï¿½ï¿½ï¿½... ï¿½ï¿½Å©!!");
+
+            // ë‹¤ ë†€ëìœ¼ë©´ í˜„ì¬ì‹œê°„ì„ íë¥´ê²Œ í•œë‹¤.
+
             currentTime += Time.deltaTime;
-            // ´Ù ³î¶úÀ¸¸é 
-            if (currentTime > 1)
+            // 2ì´ˆê°€ ì§€ë‚˜ë©´
+            if (currentTime > 2)
             {
-                // »óÅÂ¸¦ Move ·Î º¯È¯ÇÑ´Ù.
+                // ìƒíƒœë¥¼ Move ë¡œ ë³€í™˜í•œë‹¤.
                 state = BocoblinState.Move;
-                anim.SetBool("Move", true);
+                //anim.SetBool("Move", true);
                 currentTime = 0;
             }
         }
@@ -121,107 +164,146 @@ public class Bocoblin : MonoBehaviour
         }
     }
 
+    private void UpdateAir()
+    {
+        // ìŠ¤í„´ ì• ë‹ˆë©”ì´ì…˜ì„ ì‹¤í–‰
+        anim.SetBool("Damaged", true);
+        // ë°”ë‹¥ì— ë–¨ì–´ì§€ë©´
+        Debug.Log(hitinfo.distance);
+        if(hitinfo.distance <= 0.4f)
+        {
+            anim.SetBool("Damaged", false);
+            // Idle ë¡œ ìƒíƒœë¥¼ ì „í™˜í•œë‹¤.
+            state = BocoblinState.Idle;
+        }
+    }
+
+    private void UpdateDodge()
+    {
+        //anim.SetBool("Buff", false);
+        //anim.SetTrigger("Dodge");
+        //rb.AddForce(transform.forward * -2, ForceMode.Impulse);
+        transform.position = Vector3.Lerp(transform.position, dodgePos.position, 0.8f);
+        state = BocoblinState.Idle;
+    }
+
     private void UpdateMove()
     {
-        // °Å¸®¸¦ ±¸ÇÑ´Ù.
-         distance = Vector3.Distance(link.transform.position, transform.position);
-        // ¸¸¾à °Å¸®°¡ °¨Áö °Å¸®º¸´Ù Å©¸é 
-        if(distance > detectDistance)
+        // ê±°ë¦¬ë¥¼ êµ¬í•œë‹¤.
+        distance = Vector3.Distance(link.transform.position, transform.position);
+        // ë§Œì•½ ê±°ë¦¬ê°€ ê°ì§€ ê±°ë¦¬ë³´ë‹¤ í¬ë©´ 
+        if (distance > detectDistance)
         {
-            // »óÅÂ¸¦ Idle ·Î ÀüÈ¯ÇÑ´Ù.
+            // ìƒíƒœë¥¼ Idle ë¡œ ì „í™˜í•œë‹¤.
             state = BocoblinState.Idle;
-            anim.SetBool("Move", false);
+            //anim.SetBool("Move", false);
         }
-        // ¸¸¾à ¸µÅ©¿ÍÀÇ °Å¸®°¡ °ø°İ°Å¸®º¸´Ù ¸Ö¸é 
-        else if (distance > attackDistance)
+        // ë§Œì•½ ë§í¬ì™€ì˜ ê±°ë¦¬ê°€ ê³µê²©ê±°ë¦¬ë³´ë‹¤ ë©€ë©´
+        else if (distance > attackPossibleDistance)
         {
             // transform.LookAt(new Vector3(rink.transform.position.x,0,rink.transform.position.z));
-            // ¸µÅ©ÀÇ À§Ä¡º¤ÅÍ¸¦ ±¸ÇØ¼­
-            // ¹ß¹ØÀ» ¹Ù¶óº¼ ¶§ ¸öÀÌ µ¹¾Æ°¡´Â ¹®Á¦¸¦ ¿¹¹æÇÏ±â À§ÇØ X ·ÎÅ×ÀÌ¼ÇÀ» 0À¸·Î °íÁ¤ÇÑ´Ù. 
+            // ë§í¬ì˜ ìœ„ì¹˜ë²¡í„°ë¥¼ êµ¬í•´ì„œ
+            // ë°œë°‘ì„ ë°”ë¼ë³¼ ë•Œ ëª¸ì´ ëŒì•„ê°€ëŠ” ë¬¸ì œë¥¼ ì˜ˆë°©í•˜ê¸° ìœ„í•´ X ë¡œí…Œì´ì…˜ì„ 0ìœ¼ë¡œ ê³ ì •í•œë‹¤.  
             Vector3 dir = new Vector3(link.transform.position.x, 0, link.transform.position.z);
-            // ¸µÅ©°¡ ÀÖ´Â °÷À» ¹Ù¶óº»´Ù.
+
+            // ë§í¬ê°€ ìˆëŠ” ê³³ì„ ë°”ë¼ë³¸ë‹¤.
             transform.LookAt(dir);
-            // ¸µÅ©¿ÍÀÇ ¹æÇâÀ» ±¸ÇØ¼­
+
+            // ë§í¬ì™€ì˜ ë°©í–¥ì„ êµ¬í•´ì„œ
             Vector3 rinkDir = link.transform.position - transform.position;
+
             rinkDir.y = 0;
             rinkDir.Normalize();
-            // ¸µÅ©°¡ ÀÖ´Â °÷À¸·Î ÀÌµ¿ÇÑ´Ù.
+            // ë§í¬ê°€ ìˆëŠ” ê³³ìœ¼ë¡œ ì´ë™í•œë‹¤.
             transform.position += rinkDir * speed * Time.deltaTime;
             // transform.position = Vector3.MoveTowards(transform.position, rink.transform.position, 0.1f);
         }
-        // ¸µÅ©°¡ °ø°İ °Å¸® ¾ÈÀ¸·Î µé¾î¿À¸é
+        // ë§í¬ê°€ ê³µê²© ê±°ë¦¬ ì•ˆìœ¼ë¡œ ë“¤ì–´ì˜¤ë©´
         else
         {
-            // °ø°İ»óÅÂ·Î ÀüÈ¯ÇÑ´Ù.
+            // ê³µê²©ìƒíƒœë¡œ ì „í™˜í•œë‹¤.
             state = BocoblinState.Attack;
-            anim.SetBool("Move", false);
+            //anim.SetBool("Move", false);
+            //anim.SetBool("Buff", true);
         }
     }
-    
+    public Transform dodgePos;
+    bool isAttack;
     private void UpdateAttack()
     {
-        anim.SetBool("Buff", true);
         distance = Vector3.Distance(link.transform.position, transform.position);
-        // ÇöÀç½Ã°£À» Èå¸£°Ô ÇÑ´Ù.
+        // í˜„ì¬ì‹œê°„ì„ íë¥´ê²Œ í•œë‹¤.
         currentTime += Time.deltaTime;
-        // ¸¸¾à ÇöÀç½Ã°£ÀÌ ´ë±â ½Ã°£º¸´Ù ±æ¾îÁö¸é
+        // ë§Œì•½ í˜„ì¬ì‹œê°„ì´ ëŒ€ê¸° ì‹œê°„ë³´ë‹¤ ê¸¸ì–´ì§€ë©´
         if (currentTime > waitTime)
         {
-            // °ø°İ!!!!!!!!!!!!!
-            print("@@@@@@@@@@@@ °ø°İ @@@@@@@@@@@@");
-            anim.SetBool("Buff", false);
-            // ¾Ö´Ï¸ŞÀÌ¼Ç ( ´ë±â -> °ø°İ ) ½ÇÇà
-            anim.SetTrigger("Attack");
-            // ¸µÅ©ÀÇ µ¥¹ÌÁö ÇÔ¼ö¸¦ È£ÃâÇÑ´Ù.
-            // link.gameObject.GetComponent<HP>().Ondamaged();
+            //anim.SetBool("Buff", true);
+            int rValue = Random.Range(0, 10);
+            // 40% í™•ë¥ ë¡œ íšŒí”¼
+            if (rValue < 4 && isAttack == false)
+            {
+                state = BocoblinState.Dodge;
+                isAttack = true;
+            }
+            // 60% í™•ë¥ ë¡œ 
+            else
+            {
+                //anim.SetBool("Buff", false);
+                // AttackDistance ê¹Œì§€ ë‹¬ë ¤ê°
+                Vector3 dir = new Vector3(link.transform.position.x, 0, link.transform.position.z);
+                transform.LookAt(dir);
+                Vector3 rinkDir = link.transform.position - transform.position;
+                rinkDir.y = 0;
+                rinkDir.Normalize();
+                transform.position += rinkDir * 10 * Time.deltaTime;
 
-            // ÇöÀç½Ã°£À» ÃÊ±âÈ­ÇÑ´Ù.
-            currentTime = 0;
+                // ë§Œì•½ ê³µê²©ê±°ë¦¬ë³´ë‹¤ ê°€ê¹Œì›Œì§€ë©´
+                if(distance < attackDistance)
+                {
+                    // ê³µê²©!!!!!!!!!!!!!
+                    print("@@@@@@@@@@@@@@@@@@@@@@@");
+                    // ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
+                    //anim.SetTrigger("Attack");
 
-            // »óÅÂ¸¦ ÃÊ±âÈ­ÇÑ´Ù.
-            state = BocoblinState.Idle;
+                    // ë§í¬ì˜ ë°ë¯¸ì§€ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•œë‹¤.
+                    // link.gameObject.GetComponent<HP>().Ondamaged();
+
+                    // í˜„ì¬ì‹œê°„ì„ ì´ˆê¸°í™”í•œë‹¤.
+                    currentTime = 0;
+                    isAttack = false;
+                }
+            }
         }
-        // ´ë±â ½Ã°£ Áß¿¡ ¸µÅ©°¡ °ø°İ°Å¸® º¸´Ù ¸Ö¾îÁø´Ù¸é
-        else if (currentTime < waitTime && distance > attackDistance)
+        // ëŒ€ê¸° ì‹œê°„ ì¤‘ì— ë§í¬ê°€ ê³µê²©ê±°ë¦¬ ë³´ë‹¤ ë©€ì–´ì§„ë‹¤ë©´
+        else if (currentTime < waitTime && distance > attackPossibleDistance)
         {
-            // ¹öÇÁ ¾Ö´Ï¸ŞÀÌ¼ÇÀ» Áß´ÜÇÏ°í
-            anim.SetBool("Buff", false);
+            // ë²„í”„ ì• ë‹ˆë©”ì´ì…˜ì„ ì¤‘ë‹¨í•˜ê³ 
+            //anim.SetBool("Buff", false);
 
-            //print("µµ¸Á°£´Ù~~~~");
 
-            // »óÅÂ¸¦ Idle ·Î ÀüÈ¯ÇÑ´Ù.
+            print("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½~~~~");
+
+
+            // ìƒíƒœë¥¼ Idle ë¡œ ì „í™˜í•œë‹¤.
             state = BocoblinState.Idle;
         }
     }
 
     public void UpdateDamaged()
     {
-        // Ã¼·ÂÀ» °¨¼Ò½ÃÅ²´Ù.
+        // ì²´ë ¥ì„ ê°ì†Œì‹œí‚¨ë‹¤.
         currentHP--;
 
-        // ´Ù¸¥ ¾Ö´Ï¸ŞÀÌ¼Ç ÁßÁö, ÇÇ°İ¾Ö´Ï¸ŞÀÌ¼Ç
-        anim.SetBool("Damaged", true);
-        anim.SetBool("Buff", false);
-        anim.SetBool("Move", false);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Floor"))
-        {
-            if (currentHP <= 0)
-            {
-                // »óÅÂ¸¦ Die ·Î ÀüÈ¯ÇÑ´Ù.
-                state = BocoblinState.Die;
-            }
-            return;
-        }
+        // ë‹¤ë¥¸ ì• ë‹ˆë©”ì´ì…˜ ì¤‘ì§€, í”¼ê²©ì• ë‹ˆë©”ì´ì…˜
+        //anim.SetBool("Damaged", true);
+        //anim.SetBool("Buff", false);
+        //anim.SetBool("Move", false);
     }
 
     private void UpdateDie()
     {
-        // 1ÃÊ ÈÄ¿¡ ÆÄ±«ÇÑ´Ù.
+        // 1ì´ˆ í›„ì— íŒŒê´´í•œë‹¤.
         Destroy(gameObject, 2);
-        // ÆÄ±«ÇÒ ¶§ °ËÀº ¸ÕÁö ÆÄÆ¼Å¬½Ã½ºÅÛÀ» ½ÇÇàÇÑ´Ù.
+        // íŒŒê´´í•  ë•Œ ê²€ì€ ë¨¼ì§€ íŒŒí‹°í´ì‹œìŠ¤í…œì„ ì‹¤í–‰í•œë‹¤.
     }
 }
