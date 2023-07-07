@@ -127,6 +127,7 @@ public class Bocoblin : MonoBehaviour
         // 공중상태에 있다가 추락해서 바닥에 닿았을 때
         if (collision.gameObject.CompareTag("Floor"))
         {
+            anim.SetBool("Air", false);
             isAir = false;
             // 만약 체력이 0 이상이라면
             if (currentHP > 0)
@@ -239,10 +240,9 @@ public class Bocoblin : MonoBehaviour
         // 링크가 공격 거리 안으로 들어오면
         else if (distance <= attackPossibleDistance)
         {
-            Debug.Log(distance + " fdfdfd" + attackPossibleDistance);
             // 공격대기상태로 전환한다.
             state = BocoblinState.Wait;
-            
+
             // 애니메이션
             anim.SetBool("Wait", true);
         }
@@ -252,7 +252,6 @@ public class Bocoblin : MonoBehaviour
     {
         // 애니메이션
         anim.SetBool("Move", false);
-
         // 시간을 흐르게 한다.
         currentTime += Time.deltaTime;
 
@@ -266,7 +265,7 @@ public class Bocoblin : MonoBehaviour
         distance = Vector3.Distance(y, transform.position);
 
         // 대기 시간 중에 링크가 공격거리 보다 멀어진다면
-        if (currentTime < waitTime && distance > attackPossibleDistance)
+        if (currentTime < waitTime && distance > attackPossibleDistance + 1)
         {
             Debug.Log(distance+" "+ attackPossibleDistance);
             // 상태를 Idle 로 전환한다.
@@ -285,11 +284,13 @@ public class Bocoblin : MonoBehaviour
                 currentTime = 0;
                 // 애니메이션 실행
                 anim.SetBool("Dodge", true);
+                anim.SetBool("Wait", false);
             }
             // 70% 확률로 공격하러 감
             else
             {
                 // 애니메이션
+                anim.SetBool("Wait", false);
                 anim.SetBool("Run", true);
                 // AttackDistance 까지 달려감
                 Vector3 linkDir = link.transform.position - transform.position;
@@ -314,13 +315,12 @@ public class Bocoblin : MonoBehaviour
 
     private void UpdateDodge()
     {
-        //rb.AddForce(transform.forward * -2, ForceMode.Impulse);
-        transform.position = Vector3.Lerp(transform.position, dodgePos.position, 0.8f);
-        isWait = true;
-        state = BocoblinState.Idle;
         // 애니메이션 실행
         anim.SetBool("Dodge", false);
-
+        rb.AddForce(transform.forward * -2, ForceMode.Impulse);
+        // transform.position = Vector3.Lerp(transform.position, dodgePos.position, 0.8f);
+        isWait = true;
+        state = BocoblinState.Idle;
     }
 
     private void UpdateAttack()

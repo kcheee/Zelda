@@ -2076,8 +2076,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.019374888, y: 0.02437036, z: 0.014423346}
-  m_Center: {x: 0.00034387768, y: 0.012936682, z: 0.0030452178}
+  m_Size: {x: 0.019374888, y: 0.02525449, z: 0.014423346}
+  m_Center: {x: 0, y: 0.012494615, z: 0.0030452178}
 --- !u!114 &1332405764793728423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2092,10 +2092,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   speed: 3
-  runSpeed: 8
+  runSpeed: 5
   detectDistance: 15
-  attackPossibleDistance: 7
-  attackDistance: 2
+  attackPossibleDistance: 8
+  attackDistance: 3
   dodgePos: {fileID: 2105014243}
   waitTime: 1
   currentHP: 0
