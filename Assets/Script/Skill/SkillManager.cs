@@ -90,7 +90,7 @@ public class SkillManager : MonoBehaviour
                     CoolTimer.instance.cooltime = CoolTimer.CoolTime.skill_cooltime;
 
                     transform.position = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
-                    rb.AddForce(transform.up * 12, ForceMode.Impulse);
+                    rb.AddForce(transform.up * 11*rb.mass, ForceMode.Impulse);
                     Instantiate(iceskill, new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z)
                         , transform.rotation);
                 }

@@ -53,6 +53,7 @@ public class Camera_PlayerMove : MonoBehaviour
         bool isMove = moveInput.magnitude != 0;
         if (isMove)
         {
+            animation_T.instance.state = animation_T.ani_state.move;
             // 카메라의 x,z 값만 가져와서 정규화 해줌 y값은 0으로 고정시키는 이유는 캐릭터가 위아래로 움직이는 것 방지
             Vector3 lookForward = new Vector3(CameraArm.forward.x, 0, CameraArm.forward.z).normalized;
 
@@ -70,6 +71,9 @@ public class Camera_PlayerMove : MonoBehaviour
             transform.position += moveDir * Time.deltaTime * speed;
             //transform.position = new Vector3(transform.position.x, characterBody.transform.localPosition.y, transform.position.z);
         }
+        else
+            animation_T.instance.state = animation_T.ani_state.idle;
+
         // 대쉬어택 테스트
         if (Input.GetKeyDown(KeyCode.V))
         {

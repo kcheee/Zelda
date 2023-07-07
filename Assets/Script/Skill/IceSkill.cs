@@ -31,8 +31,8 @@ public class IceSkill : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Collider[] cols = Physics.OverlapBox(collision.transform.position, new Vector3(3.2f,4,3.2f));
-        Debug.Log(collision.gameObject);
+        Collider[] cols = Physics.OverlapBox(collision.transform.position, new Vector3(6f,7,6f));
+       
         for (int i = 0; i < cols.Length; i++)
         {
             // ÆøÅº ¹Ý°æ¿¡ ÀÖ´Â ¿ÀºêÁ§Æ® rigidbody °¡Á®¿È
