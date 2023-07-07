@@ -82,6 +82,7 @@ public class PlayerBow : MonoBehaviour
             
             arrow.transform.position = firePosition.position;
             arrow.transform.forward = firePosition.forward;
+            firePosition.transform.position = dd();
         }
     }
     GameObject GetArrowFromObjectPool()
