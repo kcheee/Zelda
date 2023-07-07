@@ -8,7 +8,18 @@ public class Camera_PlayerMove : MonoBehaviour
     public Transform CameraArm;
     private float StartY = -3f;
     float flag = 0;
+
     float speed = 5;
+    float NORMALspeed = 5;
+    private float DASHstack = 0;
+    private float DASHspeed = 20f;
+    private float RUNspeed = 10f;
+
+    private int ATTACKstack = 0;
+    private int CHARGEDstack = 0;
+
+    public float time = 0f;
+    public float delayTime = 3f;
 
     private void Start()
     {
@@ -16,12 +27,15 @@ public class Camera_PlayerMove : MonoBehaviour
     }
     private void Update()
     {
-       //transform.position= new Vector3(characterBody.position.x,0,characterBody.position.z);
+        //transform.position= new Vector3(characterBody.position.x,0,characterBody.position.z);
         LookAround();
         Move();
 
     }
+    //static public bool at = false;
+    
 
+    
     #region 대쉬 어택 기술을 위한 코루틴
     float ti;
     static public bool dashattack = false;
@@ -44,7 +58,7 @@ public class Camera_PlayerMove : MonoBehaviour
 
     private void Move()
     {
-        
+
         // Input를 vector2로 받음.
         Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         moveInput.Normalize();
@@ -62,6 +76,31 @@ public class Camera_PlayerMove : MonoBehaviour
             // dir = transform.forward+transform.right 같은 느낌 (방향을 정함)
             Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
 
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                Debug.Log(speed);
+                DASHstack += Time.deltaTime;
+                if (DASHstack <= 0.3f)
+                {
+
+                    //this.Playeranimator.SetBool("dash", true); // 대쉬 애니메이션
+                    speed = DASHspeed; //대쉬 스피드로 변환.
+
+                    /*return*/
+                    ;
+                }
+                if (DASHstack >= 0.3f)
+                {
+                    speed = RUNspeed; //달리기 스피드
+                    print("n");
+                }
+
+            }
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                DASHstack = 0;
+                speed = NORMALspeed; //정상 스피드
+            }
             // 캐릭터의 앞방향을 카메라 앞방향으로 설정.
             characterBody.forward = moveDir;
 
@@ -76,8 +115,9 @@ public class Camera_PlayerMove : MonoBehaviour
             StartCoroutine(DashAttack());
         }
 
-    }
 
+    }
+    
     void LookAround()
     {
         // 마우스 x,y 좌표 값 
