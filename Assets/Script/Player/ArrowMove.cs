@@ -10,6 +10,7 @@ public class ArrowMove : MonoBehaviour
 
     void Start()
     {
+        this.gameObject.SetActive(true);
         rb = GetComponent<Rigidbody>();
         rb.velocity = transform.forward * speed;
     }
@@ -31,6 +32,6 @@ public class ArrowMove : MonoBehaviour
             //otherRB.AddForce(transform.forward * otherRB.mass * 5, ForceMode.Impulse);
             Destroy(arrowEffect, 0.5f);
         }
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 }
