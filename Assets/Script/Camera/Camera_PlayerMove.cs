@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Camera_rotate : MonoBehaviour
+public class Camera_PlayerMove : MonoBehaviour
 {
     public Transform characterBody;
     public Transform CameraArm;
@@ -24,18 +24,20 @@ public class Camera_rotate : MonoBehaviour
 
     #region 대쉬 어택 기술을 위한 코루틴
     float ti;
+    static public bool dashattack = false;
     IEnumerator DashAttack()
     {
-
         while (ti < 2)  // 2초동안 실행
         {
             speed = 12;
-            Debug.Log("실행");
+            dashattack = true;
+            //Debug.Log("실행");
             ti += 0.02f;
             yield return new WaitForSeconds(0.02f);
         }
         ti = 0;
         speed = 5;
+        dashattack = false;
         yield return null;
     }
     #endregion
