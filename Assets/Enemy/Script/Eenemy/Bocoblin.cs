@@ -153,7 +153,7 @@ public class Bocoblin : MonoBehaviour
     {
         if (collision.collider.name.Contains("Plane"))
         {
-            Debug.Log("tkdgoss");
+           
             state = BocoblinState.Air;
         }
     }

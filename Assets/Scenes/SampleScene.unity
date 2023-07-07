@@ -1594,6 +1594,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1389706428}
     m_Modifications:
+    - target: {fileID: 2105014243, guid: 072b05c7a2f99b942aec67df21a42aef, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1332405764793728423, guid: 072b05c7a2f99b942aec67df21a42aef,
         type: 3}
       propertyPath: dodgePos
@@ -1687,7 +1691,7 @@ PrefabInstance:
     - target: {fileID: 5189019475099409619, guid: 072b05c7a2f99b942aec67df21a42aef,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5189019475099409647, guid: 072b05c7a2f99b942aec67df21a42aef,
         type: 3}
@@ -1877,6 +1881,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1389706428}
     m_Modifications:
+    - target: {fileID: 2105014243, guid: 072b05c7a2f99b942aec67df21a42aef, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1332405764793728423, guid: 072b05c7a2f99b942aec67df21a42aef,
         type: 3}
       propertyPath: dodgePos
@@ -1970,7 +1978,7 @@ PrefabInstance:
     - target: {fileID: 5189019475099409619, guid: 072b05c7a2f99b942aec67df21a42aef,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5189019475099409647, guid: 072b05c7a2f99b942aec67df21a42aef,
         type: 3}
@@ -2664,6 +2672,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1389706428}
     m_Modifications:
+    - target: {fileID: 2105014243, guid: 072b05c7a2f99b942aec67df21a42aef, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1332405764793728423, guid: 072b05c7a2f99b942aec67df21a42aef,
         type: 3}
       propertyPath: dodgePos
@@ -2757,7 +2769,7 @@ PrefabInstance:
     - target: {fileID: 5189019475099409619, guid: 072b05c7a2f99b942aec67df21a42aef,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5189019475099409647, guid: 072b05c7a2f99b942aec67df21a42aef,
         type: 3}
@@ -3450,6 +3462,8 @@ MonoBehaviour:
   Candash: 0
   isdashing: 0
   gravity: -9.81
+  Enemy: {fileID: 0}
+  Playeranimator: {fileID: 0}
 --- !u!54 &855531975
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3806,6 +3820,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1389706428}
     m_Modifications:
+    - target: {fileID: 2105014243, guid: 072b05c7a2f99b942aec67df21a42aef, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1332405764793728423, guid: 072b05c7a2f99b942aec67df21a42aef,
         type: 3}
       propertyPath: dodgePos
@@ -3899,7 +3917,7 @@ PrefabInstance:
     - target: {fileID: 5189019475099409619, guid: 072b05c7a2f99b942aec67df21a42aef,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5189019475099409647, guid: 072b05c7a2f99b942aec67df21a42aef,
         type: 3}
@@ -6642,6 +6660,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1389706428}
     m_Modifications:
+    - target: {fileID: 2105014243, guid: 072b05c7a2f99b942aec67df21a42aef, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1332405764793728423, guid: 072b05c7a2f99b942aec67df21a42aef,
         type: 3}
       propertyPath: dodgePos
@@ -7237,6 +7259,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1389706428}
     m_Modifications:
+    - target: {fileID: 2105014243, guid: 072b05c7a2f99b942aec67df21a42aef, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1332405764793728423, guid: 072b05c7a2f99b942aec67df21a42aef,
         type: 3}
       propertyPath: dodgePos
@@ -7330,7 +7356,7 @@ PrefabInstance:
     - target: {fileID: 5189019475099409619, guid: 072b05c7a2f99b942aec67df21a42aef,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5189019475099409647, guid: 072b05c7a2f99b942aec67df21a42aef,
         type: 3}

@@ -90,7 +90,7 @@ public class SkillManager : MonoBehaviour
                     CoolTimer.instance.cooltime = CoolTimer.CoolTime.skill_cooltime;
 
                     transform.position = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
-                    rb.AddForce(transform.up * 10, ForceMode.Impulse);
+                    rb.AddForce(transform.up * 12, ForceMode.Impulse);
                     Instantiate(iceskill, new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z)
                         , transform.rotation);
                 }
@@ -116,13 +116,15 @@ public class SkillManager : MonoBehaviour
             flag = false; Time.timeScale = 1;
         }
     }
+    
     private void OnCollisionEnter(Collision collision)
     {
         // 대쉬할때 보코블린 튕겨나가는 코드
         if (collision.collider.name.Contains("Boco"))
         {
             Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
-            Debug.Log(rb);
+            //Debug.Log(rb);
+            
             rb.AddForce(Vector3.up * 10 + -transform.forward * 15, ForceMode.Impulse);
             //rb.velocity=GMrb.velocity*2.1f;
             
