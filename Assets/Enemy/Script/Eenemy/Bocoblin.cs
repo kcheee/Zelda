@@ -61,11 +61,15 @@ public class Bocoblin : MonoBehaviour
     public int maxHP = 10;
     Rigidbody rb;
     
-    // 기다리는지 여부
+    // bool
     bool isWait;
+    bool isAir;
 
     // 공중상태를 위한 레이
     RaycastHit hitinfo;
+
+    Vector3 linkTransform;
+
     #endregion
 
     // Start is called before the first frame update
@@ -75,11 +79,14 @@ public class Bocoblin : MonoBehaviour
         link = GameObject.Find("Link");
         rb = GetComponent<Rigidbody>();
         anim = gameObject.GetComponentInChildren<Animator>();
+        linkTransform = link.transform.position;
     }
+
 
     // Update is called once per frame
     void Update()
     {
+        print(state);
         if (state == BocoblinState.Idle)
         {
             UpdateIdle();
@@ -115,56 +122,65 @@ public class Bocoblin : MonoBehaviour
         else if (state == BocoblinState.Die)
         {
             UpdateDie();
-        }     
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        #region Ray
-        // 아래방향으로 Ray 를 발사한다.
-        // Ray ray = new Ray(gameObject.transform.position, gameObject.transform.up * -1);
-
-        // Ray 가 충돌한 것이 바닥이면서 그 거리가 10cm 이상이 되면
-        // if (Physics.Raycast(ray, out hitinfo))
-        // {
-        //     if (hitinfo.distance > 1)
-        //     {
-        //         // 상태를 Air 로 변환한다.
-                 
-        //     }
-        // }
-        #endregion
-
+        // 공중상태에 있다가 추락해서 바닥에 닿았을 때
         if (collision.gameObject.CompareTag("Floor"))
         {
-            if(currentHP > 0)
+            isAir = false;
+            // 만약 체력이 0 이상이라면
+            if (currentHP > 0)
             {
+                // Idle 상태로 전환한다.
                 state = BocoblinState.Idle;
+                anim.SetTrigger("Idle");
+                currentTime = 0;
             }
-            if (currentHP <= 0)
+            // 만약 체력이 0 이하가 되면 
+            else if (currentHP <= 0)
             {
                 // 상태를 Die 로 전환한다.
                 state = BocoblinState.Die;
             }
         }
     }
+
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.collider.name.Contains("Plane"))
+        
+        if (isAir)
         {
-            Debug.Log("tkdgoss");
+            return;
+        }
+        else if ( collision.gameObject.CompareTag("Floor"))
+        { 
+            // 상태를 Air 로 변환한다.
             state = BocoblinState.Air;
+            // Air 애니메이션 실행
+            anim.SetTrigger("Air");
+            isAir = true;
         }
     }
 
+
     private void UpdateIdle()
     {
+        // 보코볼린의 x,z rotation 을 0으로 해준다. = > 똑바로 설 수 있도록
+        if (currentHP > 0)
+        {
+            Vector3 t = transform.eulerAngles;
+            transform.eulerAngles = new Vector3(0, t.y, 0);
+            
+        }
+
         // 링크와의 거리를 구한다.
         distance = Vector3.Distance(link.transform.position, transform.position);
         // 만약 링크와의 거리가 감지 거리보다 가까우면
-        if (distance < detectDistance)
+        if (distance <= detectDistance)
         {
-
             // 링크가 있는 방향을 찾는다.
             Vector3 dir = new Vector3(link.transform.position.x, 0, link.transform.position.z);
 
@@ -187,15 +203,7 @@ public class Bocoblin : MonoBehaviour
 
     private void UpdateAir()
     {
-        // 스턴 애니메이션을 실행
-
-        //  바닥에 떨어지면
-        // Debug.Log(hitinfo.distance);
-        // if(hitinfo.distance <= 0.4f)
-        // {
-        //     // Idle 로 상태를 전환한다.
-        //     state = BocoblinState.Idle;
-        // }
+        print("######################");
     }
 
     private void UpdateMove()
@@ -203,35 +211,34 @@ public class Bocoblin : MonoBehaviour
         // 거리를 구한다.
         distance = Vector3.Distance(link.transform.position, transform.position);
 
-        // 만약 거리가 감지 거리보다 크면 
-        if (distance > detectDistance)
+        // 만약 링크와의 거리가 감지 거리보다 멀어지면
+        if (detectDistance < distance)
         {
             // 상태를 Idle 로 전환한다.
             state = BocoblinState.Idle;
             anim.SetTrigger("Idle");
         }
-        // 만약 링크와의 거리가 공격가능거리보다 멀면
-        else if (distance > attackPossibleDistance)
+        // 만약 링크와의 거리가 감지거리보다 가깝고 공격가능거리보다 멀면
+        else if (detectDistance >= distance && distance > attackPossibleDistance)
         {
             // transform.LookAt(new Vector3(rink.transform.position.x,0,rink.transform.position.z));
-            // 링크의 위치벡터를 구해서
-            // 발밑을 바라볼 때 몸이 돌아가는 문제를 예방하기 위해 X 로테이션을 0으로 고정한다.  
+            // 링크의 위치벡터를 구해서(발밑을 바라볼 때 몸이 돌아가는 문제를 예방하기 위해 X 로테이션을 0으로 고정)
             Vector3 dir = new Vector3(link.transform.position.x, 0, link.transform.position.z);
-
             // 링크가 있는 곳을 바라본다.
             transform.LookAt(dir);
 
             // 링크와의 방향을 구해서
-            Vector3 rinkDir = link.transform.position - transform.position;
-            rinkDir.y = 0;
-            rinkDir.Normalize();
+            linkTransform.y = 0;
+            Vector3 linkDir = linkTransform - transform.position;
+            linkDir.y = 0;
+            linkDir.Normalize();
 
             // 링크가 있는 곳으로 이동한다.
-            transform.position += rinkDir * speed * Time.deltaTime;
+            transform.position += linkDir * speed * Time.deltaTime;
             // transform.position = Vector3.MoveTowards(transform.position, rink.transform.position, 0.1f);
         }
         // 링크가 공격 거리 안으로 들어오면
-        else if(distance < attackPossibleDistance)
+        else if(distance <= attackPossibleDistance)
         {
             // 공격대기상태로 전환한다.
             state = BocoblinState.Wait;
@@ -244,39 +251,44 @@ public class Bocoblin : MonoBehaviour
         //rb.AddForce(transform.forward * -2, ForceMode.Impulse);
         transform.position = Vector3.Lerp(transform.position, dodgePos.position, 0.8f);
         state = BocoblinState.Idle;
-        anim.SetTrigger("Idle");
+        anim.SetTrigger("Dodge");
     }
 
     private void UpdateWait()
     {
+        // 시간을 흐르게 한다.
+        currentTime += Time.deltaTime;
+
         // 거리를 구한다.
         distance = Vector3.Distance(link.transform.position, transform.position);
 
-        int rValue = Random.Range(0, 10);
-        // 30% 확률로 회피
-        if (rValue < 3 && isWait == false)
+        // 대기 시간 중에 링크가 공격거리 보다 멀어진다면
+        if (currentTime < waitTime && distance > attackPossibleDistance)
         {
-            state = BocoblinState.Dodge;
-            anim.SetTrigger("Dodge");
+            // 상태를 Idle 로 전환한다.
+            state = BocoblinState.Idle;
+            anim.SetTrigger("Idle");
+            currentTime = 0;
         }
-        // 70% 확률로 공격
-        else
+        // 대기 시간이 지나면
+        else if (currentTime >= waitTime)
         {
-            isWait = true;
-            // 시간을 흐르게 한다.
-            currentTime += Time.deltaTime;
+            currentTime = 0;
 
-            // 대기 시간 중에 링크가 공격거리 보다 멀어진다면
-            if (currentTime < waitTime && distance > attackPossibleDistance)
+            int rValue = Random.Range(0, 10);
+            // 30% 확률로 회피
+            if (rValue < 3 && isWait == false)
             {
-                // 상태를 Idle 로 전환한다.
-                state = BocoblinState.Idle;
-                anim.SetTrigger("Idle");
-                currentTime = 0;
+                state = BocoblinState.Dodge;
+                anim.SetTrigger("Dodge");
             }
-            // 대기 시간이 지나면
-            if (currentTime > waitTime)
+            // 70% 확률로 공격하러 감
+            else
             {
+                isWait = true;
+
+                anim.SetTrigger("Run");
+
                 // 거리를 구한다.
                 distance = Vector3.Distance(link.transform.position, transform.position);
 
@@ -284,16 +296,14 @@ public class Bocoblin : MonoBehaviour
                 Vector3 dir = new Vector3(link.transform.position.x, 0, link.transform.position.z);
                 transform.LookAt(dir);
 
-                Vector3 linkDir = link.transform.position - transform.position;
+                linkTransform.y = 0;
+                Vector3 linkDir = linkTransform - transform.position;
                 linkDir.y = 0;
                 linkDir.Normalize();
-
                 transform.position += linkDir * runSpeed * Time.deltaTime;
 
-                anim.SetTrigger("Run");
-
                 // 만약 공격거리보다 가까워지면
-                if (distance < attackDistance)
+                if (distance <= attackDistance)
                 {
                     state = BocoblinState.Attack;
                     // 애니메이션 실행
@@ -311,30 +321,30 @@ public class Bocoblin : MonoBehaviour
     {
         // 링크의 데미지 함수를 호출한다.
         // link.gameObject.GetComponent<HP>().Ondamaged();
-        isAttack = true;
-        if (isAttack)
-        {
-            state = BocoblinState.AttackWait;
-            anim.SetBool("AttackWait", true);
-        }
-        
+
+        state = BocoblinState.AttackWait;
+        anim.SetBool("AttackWait", false);
     }
 
     void UpdateAttackWait()
     {
         // 거리를 구한다.
-        distance = Vector3.Distance(link.transform.position, transform.position);
+        linkTransform.y = 0;
+        Vector3 linkDir = linkTransform - transform.position;
+
         currentTime += Time.deltaTime;
+
         if (currentTime < 2 && distance > attackDistance)
         {
             state = BocoblinState.Idle;
             anim.SetTrigger("Idle");
             currentTime = 0;
+            currentTime = 0;
         }
         else if (currentTime > 2)
         {
             // 공격 대기 했다가 다시 때린다.
-            anim.SetBool("AttackWait", false);
+            anim.SetBool("AttackWait", true);
             state = BocoblinState.Attack;
             currentTime = 0;
         }
@@ -344,12 +354,13 @@ public class Bocoblin : MonoBehaviour
     {
         // 체력을 감소시킨다.
         currentHP--;
-
-        // 다른 애니메이션 중지, 피격애니메이션
+        state = BocoblinState.Air;
+        anim.SetTrigger("Air");
     }
 
     private void UpdateDie()
     {
+        GetComponent<Rigidbody>().mass = 500;
         // 1초 후에 파괴한다.
         Destroy(gameObject, 2);
         // 파괴할 때 검은 먼지 파티클시스템을 실행한다.
