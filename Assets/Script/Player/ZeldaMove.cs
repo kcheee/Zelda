@@ -53,6 +53,8 @@ public class ZeldaMove : MonoBehaviour
     private float currentTime;
     private float idleTime;
 
+    public float time = 0f;
+    public float delayTime = 3f;
 
 
     int state;
@@ -85,13 +87,6 @@ public class ZeldaMove : MonoBehaviour
         dir.x = Input.GetAxis("Horizontal");
         dir.z = Input.GetAxis("Vertical");
         dir.Normalize();
-        //switch (state)
-        //{
-        //    case stateConst.IDLE;
-        //        UpdateIdle();
-        //        break;
-        //    c
-        //}
         if (state == IDLE)
         {
             UpdateIdle();
@@ -125,13 +120,38 @@ public class ZeldaMove : MonoBehaviour
 
     void UpdateIdle()
     {
-        //this.Playeranimator.SetBool("move", false);
-        this.Playeranimator.SetBool("move", true);
+
+        if (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.S)|| Input.GetKey(KeyCode.A)|| Input.GetKey(KeyCode.D))
+        {
+            zeldastate = ZeldaState.MOVE;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            ATTACKstack++;
+            state = ATTACK;
+        }
+        //강공격
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            CHARGEDstack++;
+            state = CHARGED;
+        }
+        //활
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            state = BOW;
+        }
+        //가드
+        if (Input.GetKey(KeyCode.Z))
+        {
+            state = GUARD;
+        }
+
     }
     #region move
     void UpdateMove()
     {
-
         if (dir != Vector3.zero)
         {
             if(Mathf.Sign(transform.forward.x)!= Mathf.Sign(dir.x)|| MathF.Sign(transform.forward.z) != MathF.Sign(dir.z))
@@ -171,27 +191,6 @@ public class ZeldaMove : MonoBehaviour
         }
         #endregion
         //공격
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            ATTACKstack++;
-            state = ATTACK;
-        }
-        //강공격
-        if (Input.GetKey(KeyCode.LeftAlt))
-        {
-            CHARGEDstack++;
-            state = CHARGED;
-        }
-        //활
-        if (Input.GetKey(KeyCode.X))
-        {
-            state = BOW;
-        }
-        //가드
-        if (Input.GetKey(KeyCode.Z))
-        {
-            state = GUARD;
-        }
 
         ////회피는 (대쉬 혹은 점프 )
         ////러쉬 (공격 후 발동되는 거)
@@ -230,21 +229,18 @@ public class ZeldaMove : MonoBehaviour
         //공격2 - 동일
         //공격3 - 동일, 스택 초기화로 다음 공격 애니메이션 시 공격 1
 
-        //if (ATTACKstack >= 1)/*&& 회피스택 == 1)*/
-        //{
-        //    state = RUSH;
-        //}
     }
     private void UpdateChargedattack()
     {
         //강공격 시간 지연 후 범위 강공격 데미지 제일 쎔. 
         //키입력이 없을 경우 IDLE
         //강공격 스택
-        if (CHARGEDstack == 1)
-        {
-            //애니메이션 1 넓은 강공격
-            print("1");
-        }
+        //Time.deltaTime
+        ////if (CHARGEDstack == 1)
+        //{
+        //    //애니메이션 1 넓은 강공격
+        //    print("1");
+        //}
         if (ATTACKstack == 1 && CHARGEDstack >= 1)
         {
             //애니메이션 2 강공격 위로 올려치기
@@ -274,6 +270,19 @@ public class ZeldaMove : MonoBehaviour
         }
         Time.timeScale = 0.2f;
     }
+    //void Update()
+    //{
+    //    timer += Time.deltaTime; // 경과 시간을 누적
+
+    //    if (timer >= delayTime)
+    //    {
+    //        // 지연 시간이 경과하면 원하는 동작 수행
+    //        Debug.Log("Delayed action performed!");
+
+    //        // 원하는 동작을 수행한 후에는 타이머를 초기화
+    //        timer = 0f;
+    //    }
+    //}
     private void UpdateBow()
     {
         //장전 -> 대기 -> 발사 애니메이션.
