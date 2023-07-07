@@ -21,7 +21,7 @@ public class ArrowBomb : MonoBehaviour
             {
                 // 해당 오브젝트의 Rigidbody를 가져와서 AddExplosionForce 함수를 사용해준다.
                 // AddExplosionForce(폭발력, 폭발위치, 반경, 위로 솟구쳐올리는 힘)
-                coll.GetComponent<Rigidbody>().AddExplosionForce(100f, transform.position, 20f, 20f);
+                coll.GetComponent<Rigidbody>().AddExplosionForce(250f, transform.position, 10f, 60f);
             }
             // 코드 정리.
             // 검출된 오브젝트들 중에서 8번 레이어에 속한 오브젝트 각각을,

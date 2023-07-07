@@ -124,7 +124,7 @@ public class ZeldaMove : MonoBehaviour
         dir.y = 0;
         dir.Normalize();
         transform.position += dir * speed * Time.deltaTime;
-        transform.Rotate(Vector3.up * h * rotationspeed * Time.deltaTime);
+        //transform.Rotate(transform.forward * h * rotationspeed * Time.deltaTime);
         this.Playeranimator.SetTrigger("move"); // ¿òÁ÷ÀÓ
 
         //yvelocity += gravity * Time.deltaTime;

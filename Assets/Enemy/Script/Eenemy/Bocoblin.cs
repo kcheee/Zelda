@@ -121,20 +121,6 @@ public class Bocoblin : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        #region Ray
-        // 아래방향으로 Ray 를 발사한다.
-        Ray ray = new Ray(gameObject.transform.position, gameObject.transform.up * -1);
-       
-        // Ray 가 충돌한 것이 바닥이면서 그 거리가 10cm 이상이 되면
-        if (Physics.Raycast(ray, out hitinfo))
-        { 
-            if (hitinfo.distance > 1)
-            {
-                // 상태를 Air 로 변환한다.
-                
-            }
-        }
-        #endregion
 
         if (collision.gameObject.CompareTag("Floor"))
         {
@@ -188,14 +174,15 @@ public class Bocoblin : MonoBehaviour
 
     private void UpdateAir()
     {
-        //// 스턴 애니메이션을 실행
-        //// 바닥에 떨어지면
-        //Debug.Log(hitinfo.distance);
-        //if(hitinfo.distance <= 0.4f)
-        //{
-        //    // Idle 로 상태를 전환한다.
-        //    state = BocoblinState.Idle;
-        //}
+        // 스턴 애니메이션을 실행
+
+        //  바닥에 떨어지면
+        // Debug.Log(hitinfo.distance);
+        // if(hitinfo.distance <= 0.4f)
+        // {
+        //     // Idle 로 상태를 전환한다.
+        //     state = BocoblinState.Idle;
+        // }
     }
 
     private void UpdateMove()
