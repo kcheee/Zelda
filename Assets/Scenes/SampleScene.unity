@@ -3326,6 +3326,7 @@ GameObject:
   - component: {fileID: 855531974}
   - component: {fileID: 855531975}
   - component: {fileID: 855531976}
+  - component: {fileID: 855531977}
   m_Layer: 0
   m_Name: Link
   m_TagString: Untagged
@@ -3462,6 +3463,7 @@ MonoBehaviour:
   Candash: 0
   isdashing: 0
   gravity: -9.81
+  zeldastate: 0
   Enemy: {fileID: 0}
   Playeranimator: {fileID: 0}
 --- !u!54 &855531975
@@ -3489,10 +3491,31 @@ SphereCollider:
   m_GameObject: {fileID: 855531965}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.76906556
   m_Center: {x: 0, y: 0.24059886, z: 0.05693364}
+--- !u!95 &855531977
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855531965}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 0304f303ae8fbe440bb52d9de19fede1, type: 3}
+  m_Controller: {fileID: 9100000, guid: 65551772c8475d14aab2eb7964bf1a1c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!224 &877966945 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2584213051592879133, guid: 7dec9353204557e4d9e964342143a05c,

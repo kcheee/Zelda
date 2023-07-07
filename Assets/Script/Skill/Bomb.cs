@@ -17,6 +17,7 @@ public class Bomb : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Destroy(gameObject);
+        Debug.Log(collision.gameObject);
 
         // 구 반경으로 위치를 가져옴.
         Collider[] cols = Physics.OverlapSphere(collision.transform.position, 30);
@@ -29,7 +30,7 @@ public class Bomb : MonoBehaviour
                 Debug.Log(i + " : " + cols[i]);
                 Rigidbody rigid = cols[i].GetComponent<Rigidbody>();
                 // (폭발의 힘, 영향이 미치는 구의 중심, 영향이 미치는 구의 반경, 위로 솟구치는 힘)
-                rigid.AddExplosionForce(300, this.transform.position, 10, 20);
+                rigid.AddExplosionForce(300, this.transform.position, 10, 50);
             }
         }
        

@@ -86,7 +86,7 @@ public class Bocoblin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(state);
+        //print(state);
         if (state == BocoblinState.Idle)
         {
             UpdateIdle();
