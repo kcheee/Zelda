@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ArrowMove : MonoBehaviour
 {
-    public float speed = 10;
+    public float speed = 15;
     Rigidbody rb;
     public GameObject effect;
 
@@ -28,6 +28,7 @@ public class ArrowMove : MonoBehaviour
         
         if (otherRB != null)
         {
+           
             GameObject arrowEffect = Instantiate(effect);
             //otherRB.AddForce(transform.forward * otherRB.mass * 5, ForceMode.Impulse);
             Destroy(arrowEffect, 0.5f);

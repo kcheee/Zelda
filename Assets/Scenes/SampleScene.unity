@@ -3241,6 +3241,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterBody: {fileID: 304373865}
   CameraArm: {fileID: 1383688653}
+  time: 0
+  delayTime: 3
 --- !u!4 &1056732759
 Transform:
   m_ObjectHideFlags: 0
@@ -3438,6 +3440,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 65551772c8475d14aab2eb7964bf1a1c, type: 2}
+    - target: {fileID: 8524567844863556068, guid: 1efc1a7128824b84182b8a7bdadef3f9,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1efc1a7128824b84182b8a7bdadef3f9, type: 3}
 --- !u!1 &1164629944
@@ -5623,7 +5630,6 @@ MonoBehaviour:
     type: 3}
   bomb: {fileID: 7905854191558516765, guid: 90148f87342ddec4f991cc2ae43692f5, type: 3}
   CameraRotation: {fileID: 1383688653}
-  rb: {fileID: 0}
   firePosition: {fileID: 2118445312}
 --- !u!114 &1670379318
 MonoBehaviour:
@@ -5651,6 +5657,42 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.32157537, y: 0.55095434, z: 0.19097082}
   m_Center: {x: 0.019427741, y: 0.28186536, z: -0.008342993}
+--- !u!95 &1670379320 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8524567844863556068, guid: 1efc1a7128824b84182b8a7bdadef3f9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1116603990}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1670379321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670379314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 943640cf8835a744cbcddae092957a0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  animator: {fileID: 1670379320}
+--- !u!114 &1670379322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670379314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf874d057e095da478105714a926584f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrowFactory: {fileID: 8335338953368106266, guid: aa0ba71ad1571ce4c85a1d4561adb379,
+    type: 3}
+  firePosition: {fileID: 2118445312}
+  fireTime: 0.2
 --- !u!1 &1747499340
 GameObject:
   m_ObjectHideFlags: 0
@@ -6989,7 +7031,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2118445311}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.098, y: 0.336, z: 0.208}
+  m_LocalPosition: {x: 0.088, y: 0.377, z: 0.419}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []

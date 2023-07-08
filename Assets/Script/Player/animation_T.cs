@@ -16,27 +16,44 @@ public class animation_T : MonoBehaviour
     {
         idle,
         move,
-        run,
         dash,
+        run,
         attack
     }
     public ani_state state;
-    Animator animator;
+    public Animator animator;
 
     private void Start()
     {
         state = ani_state.idle;
-        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
+
         //camera_PlayerMove 에서 설정.
-        if(state == ani_state.move) 
-        {
-            animator.SetBool("move", true);
-        }
-        else
-            animator.SetBool("move", false);
+        Moving();       
     }
+
+    private void Moving()
+    {
+        //if(state == ani_state.move) 
+        //{
+        //    animator.SetBool("move", true);
+        //}
+        //else animator.SetBool("move", false);
+
+        //if (state == ani_state.dash)
+        //{
+        //    animator.SetBool("dash", true);       
+        //}
+        //else animator.SetBool("dash", false);
+
+        //if (state == ani_state.run)
+        //{
+        //    animator.SetBool("run", true);
+        //}
+        //else animator.SetBool("run", false);
+    }
+
 }
