@@ -130,7 +130,7 @@ public class Bocoblin : MonoBehaviour
         // 공중상태에 있다가 추락해서 바닥에 닿았을 때
         if (collision.gameObject.CompareTag("Floor"))
         {
-            Debug.Log("Enter");
+            //Debug.Log("Enter");
             anim.SetBool("Air", false);
             isAir = false;
             // 만약 체력이 0 이상이라면
@@ -158,7 +158,7 @@ public class Bocoblin : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Floor"))
         {
-            Debug.Log("exit");
+            //Debug.Log("exit");
             // 상태를 Air 로 변환한다.
             state = BocoblinState.Air;
             // Air 애니메이션 실행

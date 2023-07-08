@@ -112,9 +112,8 @@ public class PlayerBow : MonoBehaviour
         GameObject arrow = GetArrowFromObjectPool();
         if (arrow != null)
         {           
-            
+
             float rx = UnityEngine.Random.Range(-2.0f, 2.0f); float ry = UnityEngine.Random.Range(-2.0f, 2.0f); float rz = UnityEngine.Random.Range(-2.0f, 2.0f);
-            Debug.Log(rx+" "+ ry+" "+ rz);
             arrow.transform.position = firePosition.position;
             // 카메라 방향 앞
             arrow.transform.forward = Camera.main.transform.forward;
