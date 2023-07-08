@@ -3461,6 +3461,7 @@ MonoBehaviour:
   Candash: 0
   isdashing: 0
   gravity: -9.81
+  zeldastate: 0
   Enemy: {fileID: 0}
   Playeranimator: {fileID: 0}
 --- !u!54 &855531975
