@@ -13,7 +13,11 @@ public class Lookat : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        transform.LookAt(new Vector3(player.transform.position.y, 0, 0));
+    {       
+        transform.LookAt(player.transform.position);
+        Vector3 dir = transform.eulerAngles;
+
+        transform.eulerAngles = new Vector3(0,dir.y,0);
+       
     }
 }

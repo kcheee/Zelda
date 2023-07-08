@@ -14,8 +14,6 @@ public class ArrowMove : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.velocity = transform.forward * speed;
     }
-
-    
     void Update()
     {
         transform.forward = rb.velocity.normalized;
@@ -23,16 +21,10 @@ public class ArrowMove : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        
-        var otherRB = collision.gameObject.GetComponent<Rigidbody>();
-        
-        if (otherRB != null)
-        {
-           
-            GameObject arrowEffect = Instantiate(effect);
-            //otherRB.AddForce(transform.forward * otherRB.mass * 5, ForceMode.Impulse);
-            Destroy(arrowEffect, 0.5f);
-        }
+        GameObject arrowEffect = Instantiate(effect, collision.transform.position, collision.transform.rotation);
+        //otherRB.AddForce(transform.forward * otherRB.mass * 5, ForceMode.Impulse);
+        Destroy(arrowEffect, 0.5f);
+
         this.gameObject.SetActive(false);
     }
 }
