@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class animation_T : MonoBehaviour
@@ -30,9 +31,13 @@ public class animation_T : MonoBehaviour
 
     private void Update()
     {
+        // animator가 move 상태일 때 상태는 move로 바뀜.
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) state = ani_state.idle;
 
-        //camera_PlayerMove 에서 설정.
-        Moving();       
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("move")) state = ani_state.move;
+
+        if (Input.GetKeyDown(KeyCode.Mouse0)) animator.SetTrigger("attack");
+        if (Input.GetKeyDown(KeyCode.Mouse1)) animator.SetTrigger("attack2");
     }
 
     private void Moving()

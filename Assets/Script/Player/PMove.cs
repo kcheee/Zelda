@@ -61,7 +61,6 @@ public class PMove : MonoBehaviour
             print("#@");
             yield return new WaitForSeconds(0.2f);
         }
-
         else if (CHARGEDstack == 2)
         {
             print("#2");
