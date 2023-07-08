@@ -9,9 +9,14 @@ public class animation_T : MonoBehaviour
     static public animation_T instance;
     private void Awake()
     {
-            instance = this;
+        instance = this;
     }
     #endregion
+
+    int anistack = 0;
+    float timestack = 0;
+    int chargestack = 0;
+    float maxstack = 0.5f;
 
     public enum ani_state
     {
@@ -27,17 +32,81 @@ public class animation_T : MonoBehaviour
     private void Start()
     {
         state = ani_state.idle;
+        anistack = 0;
     }
 
     private void Update()
     {
+
         // animator가 move 상태일 때 상태는 move로 바뀜.
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) state = ani_state.idle;
 
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("move")) state = ani_state.move;
 
-        if (Input.GetKeyDown(KeyCode.Mouse0)) animator.SetTrigger("attack");
-        if (Input.GetKeyDown(KeyCode.Mouse1)) animator.SetTrigger("attack2");
+        //if (Input.GetKeyDown(KeyCode.Mouse0)) animator.SetTrigger("attack");
+        //if (Input.GetKeyDown(KeyCode.Mouse1)) animator.SetTrigger("attack2");
+        //if (Input.GetKeyDown(KeyCode.Mouse2)) animator.SetTrigger("attack3");
+        if(anistack > 0)
+        {
+            timestack += Time.deltaTime;
+            Debug.Log(timestack);
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            anistack++;
+
+            if (anistack == 1)
+            {
+                animator.SetTrigger("attack");
+            }
+            else if (anistack == 2 )
+            {
+                if (timestack <= maxstack)
+                {
+                    animator.SetTrigger("attack2");
+                }
+                if(timestack >= maxstack)
+                {
+                    anistack = 0;
+                }
+
+            }
+            else if (anistack == 3 )
+            {
+                if (timestack <= maxstack)
+                {
+                    animator.SetTrigger("attack3");
+                    anistack = 0;
+
+                }
+            }
+
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            chargestack++;
+            if (chargestack == 1)
+            {
+                animator.SetTrigger("charged");
+            }
+            else if (chargestack == 2)
+            {
+                animator.SetTrigger("charged2");
+                chargestack = 0;
+            }
+        }
+
+        if (chargestack == 1 && anistack == 1)
+        {
+            animator.SetTrigger("combo1");
+        }
+        else if (chargestack == 2 && anistack == 1)
+        {
+            animator.SetTrigger("combo2");
+            chargestack = 0;
+            anistack = 0;
+        }
+
     }
 
     private void Moving()
