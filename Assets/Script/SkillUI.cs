@@ -34,13 +34,22 @@ public class SkillUI : MonoBehaviour
         }
         #region CrossHair Onoff
         // CrossHair Onoff
+        // ÆøÅº
         if (SkillManager.instance.skill_state == SkillManager.Skill_state.skill_bomb)
         {
             if (!CrossHair.activeSelf) CrossHair.SetActive(true);
         }
         else
             CrossHair.SetActive(false);
-        #endregion
 
+        // È° 
+        if (SkillManager.instance.skill_state == SkillManager.Skill_state.skill_bowzoom
+            || SkillManager.instance.skill_state == SkillManager.Skill_state.skill_bow)
+        {
+            if (!CrossHair.activeSelf) CrossHair.SetActive(true);
+        }
+        else
+            CrossHair.SetActive(false);
+        #endregion
     }
 }
