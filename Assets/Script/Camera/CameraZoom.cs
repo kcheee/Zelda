@@ -9,21 +9,10 @@ public class CameraZoom : MonoBehaviour
     Vector3 fristPo = new Vector3(0, 1, -8); // 초기 위치
     Vector3 ZoomPo = new Vector3(1.5f, 2, -2);
 
-
+    // 폭탄 카메라.
     IEnumerator ZoomCamera(Vector3 pos1, Vector3 pos2)
     {
         // zoomPosition까지 Update 대체
-        while (transform.localPosition != pos2)
-        {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, pos2, 0.2f);
-            //Debug.Log(transform.localPosition + " " + pos2);
-
-            yield return new WaitForSeconds(0.02f);
-        }
-    }
-
-    IEnumerator BowCamera(Vector3 pos1, Vector3 pos2)
-    {
         while (transform.localPosition != pos2)
         {
             transform.localPosition = Vector3.Lerp(transform.localPosition, pos2, 0.2f);
@@ -57,13 +46,12 @@ public class CameraZoom : MonoBehaviour
         if (SkillManager.instance.skill_state == SkillManager.Skill_state.skill_bowzoom && !flag)
         {
             StartCoroutine(ZoomCamera(transform.localPosition, ZoomPo));
-         
+            flag = true;
         }
         if (SkillManager.instance.skill_state == SkillManager.Skill_state.None && flag)
         {
             StartCoroutine(ZoomCamera(transform.localPosition, fristPo));
-
-            
+            flag = false;   
         }
         #endregion
 

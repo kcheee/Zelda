@@ -41,6 +41,7 @@ public class SkillManager : MonoBehaviour
     public Transform CameraRotation;    // 카메라 회전 값 가져옴. 폭탄 화살 던질때 사용.
     public Transform firePosition;
 
+    // 활 쏠때 카메라 줌인 불변수
     static public bool bowCamera = false;
 
     Rigidbody rb;
@@ -50,11 +51,23 @@ public class SkillManager : MonoBehaviour
         skill_state = Skill_state.None;
         rb = GetComponentInParent<Rigidbody>();
     }
-    // 폭탄 스킬.
 
+    // 카메라 방향
+    IEnumerator CameraRotate()
+    {
+        while (skill_state == Skill_state.skill_bomb)
+        {
+            transform.forward = Camera.main.transform.forward;
+            yield return new WaitForSeconds(0.02f);
+        }
+        yield return null;
+    }
+
+    // 폭탄 던지는 코루틴
     IEnumerator Bomb()
     {
         skill_state = Skill_state.skill_bomb;
+        StartCoroutine(CameraRotate());
         yield return new WaitForSeconds(0.5f);
         Instantiate(bomb, firePosition.position, CameraRotation.rotation);
         yield return new WaitForSeconds(0.5f);
@@ -63,6 +76,7 @@ public class SkillManager : MonoBehaviour
         Instantiate(bomb, firePosition.position, CameraRotation.rotation);
         yield return new WaitForSeconds(0.8f);
         Instantiate(bomb, firePosition.position, CameraRotation.rotation);
+        yield return new WaitForSeconds(0.5f);
         skill_state = Skill_state.None;
         // 스킬 쿨타임
         CoolTimer.instance.on_Btn();
@@ -75,15 +89,6 @@ public class SkillManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 활 쏘기.
-        if (Input.GetKey(KeyCode.L)) 
-        {
-            skill_state = Skill_state.skill_bowzoom;
-        }
-        if(Input.GetKeyUp(KeyCode.L))
-        {
-            skill_state = Skill_state.skill_bow;
-        }
         // 스킬 창 스킬
         if (CoolTimer.instance.cooltime == CoolTimer.CoolTime.None)
         {
@@ -102,7 +107,7 @@ public class SkillManager : MonoBehaviour
                     CoolTimer.instance.cooltime = CoolTimer.CoolTime.skill_cooltime;
 
                     transform.position = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
-                    rb.AddForce(transform.up * 10*rb.mass, ForceMode.Impulse);
+                    rb.AddForce(transform.up * 10 * rb.mass, ForceMode.Impulse);
                     Instantiate(iceskill, new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z)
                         , transform.rotation);
                 }
@@ -128,7 +133,7 @@ public class SkillManager : MonoBehaviour
             flag = false; Time.timeScale = 1;
         }
     }
-    
+
     private void OnCollisionEnter(Collision collision)
     {
         // 대쉬할때 보코블린 튕겨나가는 코드
@@ -136,10 +141,9 @@ public class SkillManager : MonoBehaviour
         {
             Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
             //Debug.Log(rb);
-            
+
             rb.AddForce(Vector3.up * 10 + -transform.forward * 15, ForceMode.Impulse);
             //rb.velocity=GMrb.velocity*2.1f;
-            
         }
     }
 }

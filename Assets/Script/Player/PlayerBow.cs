@@ -7,9 +7,11 @@ using static SkillManager;
 // 사용자가 마우스 왼쪽 버튼을 누르면
 // 화살공장에서 화살을 만들고
 // 그 화살을 총구위치에 배치하고싶다.
+
 public class PlayerBow : MonoBehaviour
 {
-
+    #region 오브젝트 풀
+    // 오브젝트 풀
     List<GameObject> arrowObjectPool;
     int arrowObjectPoolCount = 5;
     public static List<GameObject> deActiveArrowObjectPool;
@@ -19,6 +21,7 @@ public class PlayerBow : MonoBehaviour
     {
         get { return deActiveArrowObjectPool; }
     }
+    #endregion
 
     public GameObject arrowFactory;
     public Transform firePosition;
@@ -65,42 +68,63 @@ public class PlayerBow : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             bAutoFire = true;
-            StartCoroutine(shotBow());
-
+            
             currentTime = 0;
         }
+        if (Input.GetKey(KeyCode.X))
+        {
+            bAutoFire = true;
+            transform.forward = Camera.main.transform.forward;
+            SkillManager.instance.skill_state = SkillManager.Skill_state.skill_bowzoom;
+            currentTime = 0;
+        }
+
         else if (Input.GetKeyUp(KeyCode.X))
         {
             bAutoFire = false;
+            StartCoroutine(shotBow());
         }
     }
+
+    //활 쏘기.
     IEnumerator shotBow()
     {
-        SkillManager.instance.skill_state = SkillManager.Skill_state.skill_bomb;
-        yield return new WaitForSeconds(0.5f);
+        SkillManager.instance.skill_state = SkillManager.Skill_state.skill_bow;
+        yield return new WaitForSeconds(0.2f);
+        MakeArrow();
+        yield return new WaitForSeconds(0.2f);
+        MakeArrow();
+        yield return new WaitForSeconds(0.2f);
+        MakeArrow();
+        yield return new WaitForSeconds(0.4f);
         MakeArrow();
         yield return new WaitForSeconds(0.5f);
-        MakeArrow();
-        yield return new WaitForSeconds(0.5f);
-        MakeArrow();
-        yield return new WaitForSeconds(0.8f);
-        MakeArrow();
         SkillManager.instance.skill_state = SkillManager.Skill_state.None;
         // 스킬 쿨타임
         CoolTimer.instance.on_Btn();
         CoolTimer.instance.cooltime = CoolTimer.CoolTime.skill_cooltime;
 
     }
+
     void MakeArrow()
     {
         // 화살이 만들어질 때 화살목록에서 비활성화된 화살을 하나 가져와서 활성화 하고싶다.
         GameObject arrow = GetArrowFromObjectPool();
         if (arrow != null)
         {           
+
+            float rx = UnityEngine.Random.Range(-2.0f, 2.0f); float ry = UnityEngine.Random.Range(-2.0f, 2.0f); float rz = UnityEngine.Random.Range(-2.0f, 2.0f);
             arrow.transform.position = firePosition.position;
+            // 카메라 방향 앞
             arrow.transform.forward = Camera.main.transform.forward;
+            // 랜덤으로 화살 쏘기
+            Vector3 dir = arrow.transform.eulerAngles;
+            dir = new Vector3(dir.x+rx, dir.y+ry, dir.z+rz);
+            arrow.transform.eulerAngles = dir;
+
         }
     }
+
     GameObject GetArrowFromObjectPool()
     {
         // 만약 비활성목록에 크기가 0보다 크다면
@@ -113,7 +137,10 @@ public class PlayerBow : MonoBehaviour
             DeActiveArrowObjectPool.Remove(arrow);
             return arrow;
         }
-        // 그렇지 않다면 null을 반환하고싶다.
-        return null;
+
+        // 활성화된 화살이 없는 경우에는 새로운 화살을 생성한다.
+        GameObject newArrow = Instantiate(arrowFactory);
+        arrowObjectPool.Add(newArrow);
+        return newArrow;
     }
 }

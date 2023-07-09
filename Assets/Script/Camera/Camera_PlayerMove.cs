@@ -10,11 +10,11 @@ public class Camera_PlayerMove : MonoBehaviour
     private float StartY = -3f;
     float flag = 0;
 
-    float speed = 5;
-    float NORMALspeed = 5;
+    float speed = 8;
+    float NORMALspeed = 8;
     private float DASHstack = 0;
-    private float DASHspeed = 20f;
-    private float RUNspeed = 10f;
+    private float DASHspeed = 25f;
+    private float RUNspeed = 15f;
 
     private int ATTACKstack = 0;
     private int CHARGEDstack = 0;
@@ -82,9 +82,10 @@ public class Camera_PlayerMove : MonoBehaviour
             // dir = transform.forward+transform.right 같은 느낌 (방향을 정함)
             Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
 
+            // 대쉬 및 달리기.
             if (Input.GetKey(KeyCode.Z))
             {
-                Debug.Log(speed);
+               
                 DASHstack += Time.deltaTime;
                 if (DASHstack <= 0.3f)
                 {
@@ -102,7 +103,7 @@ public class Camera_PlayerMove : MonoBehaviour
                     animation_T.instance.state = animation_T.ani_state.run;
                     animation_T.instance.animator.SetBool("run", true);
                     speed = RUNspeed; //달리기 스피드
-                    print("n");
+
                 }
             }
             if (Input.GetKeyUp(KeyCode.Z))
@@ -112,21 +113,22 @@ public class Camera_PlayerMove : MonoBehaviour
                 speed = NORMALspeed; //정상 스피드
             }
 
-            // 캐릭터의 앞방향을 카메라 앞방향으로 설정.
+            //// 캐릭터의 앞방향을 카메라 앞방향으로 설정.
             characterBody.forward = moveDir;
-
-            // 이 오브젝트를 움직임   
 
             transform.position += moveDir * Time.deltaTime * speed;
             //transform.position = new Vector3(transform.position.x, characterBody.transform.localPosition.y, transform.position.z);
         }
-        else
-        {
-            animation_T.instance.state = animation_T.ani_state.idle;
-            animation_T.instance.animator.SetBool("move", false);
+        else 
+        {      
+            // 플레이어 애니메이터 상태가 move가 아닐때 idle로 바꾸고 move = false;
+            if (animation_T.instance.animator.GetCurrentAnimatorStateInfo(0).IsName("move"))
+            {
+               
+                animation_T.instance.state = animation_T.ani_state.idle;
+                animation_T.instance.animator.SetBool("move", false);
+            }
         }
-
-
         // 대쉬어택 테스트
         if (Input.GetKeyDown(KeyCode.V))
         {
@@ -143,7 +145,7 @@ public class Camera_PlayerMove : MonoBehaviour
 
         // 각도 제한.
         if (x < 180)
-            x = Mathf.Clamp(x, -1, 70);
+            x = Mathf.Clamp(x, -10, 70);
         else
             x = Mathf.Clamp(x, 335, 361);
 

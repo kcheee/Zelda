@@ -3296,7 +3296,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7270209923331642773}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aae41569e48122547bb19d0c6eab3a9b, type: 3}
   m_Name: 
@@ -3376,7 +3376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf874d057e095da478105714a926584f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowFactory: {fileID: 5095982366003801567, guid: 62d2d6a6109eefc4883e78fdd45046ca,
+  arrowFactory: {fileID: 8335338953368106266, guid: aa0ba71ad1571ce4c85a1d4561adb379,
     type: 3}
   firePosition: {fileID: 211999654}
   fireTime: 0.2
@@ -3488,7 +3488,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4125601043814597686}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43ac1de8d10f2da409023c66387fdecf, type: 3}
   m_Name: 
