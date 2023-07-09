@@ -18,14 +18,14 @@ public class traill_tracking : StateMachineBehaviour
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //Trail.instance.StartCoroutine(Trail.instance.Attack());
-        // traill_offset 초기화
-        //int flag = 0;
-        //while (true)
-        //{
-        //    if (Trail.instance.trail_offsets[flag].magnitude == 0)
-        //        break;
-        //    Trail.instance.trail_offsets[flag] = Vector3.zero;
-        //    flag++;
-        //}
+       // traill_offset 초기화
+        int flag = 0;
+        while (true)
+        {
+            if (Trail.instance.trail_offsets[flag].magnitude == 0)
+                break;
+            Trail.instance.trail_offsets[flag] = Vector3.zero;
+            flag++;
+        }
     }
 }

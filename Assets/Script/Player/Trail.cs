@@ -23,11 +23,12 @@ public class Trail : MonoBehaviour
     void StartHit()
     {
         // 공격 애니메이션에 붙어있는 traill_tracking 함수.
+        trail.emitting = true;
         traill_track = true;   
     }
     void EndHit()
     {
-        StartCoroutine(Attack());       
+        trail.emitting = false;
         traill_track = false;
         trail_index = 0;
     }
@@ -35,11 +36,17 @@ public class Trail : MonoBehaviour
 
     private void Awake()
     {
+        //초기 위치 저장
         initialPo = trail.transform.localPosition;
+        // traill renderer 꺼지게.
         trail.emitting = false;
         canAttack = true;
         instance = this;
     }
+
+
+    #region 코루틴 써서 traill
+    // 보간함수.. 지금 안씀.
     double InterPolate(double input_y)
     {
         double output = 0;
@@ -72,12 +79,24 @@ public class Trail : MonoBehaviour
         return output;
     }
 
-    Vector3[] T_offset = new Vector3[20];
+    //traill renderer 위치에 쓸 vector3변수
+    Vector3[] T_offset = new Vector3[100];
     public IEnumerator Attack()
     {
         canAttack = false; //공격 중복 방지용 flag
-        //playeranim.SetBool("isAttack", true);
-        //트레일 구현
+                           //playeranim.SetBool("isAttack", true);
+
+        // 위치 초기화.
+        int flag = 0;
+        while (true)
+        {
+            if (T_offset[flag].magnitude == 0)
+                break;
+            T_offset[flag] = Vector3.zero;
+            flag++;
+        }
+
+        //트레일 구현, 위치 대입.
         for (int i = 0; i < trail_offsets.Length; i++)
         {
             if (trail_offsets[i].magnitude == 0) break;
@@ -85,8 +104,8 @@ public class Trail : MonoBehaviour
             T_offset[i] = trail_offsets[i];
             Debug.Log(T_offset[i]);
         }
-        yield return new WaitForSeconds(0.02f);
-        trail.transform.position = T_offset[0];
+        yield return new WaitForSeconds(waitTime);
+        trail.transform.position = T_offset[0]; // 초기 위치로 이동
         yield return new WaitForSeconds(waitTime);
         trail.emitting = true;
         for (int i = 1; i < T_offset.Length-5; i++)
@@ -99,17 +118,9 @@ public class Trail : MonoBehaviour
      
         //playeranim.SetBool("isAttack", false);
         canAttack = true;
-        //trail.transform.localPosition = initialPo;
-        int flag = 0;
-        while (true)
-        {
-            if (Trail.instance.trail_offsets[flag].magnitude == 0)
-                break;
-            Trail.instance.trail_offsets[flag] = Vector3.zero;
-            flag++;
-        }
+
         yield return null;
     }
+    #endregion
 
-  
 }
