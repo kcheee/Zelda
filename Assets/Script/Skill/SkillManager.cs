@@ -27,20 +27,23 @@ public class SkillManager : MonoBehaviour
     {
         None,
         skill_state,   // 스킬 창 열 때,
+        skill_bowzoom,
         skill_bow,
         skill_bomb,
         skill_coolTime
     }
-
     public Skill_state skill_state;
+
+    // 스킬 
     public IceSkill iceskill;
     public Bomb bomb;
+
     public Transform CameraRotation;    // 카메라 회전 값 가져옴. 폭탄 화살 던질때 사용.
-    public 
+    public Transform firePosition;
+
+    static public bool bowCamera = false;
 
     Rigidbody rb;
-
-    public Transform firePosition;
 
     private void Start()
     {
@@ -71,7 +74,16 @@ public class SkillManager : MonoBehaviour
     bool flag = false;
     // Update is called once per frame
     void Update()
-    {     
+    {
+        // 활 쏘기.
+        if (Input.GetKey(KeyCode.L)) 
+        {
+            skill_state = Skill_state.skill_bowzoom;
+        }
+        if(Input.GetKeyUp(KeyCode.L))
+        {
+            skill_state = Skill_state.skill_bow;
+        }
         // 스킬 창 스킬
         if (CoolTimer.instance.cooltime == CoolTimer.CoolTime.None)
         {
@@ -90,7 +102,7 @@ public class SkillManager : MonoBehaviour
                     CoolTimer.instance.cooltime = CoolTimer.CoolTime.skill_cooltime;
 
                     transform.position = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
-                    rb.AddForce(transform.up * 12, ForceMode.Impulse);
+                    rb.AddForce(transform.up * 10*rb.mass, ForceMode.Impulse);
                     Instantiate(iceskill, new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z)
                         , transform.rotation);
                 }

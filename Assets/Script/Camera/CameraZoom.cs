@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 public class CameraZoom : MonoBehaviour
 {
     Vector3 fristPo = new Vector3(0, 1, -8); // ÃÊ±â À§Ä¡
-    Vector3 ZoomPo = new Vector3(2, 1, -3);
+    Vector3 ZoomPo = new Vector3(1.5f, 2, -2);
 
 
     IEnumerator ZoomCamera(Vector3 pos1, Vector3 pos2)
@@ -22,12 +22,23 @@ public class CameraZoom : MonoBehaviour
         }
     }
 
+    IEnumerator BowCamera(Vector3 pos1, Vector3 pos2)
+    {
+        while (transform.localPosition != pos2)
+        {
+            transform.localPosition = Vector3.Lerp(transform.localPosition, pos2, 0.2f);
+            //Debug.Log(transform.localPosition + " " + pos2);
+
+            yield return new WaitForSeconds(0.02f);
+        }
+    }
 
     // flag
     bool flag = false;
     // Update is called once per frame
     void Update()
     {
+        #region ÆøÅº
         if (SkillManager.instance.skill_state == SkillManager.Skill_state.skill_bomb && !flag)
         {
             StartCoroutine(ZoomCamera(transform.localPosition, ZoomPo));
@@ -40,6 +51,21 @@ public class CameraZoom : MonoBehaviour
 
             flag = false;
         }
+        #endregion
+
+        #region È°
+        if (SkillManager.instance.skill_state == SkillManager.Skill_state.skill_bowzoom && !flag)
+        {
+            StartCoroutine(ZoomCamera(transform.localPosition, ZoomPo));
+         
+        }
+        if (SkillManager.instance.skill_state == SkillManager.Skill_state.None && flag)
+        {
+            StartCoroutine(ZoomCamera(transform.localPosition, fristPo));
+
+            
+        }
+        #endregion
 
     }
 }

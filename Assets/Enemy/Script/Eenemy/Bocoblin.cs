@@ -83,6 +83,7 @@ public class Bocoblin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (state == BocoblinState.Idle)
         {
             UpdateIdle();
@@ -119,6 +120,7 @@ public class Bocoblin : MonoBehaviour
         {
             UpdateDie();
         }
+
     }
     #endregion
 
@@ -143,12 +145,13 @@ public class Bocoblin : MonoBehaviour
 
     // 착지
     private void OnCollisionEnter(Collision collision)
-    {
+    {        
         // 공중상태에 있다가 추락해서 바닥에 닿았을 때
         if (collision.gameObject.CompareTag("Floor"))
         {
             anim.SetBool("Air", false);
             isGrounded = false;
+
             // 만약 체력이 0 이상이라면
             if (currentHP > 0)
             {
@@ -173,12 +176,12 @@ public class Bocoblin : MonoBehaviour
         GetComponent<Rigidbody>().mass = 1;
         isGrounded = true;
     }
+
     #endregion
 
     #region 상태함수
     private void UpdateIdle()
     {
-
         isAir = false;
 
         // 보코볼린의 x,z rotation 을 0으로 해준다.
@@ -194,10 +197,11 @@ public class Bocoblin : MonoBehaviour
         if (distance <= detectDistance)
         {
             // 링크가 있는 방향을 찾는다.
-            Vector3 dir = new Vector3(link.transform.position.x, 0, link.transform.position.z);
-
+            Vector3 linkDir = link.transform.position - transform.position;
+            linkDir.y = 0;
             // 그 방향을 바라본다.
-            transform.LookAt(dir);
+            //Debug.Log(dir.ToString());
+            transform.LookAt(linkDir);
 
             currentTime += Time.deltaTime;
 
@@ -225,7 +229,6 @@ public class Bocoblin : MonoBehaviour
         y.y = 0;
         distance = Vector3.Distance(y, transform.position);
         
-
         // 만약 링크와의 거리가 감지 거리보다 멀어지면
         if (detectDistance+1 < distance)
         {
@@ -246,7 +249,7 @@ public class Bocoblin : MonoBehaviour
             Vector3 linkDir = link.transform.position - transform.position;
             linkDir.y = 0;
             linkDir.Normalize();
-
+            Debug.Log(linkDir);
             // 링크가 있는 곳으로 이동한다.
             transform.position += linkDir * speed * Time.deltaTime;
             // transform.position = Vector3.MoveTowards(transform.position, rink.transform.position, 0.1f);
@@ -280,9 +283,9 @@ public class Bocoblin : MonoBehaviour
         distance = Vector3.Distance(y, transform.position);
 
         // 대기 시간 중에 링크가 공격거리 보다 멀어진다면
+
         if (currentTime < waitTime && distance > attackPossibleDistance + 1)
         {
-            Debug.Log(distance + " " + attackPossibleDistance);
             // 상태를 Idle 로 전환한다.
             state = BocoblinState.Idle;
             // 애니메이션 실행
@@ -340,8 +343,6 @@ public class Bocoblin : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, dodgePos.position, 0.8f);
         state = BocoblinState.Idle;
         anim.SetBool("Dodge", false);
-
-
     }
 
     private void UpdateAttack()
