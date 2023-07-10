@@ -83,7 +83,6 @@ public class Bocoblin1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         if (state == BocoblinState.Idle)
         {
             UpdateIdle();
@@ -120,7 +119,6 @@ public class Bocoblin1 : MonoBehaviour
         {
             UpdateDie();
         }
-
     }
     #endregion
 
@@ -196,22 +194,25 @@ public class Bocoblin1 : MonoBehaviour
         // 만약 링크와의 거리가 감지 거리보다 가까우면
         if (distance <= detectDistance)
         {
+            #region 바라보기
             // 링크가 있는 방향을 찾는다.
             Vector3 linkDir = link.transform.position - transform.position;
             linkDir.y = 0;
+            linkDir.Normalize();
+
             // 그 방향을 바라본다.
-            //Debug.Log(dir.ToString());
-            //transform.LookAt(linkDir);
+            transform.forward = linkDir;
+            #endregion
 
             currentTime += Time.deltaTime;
 
             // 2초가 지나면
             if (currentTime > 2)
             {
-                currentTime = 0;
-                
                 // 상태를 Move 로 변환한다.
                 state = BocoblinState.Move;
+                anim.SetBool("Move", true);
+                currentTime = 0;
             }
         }
     }
@@ -220,43 +221,45 @@ public class Bocoblin1 : MonoBehaviour
     {
         GetComponent<Rigidbody>().mass = 10;
         isAir = true;
+        if (isGrounded)
+            return;
     }
 
     private void UpdateMove()
     {
+        #region 거리재기
         // 거리를 구한다.
         Vector3 y = link.transform.position;
         y.y = 0;
         distance = Vector3.Distance(y, transform.position);
-        
-        // 만약 링크와의 거리가 감지 거리보다 멀어지면
+        #endregion
+
+        // 만약 링크와의 거리가 감지 거리보다 멀어지면 Idle 상태로 돌아간다.
         if (detectDistance+1 < distance)
         {
             // 상태를 Idle 로 전환한다.
             state = BocoblinState.Idle;
             anim.SetBool("Move", false);
         }
-        // 만약 링크와의 거리가 감지거리보다 가깝고 공격가능거리보다 멀면
+
+        // 만약 링크와의 거리가 감지거리보다 가깝고 공격가능거리보다 멀면 이동한다.
         else if (detectDistance > distance && distance > attackPossibleDistance)
         {
-            // transform.LookAt(new Vector3(rink.transform.position.x,0,rink.transform.position.z));
-            // 링크의 위치벡터를 구해서(발밑을 바라볼 때 몸이 돌아가는 문제를 예방하기 위해 X 로테이션을 0으로 고정)
-            Vector3 dir = new Vector3(link.transform.position.x, 0, link.transform.position.z);
-            // 링크가 있는 곳을 바라본다.
-            //transform.LookAt(dir);
-
-            // 링크와의 방향을 구해서
+            #region 바라보기 및 이동
+            // 링크가 있는 방향을 찾는다.
             Vector3 linkDir = link.transform.position - transform.position;
             linkDir.y = 0;
             linkDir.Normalize();
-            Debug.Log(linkDir);
+
+            // 그 방향을 바라본다.
+            transform.forward = linkDir;
+
             // 링크가 있는 곳으로 이동한다.
             transform.position += linkDir * speed * Time.deltaTime;
-            // transform.position = Vector3.MoveTowards(transform.position, rink.transform.position, 0.1f);
-
-            anim.SetBool("Move", true);
+            #endregion
         }
-        // 링크가 공격 거리 안으로 들어오면
+
+        // 링크가 공격 거리 안으로 들어오면 기다린다.
         else if (distance <= attackPossibleDistance)
         {
             // 공격대기상태로 전환한다.
@@ -273,17 +276,22 @@ public class Bocoblin1 : MonoBehaviour
         // 시간을 흐르게 한다.
         currentTime += Time.deltaTime;
 
-        // 링크를 본다.
-        Vector3 dir = new Vector3(link.transform.position.x, 0, link.transform.position.z);
-        //transform.LookAt(dir);
-
+        #region 거리재기 및 바라보기
         // 거리를 구한다.
         Vector3 y = link.transform.position;
         y.y = 0;
         distance = Vector3.Distance(y, transform.position);
 
-        // 대기 시간 중에 링크가 공격거리 보다 멀어진다면
+        // 링크가 있는 방향을 찾는다.
+        Vector3 linkDir = link.transform.position - transform.position;
+        linkDir.y = 0;
+        linkDir.Normalize();
 
+        // 그 방향을 바라본다.
+        transform.forward = linkDir;
+        #endregion
+
+        // 대기 시간 중에 링크가 공격거리 보다 멀어진다면 Idle
         if (distance > attackPossibleDistance + 1)
         {
             // 상태를 Idle 로 전환한다.
@@ -291,7 +299,8 @@ public class Bocoblin1 : MonoBehaviour
             // 애니메이션 실행
             anim.SetBool("Wait", false);
         }
-        // 대기 시간이 지나면
+
+        // 대기 시간이 지나면 Dodge or Attack
         else if (currentTime >= waitTime)
         {
             int rValue = Random.Range(0, 10);
@@ -303,29 +312,34 @@ public class Bocoblin1 : MonoBehaviour
                 // 애니메이션 실행
                 anim.SetBool("Dodge", true);
             }
+
             // 70% 확률로 공격하러 감
             else
             {
                 isWait = true;
+
                 // 애니메이션
                 anim.SetBool("Wait", false);
                 anim.SetBool("Run", true);
+
                 // AttackDistance 까지 달려감
-                Vector3 linkDir = link.transform.position - transform.position;
-                linkDir.y = 0;
-                linkDir.Normalize();
                 transform.position += linkDir * runSpeed * Time.deltaTime;
 
                 // 만약 공격거리보다 가까워지면
                 if (distance <= attackDistance)
                 {
                     state = BocoblinState.Attack;
+
                     // 애니메이션 실행
                     anim.SetBool("Attack", true);
+
                     // 시간을 초기화한다.
                     currentTime = 0;
+
                     isWait = false;
                 }
+
+                // 달려가는 도중에 링크와의 거리가 공격가능거리보다 멀어지면 Idle
                 else if (distance > attackPossibleDistance + 1)
                 {
                     state = BocoblinState.Idle;
@@ -362,17 +376,22 @@ public class Bocoblin1 : MonoBehaviour
     {
         currentTime += Time.deltaTime;
 
+        #region 거리재기 및 바라보기
         // 거리를 구한다.
         Vector3 y = link.transform.position;
         y.y = 0;
         distance = Vector3.Distance(y, transform.position);
 
-        // 바라본다.
-        Vector3 dir = new Vector3(link.transform.position.x, 0, link.transform.position.z);
-        //
-        //transform.LookAt(dir);
+        // 링크가 있는 방향을 찾는다.
+        Vector3 linkDir = link.transform.position - transform.position;
+        linkDir.y = 0;
+        linkDir.Normalize();
 
-        // 다음 공격시간까지 대기하는 도중에 링크가 공격거리에서 멀어지면
+        // 그 방향을 바라본다.
+        transform.forward = linkDir;
+        #endregion
+
+        // 다음 공격시간까지 대기하는 도중에 링크가 공격거리에서 멀어지면 Idle
         if (currentTime < 2 && distance > attackDistance + 1)
         {
             // 상태를 Idle 로 바꾼다.
@@ -381,7 +400,8 @@ public class Bocoblin1 : MonoBehaviour
             currentTime = 0;
             anim.SetBool("AttackWait", false);
         }
-        // 2초가 지나면
+
+        // 2초가 지나면 다시 공격
         else if (currentTime >= 2)
         {
             //  다시 때린다.

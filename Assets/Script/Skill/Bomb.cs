@@ -29,6 +29,7 @@ public class Bomb : MonoBehaviour
                 Rigidbody rigid = cols[i].GetComponent<Rigidbody>();
                 // (폭발의 힘, 영향이 미치는 구의 중심, 영향이 미치는 구의 반경, 위로 솟구치는 힘)
                 rigid.AddExplosionForce(500, this.transform.position, 20, 30);
+                cols[i].GetComponent<Bocoblin1>().state = Bocoblin1.BocoblinState.Damaged;
             }
         }
        
