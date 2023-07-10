@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ItemDatabase : MonoBehaviour
 {
-
     // ΩÃ±€≈Ê
    public static ItemDatabase instance;
     private void Awake()

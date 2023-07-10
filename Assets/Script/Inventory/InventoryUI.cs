@@ -49,7 +49,7 @@ public class InventoryUI : MonoBehaviour
     }
     public void AddSlot()
     {
-        Debug.Log("실행");
+        //Debug.Log("실행");
         inven.SlotCnt++;
     }
 
