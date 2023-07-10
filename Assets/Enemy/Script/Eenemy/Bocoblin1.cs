@@ -18,10 +18,10 @@ using Random = UnityEngine.Random;
 // 보코블린의 체력이 0이 되면 죽고 싶다.
 #endregion
 
-public class Bocoblin : MonoBehaviour
+public class Bocoblin1 : MonoBehaviour
 {
     #region 변수
-    static public Bocoblin instance = null;
+    static public Bocoblin1 instance = null;
     private void Awake()
     {
         instance = this;
@@ -201,7 +201,7 @@ public class Bocoblin : MonoBehaviour
             linkDir.y = 0;
             // 그 방향을 바라본다.
             //Debug.Log(dir.ToString());
-            transform.LookAt(linkDir);
+            //transform.LookAt(linkDir);
 
             currentTime += Time.deltaTime;
 
@@ -243,7 +243,7 @@ public class Bocoblin : MonoBehaviour
             // 링크의 위치벡터를 구해서(발밑을 바라볼 때 몸이 돌아가는 문제를 예방하기 위해 X 로테이션을 0으로 고정)
             Vector3 dir = new Vector3(link.transform.position.x, 0, link.transform.position.z);
             // 링크가 있는 곳을 바라본다.
-            transform.LookAt(dir);
+            //transform.LookAt(dir);
 
             // 링크와의 방향을 구해서
             Vector3 linkDir = link.transform.position - transform.position;
@@ -275,7 +275,7 @@ public class Bocoblin : MonoBehaviour
 
         // 링크를 본다.
         Vector3 dir = new Vector3(link.transform.position.x, 0, link.transform.position.z);
-        transform.LookAt(dir);
+        //transform.LookAt(dir);
 
         // 거리를 구한다.
         Vector3 y = link.transform.position;
@@ -369,7 +369,8 @@ public class Bocoblin : MonoBehaviour
 
         // 바라본다.
         Vector3 dir = new Vector3(link.transform.position.x, 0, link.transform.position.z);
-        transform.LookAt(dir);
+        //
+        //transform.LookAt(dir);
 
         // 다음 공격시간까지 대기하는 도중에 링크가 공격거리에서 멀어지면
         if (currentTime < 2 && distance > attackDistance + 1)
