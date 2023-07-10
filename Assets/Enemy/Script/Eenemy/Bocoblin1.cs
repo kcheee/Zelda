@@ -218,7 +218,7 @@ public class Bocoblin1 : MonoBehaviour
 
     private void UpdateAir()
     {
-        GetComponent<Rigidbody>().mass = 50;
+        GetComponent<Rigidbody>().mass = 10;
         isAir = true;
     }
 
