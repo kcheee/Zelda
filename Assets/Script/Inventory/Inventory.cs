@@ -60,7 +60,7 @@ public class Inventory : MonoBehaviour
         }
         return false;
     }
-        
+    
     public void RemoveItem(int _index)
     {
         Debug.Log("½ÇÇà");

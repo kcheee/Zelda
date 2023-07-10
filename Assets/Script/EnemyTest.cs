@@ -11,11 +11,16 @@ public class EnemyTest : MonoBehaviour
         Debug.Log(other.transform.root.GetChild(0).forward);
         
         Rigidbody rb = transform.GetComponent<Rigidbody>();
-
-        this.gameObject.GetComponentInParent<Bocoblin1>().state = Bocoblin1.BocoblinState.Damaged;
-
-        rb.AddForce(other.transform.root.GetChild(0).up * 10, ForceMode.Impulse);
-        rb.AddForce(other.transform.root.GetChild(0).forward * 5, ForceMode.Impulse);
-
+        if (!Trail.strongatt)
+        {
+            rb.AddForce(other.transform.root.GetChild(0).up * rb.mass * 5, ForceMode.Impulse);
+            rb.AddForce(other.transform.root.GetChild(0).forward * rb.mass * 1.5f, ForceMode.Impulse);
+        }
+        else
+        {
+            rb.AddForce(other.transform.root.GetChild(0).up * rb.mass * 10, ForceMode.Impulse);
+            rb.AddForce(other.transform.root.GetChild(0).forward * rb.mass * 20, ForceMode.Impulse);
+        }
+        this.gameObject.GetComponent<Bocoblin1>().state = Bocoblin1.BocoblinState.Damaged;
     }
 }
