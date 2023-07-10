@@ -6,9 +6,15 @@ using UnityEngine;
 public class ItemHealingEft : ItemEffect
 {
     public int healingPotin = 5;
+    public GameObject healthbar;
+
+    void Start()
+    {
+        healthbar = GameObject.Find("HealthBar");
+    }
     public override bool ExecuteRole()
     {
-        Debug.Log("이게 실행이 되야함");
+        Debug.Log(healthbar);
         return true;
     }
 }

@@ -22,6 +22,7 @@ public class Trail : MonoBehaviour
     public BoxCollider sword;
 
     #region
+    static public bool strongatt = false;
     void StartHit()
     { 
         // 공격 애니메이션에 붙어있는 traill_tracking 함수.
@@ -30,6 +31,7 @@ public class Trail : MonoBehaviour
 
         //  칼 콜라이더 
         sword.enabled = true;
+
     }
     void EndHit()
     {
@@ -37,7 +39,9 @@ public class Trail : MonoBehaviour
         traill_track = false;
         trail_index = 0;
         sword.enabled = false;
-    }
+        strongatt=false;
+    } 
+    void StrongAttack(){ strongatt =true; }
     #endregion
 
     private void Awake()
