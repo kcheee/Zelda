@@ -11,8 +11,11 @@ public class EnemyTest : MonoBehaviour
         Debug.Log(other.transform.root.GetChild(0).forward);
         
         Rigidbody rb = transform.GetComponent<Rigidbody>();
-        rb.AddForce(other.transform.root.GetChild(0).forward * 50, ForceMode.Impulse);
 
         this.gameObject.GetComponent<Bocoblin1>().state = Bocoblin1.BocoblinState.Damaged;
+
+        rb.AddForce(other.transform.root.GetChild(0).up * 10, ForceMode.Impulse);
+        rb.AddForce(other.transform.root.GetChild(0).forward * 5, ForceMode.Impulse);
+
     }
 }

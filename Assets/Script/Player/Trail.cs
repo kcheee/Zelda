@@ -19,18 +19,24 @@ public class Trail : MonoBehaviour
     public int interpolateSize=2; //점과 점사이에 나누어질 구간 수
     Vector3 initialPo;
 
+    public BoxCollider sword;
+
     #region
     void StartHit()
-    {
+    { 
         // 공격 애니메이션에 붙어있는 traill_tracking 함수.
         trail.emitting = true;
-        traill_track = true;   
+        traill_track = true;
+
+        //  칼 콜라이더 
+        sword.enabled = true;
     }
     void EndHit()
     {
         trail.emitting = false;
         traill_track = false;
         trail_index = 0;
+        sword.enabled = false;
     }
     #endregion
 
@@ -42,6 +48,7 @@ public class Trail : MonoBehaviour
         trail.emitting = false;
         canAttack = true;
         instance = this;
+        sword.enabled = false;
     }
 
 
