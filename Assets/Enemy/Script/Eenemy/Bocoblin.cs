@@ -407,8 +407,11 @@ public class Bocoblin : MonoBehaviour
     {
         GetComponent<Rigidbody>().mass = 500;
         // 1초 후에 파괴한다.
-        Destroy(gameObject, 2);
+        Destroy(gameObject, 1);
         // 파괴할 때 검은 먼지 파티클시스템을 실행한다.
+
+        // 파괴할 때 포션 아이템을 드랍한다.
+        
     }
     #endregion
 }
