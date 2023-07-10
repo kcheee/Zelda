@@ -10275,6 +10275,7 @@ GameObject:
   - component: {fileID: 6714552349986447243}
   - component: {fileID: 6714552349986447284}
   - component: {fileID: 6714552349986447288}
+  - component: {fileID: 6714552349986447289}
   m_Layer: 0
   m_Name: Boco
   m_TagString: Untagged
@@ -10304,6 +10305,18 @@ MonoBehaviour:
   waitTime: 1.5
   currentHP: 0
   maxHP: 1
+--- !u!114 &6714552349986447289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6714552349986447287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d481fe56fad17459a3a00ff4c7c464, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6781569519807922888
 GameObject:
   m_ObjectHideFlags: 0
