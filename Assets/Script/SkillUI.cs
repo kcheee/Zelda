@@ -11,17 +11,24 @@ public class SkillUI : MonoBehaviour
         instance = this;
     }
     #endregion
-
+    public GameObject ItemPanel;
     public GameObject Skillpanel;
     public GameObject CrossHair;
 
     private void Start()
     {
         // 스킬 창 닫기
+        ItemPanel.SetActive(false);
         Skillpanel.SetActive(false);
     }
     private void Update()
     {
+        //  포션 아이템 창
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            if (!ItemPanel.activeSelf)
+                ItemPanel.SetActive(true);
+        }
         // 쿨타임이 지나있으면 스킬창 열림.
         if (CoolTimer.instance.cooltime == CoolTimer.CoolTime.None)
         {
