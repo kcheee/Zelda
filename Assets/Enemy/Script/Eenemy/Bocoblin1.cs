@@ -75,7 +75,7 @@ public class Bocoblin1 : MonoBehaviour
         currentHP = maxHP;
         link = GameObject.Find("Player");
         rb = GetComponent<Rigidbody>();
-        anim = gameObject.GetComponentInChildren<Animator>();
+        anim = gameObject.GetComponent<Animator>();
     }
     #endregion
 
@@ -125,34 +125,46 @@ public class Bocoblin1 : MonoBehaviour
     #region 공중 및 착지
     // 공중
     bool isGrounded = true;
-    private void OnCollisionExit(Collision collision)
-    {
-        if (isAir)
-        {
-            return;
-        }
-        else if (collision.gameObject.CompareTag("Floor") && true == isGrounded)
-        {
-            // 상태를 Air 로 변환한다.
-            state = BocoblinState.Air;
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (isAir)
+    //    {
+    //        return;
+    //    }
+    //    else if (collision.gameObject.CompareTag("Floor") && true == isGrounded)
+    //    {
+    //        // 상태를 Air 로 변환한다.
+    //        state = BocoblinState.Air;
 
-            // Air 애니메이션 실행
-            anim.SetBool("Air", true);
-        }
-    }
+    //        // Air 애니메이션 실행
+    //        anim.SetBool("Air", true);
+    //    }
+    //}
 
+    public GameObject bocoAvatar;
+    public GameObject bocoRagdoll;
     // 착지
     private void OnCollisionEnter(Collision collision)
-    {        
+    {
         // 공중상태에 있다가 추락해서 바닥에 닿았을 때
         if (collision.gameObject.CompareTag("Floor"))
         {
-            anim.SetBool("Air", false);
             isGrounded = false;
+
+            // 캡슐콜라이더를 켬
+            GetComponent<CapsuleCollider>().enabled = true;
+            // 보코블린의 Y 위치값을 0으로 초기화
+            Vector3 floorTransform = transform.position;
+            floorTransform.y = -0.6f;
+            transform.position = floorTransform;
+            // 보코블린 아바타 켬
+            bocoAvatar.SetActive(true);
+            // 보코블린 랙돌 끔
+            bocoRagdoll.SetActive(false);
 
             // 만약 체력이 0 이상이라면
             if (currentHP > 0)
-            {
+            {   
                 anim.SetTrigger("Down");
                 Invoke("StandUp", 2);
             }
@@ -171,7 +183,6 @@ public class Bocoblin1 : MonoBehaviour
         anim.SetTrigger("StandUp");
         // Idle 상태로 전환한다.
         state = BocoblinState.Idle;
-        GetComponent<Rigidbody>().mass = 1;
         isGrounded = true;
     }
 
@@ -181,6 +192,7 @@ public class Bocoblin1 : MonoBehaviour
     private void UpdateIdle()
     {
         isAir = false;
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
         // 보코볼린의 x,z rotation 을 0으로 해준다.
         Vector3 t = transform.eulerAngles;
@@ -219,10 +231,10 @@ public class Bocoblin1 : MonoBehaviour
 
     private void UpdateAir()
     {
-        GetComponent<Rigidbody>().mass = 10;
         isAir = true;
-        if (isGrounded)
-            return;
+
+        //if (isGrounded)
+        //    return;
     }
 
     private void UpdateMove()
@@ -292,7 +304,7 @@ public class Bocoblin1 : MonoBehaviour
         #endregion
 
         // 대기 시간 중에 링크가 공격거리 보다 멀어진다면 Idle
-        if (distance > attackPossibleDistance + 1)
+        if (distance > attackPossibleDistance)
         {
             // 상태를 Idle 로 전환한다.
             state = BocoblinState.Idle;
@@ -307,8 +319,8 @@ public class Bocoblin1 : MonoBehaviour
             // 20% 확률로 회피
             if (rValue < 3 && isWait == false)
             {
-                state = BocoblinState.Dodge;
                 currentTime = 0;
+                state = BocoblinState.Dodge;
                 // 애니메이션 실행
                 anim.SetBool("Dodge", true);
             }
@@ -340,7 +352,7 @@ public class Bocoblin1 : MonoBehaviour
                 }
 
                 // 달려가는 도중에 링크와의 거리가 공격가능거리보다 멀어지면 Idle
-                else if (distance > attackPossibleDistance + 1)
+                else if (distance > attackPossibleDistance)
                 {
                     state = BocoblinState.Idle;
                     anim.SetBool("Run", false);
@@ -352,10 +364,8 @@ public class Bocoblin1 : MonoBehaviour
     private void UpdateDodge()
     {
         isWait = false;
-        // 애니메이션 실행
-        // rb.AddForce(transform.forward * -3, ForceMode.Impulse);
-        transform.position = Vector3.Lerp(transform.position, dodgePos.position, 0.8f);
         state = BocoblinState.Idle;
+        // 애니메이션 실행
         anim.SetBool("Dodge", false);
     }
 
@@ -419,9 +429,21 @@ public class Bocoblin1 : MonoBehaviour
     {
         // 체력을 감소시킨다.
         currentHP--;
-        GetComponent<Rigidbody>().mass = 1;
+        // 상태변환
         state = BocoblinState.Air;
-        anim.SetTrigger("Air");
+        //애니메이션실행
+        anim.SetTrigger("Damaged");
+        // 회전할 수 있게!
+        rb.freezeRotation = false;
+
+        // 캡슐콜라이더를 끔
+        GetComponent<CapsuleCollider>().enabled = false;
+
+        // 보코블린 아바타 끔
+        bocoAvatar.SetActive(false);
+
+        // 보코블린 랙돌 켬
+        bocoRagdoll.SetActive(true);
     }
 
     private void UpdateDie()
