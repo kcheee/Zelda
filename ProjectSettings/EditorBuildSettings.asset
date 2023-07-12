@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/introScene.unity
     guid: 2d268978743aea544b1b73699c56cdd5
+  - enabled: 1
+    path: Assets/TerrainDemoScene_URP/Scenes/TerrainDemoScene.unity
+    guid: 9a18cc5d35536fd428eb6e90b3402589
   m_configObjects: {}
