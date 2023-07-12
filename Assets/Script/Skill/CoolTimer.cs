@@ -78,7 +78,7 @@ public class CoolTimer : MonoBehaviour
 
     void Set_FillAmount(float value)
     {
-        image_fill.fillAmount = value / time_coolTime;
+        image_fill.fillAmount = value / time_coolTime;  // 쿨타임 설정.
         text_CoolTime.text = string.Format("Rest : {0}", value.ToString("0.0"));
     }
 

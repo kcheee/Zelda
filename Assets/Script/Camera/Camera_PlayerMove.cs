@@ -10,11 +10,11 @@ public class Camera_PlayerMove : MonoBehaviour
     private float StartY = -3f;
     float flag = 0;
 
-    float speed = 8;
-    float NORMALspeed = 8;
+     public float speed = 10;
+    float NORMALspeed = 10;
     private float DASHstack = 0;
-    private float DASHspeed = 25f;
-    private float RUNspeed = 15f;
+    private float DASHspeed = 30;
+    private float RUNspeed = 20;
 
     private int ATTACKstack = 0;
     private int CHARGEDstack = 0;
@@ -34,8 +34,6 @@ public class Camera_PlayerMove : MonoBehaviour
 
     }
     //static public bool at = false;
-
-
 
     #region 대쉬 어택 기술을 위한 코루틴
     float ti;
@@ -116,7 +114,9 @@ public class Camera_PlayerMove : MonoBehaviour
             //// 캐릭터의 앞방향을 카메라 앞방향으로 설정.
             characterBody.forward = moveDir;
 
-            transform.position += moveDir * Time.deltaTime * speed;
+            transform.position += moveDir * Time.deltaTime*speed;
+            
+
             //transform.position = new Vector3(transform.position.x, characterBody.transform.localPosition.y, transform.position.z);
         }
         else 

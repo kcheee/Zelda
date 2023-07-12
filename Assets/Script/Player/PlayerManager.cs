@@ -19,4 +19,8 @@ public class PlayerManager : MonoBehaviour
     {
         Healthbar.transform.GetChild(HP-1).gameObject.SetActive(true);
     }
+    public void Update()
+    {
+        //transform.position= Vector3.zero; 
+    }
 }
