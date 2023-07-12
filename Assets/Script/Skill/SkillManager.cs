@@ -89,6 +89,18 @@ public class SkillManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 아이템 창 panel
+        if (Input.GetKey(KeyCode.J))
+        {
+            if (!flag)
+                Time.timeScale = 0.3f;
+        }
+        if (Input.GetKeyUp(KeyCode.J))
+        {
+            SkillUI.instance.ItemPanel.SetActive(false);
+            flag = false; Time.timeScale = 1;
+        }
+
         // 스킬 창 스킬
         if (CoolTimer.instance.cooltime == CoolTimer.CoolTime.None)
         {
