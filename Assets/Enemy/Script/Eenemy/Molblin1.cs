@@ -90,10 +90,9 @@ public class Molblin1 : MonoBehaviour
         #region 거리재기
         // 거리를 구한다.
         Vector3 y = link.transform.position;
-        y.y = 0;
+        y.y = transform.position.y;
         distance = Vector3.Distance(y, transform.position);
         #endregion
-
 
         if (state == MolblinnState.Idle)
         {
@@ -141,6 +140,7 @@ public class Molblin1 : MonoBehaviour
         //anim.SetBool("Dodge", false);
     }
 
+    bool isPohyo = false;
     private void UpdateIdle()
     {
         // 만약 링크와의 거리가 감지 거리보다 가까우면
@@ -148,8 +148,11 @@ public class Molblin1 : MonoBehaviour
         {
             currentTime += Time.deltaTime;
 
-            // 2초가 지나면
-            if (currentTime > 2)
+            // 포효를 하고 
+            isPohyo = true;
+
+            // 3초가 지나면
+            if (currentTime > 3 && isPohyo)
             {
                 // 상태를 Move 로 변환한다.
                 state = MolblinnState.Move;
@@ -245,19 +248,20 @@ public class Molblin1 : MonoBehaviour
     {
         int attackValue = Random.Range(0, 5);
         // 공격패턴 1 실행
-        if (attackValue == 0 || attackValue == 1 || attackValue == 2)
+        if (distance <= 3)  // 링크가 모리블린의 공격을 피하려고 엄청 가까이 다가오면 발길질을 함
         {
             print("1");
-
         }
+
         // 공격패턴 2 실행
-        else if(attackValue == 3)
+        if(attackValue < 3)
         {
             print("2");
             isDisturb = false;
         }
+
         // 공격패턴 3 실행
-        else if(attackValue == 4)
+        else
         {
             print("3");
             isDisturb = false;
