@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -41,15 +42,19 @@ public class GameManager : MonoBehaviour
     #region KillCount UI and KillcntUpdate() 함수
     // killUI
     public TextMeshProUGUI KillCnt;
-    int kiilcnt;
+    int kiilcnt=0;
     // 죽으면 이 함수를 불러옴.
     public void KillcntUpdate()
     {
         kiilcnt++;
-        KillCnt.text = KillCnt.ToString();
+        KillCnt.text = kiilcnt.ToString();
     }
     #endregion
-
+    private void Update()
+    {
+        // 킬수 테스트
+        if(Input.GetKeyDown(KeyCode.M)) { KillcntUpdate(); }
+    }
 
 }
 
