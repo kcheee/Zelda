@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
 public class Camera_PlayerMove : MonoBehaviour
@@ -112,8 +113,15 @@ public class Camera_PlayerMove : MonoBehaviour
             }
 
             //// 캐릭터의 앞방향을 카메라 앞방향으로 설정.
-            characterBody.forward = moveDir;
 
+
+            // 회전 값
+            /*
+            Quaternion look = Quaternion.LookRotation(lookdir);
+            transform.rotation = Quaternion.Lerp(transform.rotation, look, Time.deltaTime * 5);
+            */
+
+            characterBody.forward = moveDir;
             transform.position += moveDir * Time.deltaTime*speed;
             
 
