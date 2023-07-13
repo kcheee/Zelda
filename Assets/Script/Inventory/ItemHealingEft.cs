@@ -6,9 +6,14 @@ using UnityEngine;
 public class ItemHealingEft : ItemEffect
 {
     public int healingPotin = 5;
+
+    void Start()
+    {
+
+    }
     public override bool ExecuteRole()
     {
-        Debug.Log("이게 실행이 되야함");
+        PlayerManager.instance.potionHeal();
         return true;
     }
 }

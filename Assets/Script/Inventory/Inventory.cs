@@ -60,10 +60,10 @@ public class Inventory : MonoBehaviour
         }
         return false;
     }
-        
+    
     public void RemoveItem(int _index)
     {
-        Debug.Log("실행");
+        //Debug.Log("실행");
         items.RemoveAt(_index);  // 인덱스에 있는 아이템 제거
         onChangeItem.Invoke();
     }

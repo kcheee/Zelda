@@ -2005,7 +2005,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 2e00b37063ab97e4eaf74920ba5b1eb1, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -2024,7 +2024,8 @@ GameObject:
   - component: {fileID: 5189019475099409617}
   - component: {fileID: 5189019475099409647}
   - component: {fileID: 5189019475099409616}
-  - component: {fileID: 1332405764793728423}
+  - component: {fileID: 1399504856}
+  - component: {fileID: 1399504857}
   m_Layer: 0
   m_Name: Boco
   m_TagString: Untagged
@@ -2041,7 +2042,7 @@ Transform:
   m_GameObject: {fileID: 5189019475099409619}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10.45, y: 0, z: 4.8700004}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 80, y: 80, z: 80}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5731288770105903875}
@@ -2059,7 +2060,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.08
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -2076,9 +2077,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.019374888, y: 0.02437036, z: 0.014423346}
-  m_Center: {x: 0.00034387768, y: 0.012936682, z: 0.0030452178}
---- !u!114 &1332405764793728423
+  m_Size: {x: 0.009937644, y: 0.019997953, z: 0.0097540505}
+  m_Center: {x: 0.001286962, y: 0.010419667, z: 0.0007105714}
+--- !u!114 &1399504856
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2087,17 +2088,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 5189019475099409619}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fb502648e5029149ab318bc2173e71a, type: 3}
+  m_Script: {fileID: 11500000, guid: 90d481fe56fad17459a3a00ff4c7c464, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1399504857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5189019475099409619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cf35046f17e6eb4c87296e268a29cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
   speed: 3
-  runSpeed: 8
+  runSpeed: 4
   detectDistance: 15
-  attackPossibleDistance: 7
-  attackDistance: 2
+  attackPossibleDistance: 8
+  attackDistance: 3
   dodgePos: {fileID: 2105014243}
-  waitTime: 1
+  waitTime: 1.5
   currentHP: 0
   maxHP: 1
 --- !u!1 &5370673831626872962

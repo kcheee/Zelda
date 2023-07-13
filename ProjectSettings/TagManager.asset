@@ -13,6 +13,8 @@ TagManager:
   - 
   - Water
   - UI
+  - Player
+  - Boco
   - 
   - 
   - 
@@ -21,9 +23,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - PlayerUI
   - 
   - 
   - 

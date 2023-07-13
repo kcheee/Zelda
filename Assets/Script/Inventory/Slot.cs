@@ -14,12 +14,12 @@ public class Slot : MonoBehaviour, IPointerUpHandler
     {
         itemIcon.sprite = item.itemImage;
         itemIcon.gameObject.SetActive(true);
-        Debug.Log("È¹µæ");
+        //Debug.Log("È¹µæ");
     }
     // ½½·Ô Á¦°Å
     public void RemoveSlot()
     {
-        Debug.Log("Removeslot");
+        //Debug.Log("Removeslot");
         item = null;
         itemIcon.gameObject.SetActive(false);
     }

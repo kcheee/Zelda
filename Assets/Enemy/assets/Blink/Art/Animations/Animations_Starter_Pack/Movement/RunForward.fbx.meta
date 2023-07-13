@@ -29,7 +29,26 @@ ModelImporter:
       that might lower retargeting quality:\nNote: Activate translation DOF on avatar
       to improve retargeting quality.\n\t'Scapula_L' has translation animation that
       will be discarded.\n"
-    animationRetargetingWarnings: 
+    animationRetargetingWarnings: "\nRetargeting quality report for clip 'tpose':\n\tLeftLowerLeg
+      average position error 6.2 mm and maximum position error 6.2 mm at time 0:
+      0 (0.0%) Frame 0\n\tRightLowerLeg average position error 6.2 mm and maximum
+      position error 6.2 mm at time 0: 0 (0.0%) Frame 0\n\tLeftLowerArm average position
+      error 1.6 mm and maximum position error 1.6 mm at time 0: 0 (0.0%) Frame 0\n\tRightLowerArm
+      average position error 1.6 mm and maximum position error 1.6 mm at time 0:
+      0 (0.0%) Frame 0\n\nRetargeting quality report for clip 'human_male_run_01':\n\tLeftLowerLeg
+      average position error 0.7 mm and maximum position error 8.7 mm at time 0:15
+      (65.0%) Frame 15\n\tRightLowerLeg average position error 0.7 mm and maximum
+      position error 8.7 mm at time 0: 5 (15.0%) Frame 5\n\tLeftUpperArm average
+      position error 10.0 mm and maximum position error 20.2 mm at time 0: 9 (35.0%)
+      Frame 9\n\tLeftLowerArm average position error 10.0 mm and maximum position
+      error 20.3 mm at time 0: 9 (35.0%) Frame 9\n\tLeftHand average position error
+      10.0 mm and maximum position error 20.2 mm at time 0: 9 (35.0%) Frame 9\n\tRightUpperArm
+      average position error 15.4 mm and maximum position error 15.6 mm at time 0:19
+      (85.0%) Frame 19\n\tRightLowerArm average position error 15.4 mm and maximum
+      position error 15.6 mm at time 0:19 (85.0%) Frame 19\n\tRightHand average position
+      error 15.4 mm and maximum position error 15.6 mm at time 0:19 (85.0%) Frame
+      19\n\tHead average position error 3.0 mm and maximum position error 3.0 mm
+      at time 0: 4 (10.0%) Frame 4\n"
     animationDoRetargetingWarnings: 1
     importAnimatedCustomProperties: 0
     importConstraints: 0
@@ -98,7 +117,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 2
     isReadable: 0
   meshes:
     lODScreenPercentages: []
