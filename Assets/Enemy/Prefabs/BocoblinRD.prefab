@@ -3003,14 +3003,13 @@ GameObject:
   - component: {fileID: 6610246748950431370}
   - component: {fileID: 6610246748950431369}
   - component: {fileID: 6610246748950431375}
-  - component: {fileID: 6610246748950431368}
   m_Layer: 0
   m_Name: BocoblinRD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6610246748950431413
 Transform:
   m_ObjectHideFlags: 0
@@ -3039,7 +3038,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.08
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
@@ -3122,20 +3121,6 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6610246748950431415}
-  m_Mesh: {fileID: -6160177445945214424, guid: 776ed2070abceaf4fa9f02225e34e4b8, type: 3}
---- !u!64 &6610246748950431368
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6610246748950431415}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
   m_Mesh: {fileID: -6160177445945214424, guid: 776ed2070abceaf4fa9f02225e34e4b8, type: 3}
 --- !u!1 &6817202255177448785
 GameObject:
