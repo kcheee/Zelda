@@ -1,0 +1,310 @@
+<?xml version="1.0"?>
+<COLLADA xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.4.1" xmlns="http://www.collada.org/2005/11/COLLADASchema">
+  <asset>
+    <created>2020-07-14T17:11:46.5495291-04:00</created>
+    <modified>2020-07-14T17:11:46.5495291-04:00</modified>
+  </asset>
+  <library_images>
+    <image id="wep_LinkClowshot_chain_3DS">
+      <init_from>./wep_LinkClowshot_chain_3DS.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="Crawshot_chain_3DS_mt_mat_id" name="Crawshot_chain_3DS_mt_mat">
+      <instance_effect url="#Crawshot_chain_3DS_mt_eff_id" />
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="Crawshot_chain_3DS_mt_eff_id" name="Crawshot_chain_3DS_mt_eff">
+      <profile_COMMON>
+        <newparam sid="Crawshot_chain_3DS_mt_surf">
+          <surface type="2D">
+            <init_from>wep_LinkClowshot_chain_3DS</init_from>
+            <format>PNG</format>
+          </surface>
+        </newparam>
+        <newparam sid="Crawshot_chain_3DS_mt_samp">
+          <sampler2D>
+            <source>Crawshot_chain_3DS_mt_surf</source>
+            <wrap_s>MIRROR</wrap_s>
+            <wrap_t>MIRROR</wrap_t>
+            <minfilter>LINEAR</minfilter>
+            <magfilter>LINEAR</magfilter>
+            <mipfilter>LINEAR</mipfilter>
+          </sampler2D>
+        </newparam>
+        <technique sid="Crawshot_chain_3DS_mt_tech">
+          <phong>
+            <diffuse>
+              <texture texture="Crawshot_chain_3DS_mt_samp" texcoord="uv" />
+            </diffuse>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="_0_0_geo_id" name="_0_0">
+      <mesh>
+        <source id="_0_0_Position_id" name="_0_0_Position">
+          <float_array id="_0_0_Position_array_id" count="132">1.715384E-10 0.3868974 17.01719 1.362592E-10 0.3868876 19.70937 1.715384E-10 -0.3412536 17.01719 1.362592E-10 -0.3412634 19.70937 1.715384E-10 0.3868974 17.01719 1.715384E-10 -0.3412536 17.01719 1.362592E-10 0.3868876 19.70937 1.362592E-10 -0.3412634 19.70937 2.068174E-10 0.3869071 14.32503 2.068174E-10 -0.3412439 14.32502 2.068174E-10 0.3869071 14.32503 2.068174E-10 -0.3412439 14.32502 2.420966E-10 0.3869169 11.63285 2.420966E-10 -0.3412341 11.63285 2.420966E-10 0.3869169 11.63285 2.420966E-10 -0.3412341 11.63285 2.773758E-10 0.3869266 8.940672 2.773758E-10 -0.3412244 8.940669 2.773758E-10 0.3869266 8.940672 2.773758E-10 -0.3412244 8.940669 3.12655E-10 0.3869364 6.248494 3.12655E-10 -0.3412146 6.248491 3.12655E-10 0.3869364 6.248494 3.12655E-10 -0.3412146 6.248491 3.479341E-10 0.3869461 3.55632 3.479341E-10 -0.3412049 3.556318 3.479341E-10 0.3869461 3.55632 3.479341E-10 -0.3412049 3.556318 3.042196E-11 0.3868584 27.78588 -7.937134E-12 0.3868478 30.71309 3.042196E-11 -0.3412926 27.78588 -7.937134E-12 -0.3413032 30.71309 3.042196E-11 0.3868584 27.78588 3.042196E-11 -0.3412926 27.78588 -7.937134E-12 0.3868478 30.71309 -7.937134E-12 -0.3413032 30.71309 6.57009E-11 0.3868681 25.09372 6.57009E-11 -0.3412828 25.09372 6.57009E-11 0.3868681 25.09372 6.57009E-11 -0.3412828 25.09372 1.009801E-10 0.3868779 22.40154 1.009801E-10 -0.3412731 22.40154 1.009801E-10 0.3868779 22.40154 1.009801E-10 -0.3412731 22.40154</float_array>
+          <technique_common>
+            <accessor source="#_0_0_Position_array_id" count="44" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="_0_0_Normal_id" name="_0_0_Normal">
+          <float_array id="_0_0_Normal_array_id" count="132">1 0 1.310433E-11 1 0 1.310433E-11 1 0 1.310433E-11 1 0 1.310433E-11 -1 0 -1.310433E-11 -1 0 -1.310433E-11 -1 0 -1.310433E-11 -1 0 -1.310433E-11 1 0 1.310433E-11 1 0 1.310433E-11 -1 0 -1.310433E-11 -1 0 -1.310433E-11 1 0 1.310433E-11 1 0 1.310433E-11 -1 0 -1.310433E-11 -1 0 -1.310433E-11 1 0 1.310433E-11 1 0 1.310433E-11 -1 0 -1.310433E-11 -1 0 -1.310433E-11 1 0 1.310433E-11 1 0 1.310433E-11 -1 0 -1.310433E-11 -1 0 -1.310433E-11 1 0 1.310433E-11 1 0 1.310433E-11 -1 0 -1.310433E-11 -1 0 -1.310433E-11 1 0 1.310433E-11 1 0 1.310433E-11 1 0 1.310433E-11 1 0 1.310433E-11 -1 0 -1.310433E-11 -1 0 -1.310433E-11 -1 0 -1.310433E-11 -1 0 -1.310433E-11 1 0 1.310433E-11 1 0 1.310433E-11 -1 0 -1.310433E-11 -1 0 -1.310433E-11 1 0 1.310433E-11 1 0 1.310433E-11 -1 0 -1.310433E-11 -1 0 -1.310433E-11</float_array>
+          <technique_common>
+            <accessor source="#_0_0_Normal_array_id" count="44" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="_0_0_TexCoord0_id" name="_0_0_TexCoord0">
+          <float_array id="_0_0_TexCoord0_array_id" count="88">-1.92256 0.996467 2.95102 0.996467 -1.92256 0 2.95102 0 -1.92256 0.996467 -1.92256 0 2.95102 0.996467 2.95102 0 2.95102 0.996467 2.95102 0 2.95102 0.996467 2.95102 0 -1.92256 0.996467 -1.92256 0 -1.92256 0.996467 -1.92256 0 2.95102 0.996467 2.95102 0 2.95102 0.996467 2.95102 0 -1.92256 0.996467 -1.92256 0 -1.92256 0.996467 -1.92256 0 2.95102 0.996467 2.95102 0 2.95102 0.996467 2.95102 0 -1.92256 0.996467 2.95102 0.996467 -1.92256 0 2.95102 0 -1.92256 0.996467 -1.92256 0 2.95102 0.996467 2.95102 0 2.95102 0.996467 2.95102 0 2.95102 0.996467 2.95102 0 -1.92256 0.996467 -1.92256 0 -1.92256 0.996467 -1.92256 0</float_array>
+          <technique_common>
+            <accessor source="#_0_0_TexCoord0_array_id" count="44" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="_0_0_vtx_id">
+          <input semantic="POSITION" source="#_0_0_Position_id" />
+          <input semantic="NORMAL" source="#_0_0_Normal_id" />
+        </vertices>
+        <triangles material="Mdl_0_Mtl_Crawshot_chain_3DS_mt" count="40">
+          <input semantic="VERTEX" source="#_0_0_vtx_id" offset="0" />
+          <input semantic="TEXCOORD" source="#_0_0_TexCoord0_id" offset="0" set="0" />
+          <p>0 1 2 0 2 9 0 9 8 1 3 2 1 40 3 9 13 8 40 41 3 40 36 41 13 12 8 13 17 12 36 37 41 36 28 37 17 16 12 17 21 16 28 30 37 28 29 30 21 20 16 21 25 20 29 31 30 25 24 20 4 5 6 4 11 5 4 10 11 6 5 7 6 7 42 10 15 11 10 14 15 7 43 42 14 19 15 14 18 19 43 38 42 43 39 38 18 23 19 18 22 23 39 32 38 39 33 32 22 27 23 22 26 27 33 34 32 33 35 34</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+    <controller id="_0_0_ctrl_id" name="_0_0_ctrl">
+      <skin source="#_0_0_geo_id">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="_0_0_ctrl_names_id" name="_0_0_ctrl_names">
+          <Name_array id="_0_0_ctrl_names_array_id" count="23">TopN HaveN HookShotTipN HookShot21N HookShot20N HookShot19N HookShot18N HookShot17N HookShot16N HookShot15N HookShot14N HookShot13N HookShot12N HookShot11N HookShot10N HookShot09N HookShot08N HookShot07N HookShot06N HookShot05N HookShot04N HookShot03N HookShot02N</Name_array>
+          <technique_common>
+            <accessor source="#_0_0_ctrl_names_array_id" count="23" stride="1">
+              <param name="JOINT" type="Name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="_0_0_ctrl_poses_id" name="_0_0_ctrl_poses">
+          <float_array id="_0_0_ctrl_poses_array_id" count="368">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -3.55746E-06 -1 0 0 1 -3.55746E-06 0 0 0 0 1 0 0 0 0 1 1.265552E-11 3.55746E-06 -1 30.1074 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 28.857 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 27.60074 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 26.35035 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 25.09409 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 23.84369 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 22.58743 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 21.33703 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 20.08077 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 18.83037 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 17.57411 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 16.32372 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 15.06746 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 13.81706 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 12.5608 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 11.3104 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 10.05414 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 8.803742 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810249E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 7.547482 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810248E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 6.297083 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810248E-10 0 0 0 1 1.265552E-11 3.55746E-06 -1 5.040823 2.273287E-13 1 3.55746E-06 -0.0001071059 1 2.273287E-13 1.265552E-11 -3.810248E-10 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#_0_0_ctrl_poses_array_id" count="23" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="_0_0_ctrl_weights_id" name="_0_0_ctrl_weights">
+          <float_array id="_0_0_ctrl_weights_array_id" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#_0_0_ctrl_weights_array_id" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#_0_0_ctrl_names_id" />
+          <input semantic="INV_BIND_MATRIX" source="#_0_0_ctrl_poses_id" />
+        </joints>
+        <vertex_weights count="44">
+          <input semantic="JOINT" source="#_0_0_ctrl_names_id" offset="0" />
+          <input semantic="WEIGHT" source="#_0_0_ctrl_weights_id" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</vcount>
+          <v>12 0 10 0 12 0 10 0 12 0 12 0 10 0 10 0 14 0 14 0 14 0 14 0 16 0 16 0 16 0 16 0 18 0 18 0 18 0 18 0 21 0 21 0 21 0 21 0 22 0 22 0 22 0 22 0 3 0 2 0 3 0 2 0 3 0 3 0 2 0 2 0 6 0 6 0 6 0 6 0 8 0 8 0 8 0 8 0</v>
+        </vertex_weights>
+      </skin>
+    </controller>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="clawshotreverse_00_id" name="clawshotreverse_00">
+      <node id="TopN_bone_id" name="TopN" sid="TopN" type="JOINT">
+        <translate sid="translate">0 0 0</translate>
+        <rotate sid="rotateZ">0 0 1 0</rotate>
+        <rotate sid="rotateY">0 1 0 0</rotate>
+        <rotate sid="rotateX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <node id="HaveN_bone_id" name="HaveN" sid="HaveN" type="JOINT">
+          <translate sid="translate">0 0 0</translate>
+          <rotate sid="rotateZ">0 0 1 -90.00021</rotate>
+          <rotate sid="rotateY">0 1 0 0</rotate>
+          <rotate sid="rotateX">1 0 0 0</rotate>
+          <scale sid="scale">1 1 1</scale>
+          <node id="HookShotTipN_bone_id" name="HookShotTipN" sid="HookShotTipN" type="JOINT">
+            <translate sid="translate">0 0 30.1074</translate>
+            <rotate sid="rotateZ">0 0 1 0</rotate>
+            <rotate sid="rotateY">0 1 0 90.00021</rotate>
+            <rotate sid="rotateX">1 0 0 -90.00021</rotate>
+            <scale sid="scale">1 1 1</scale>
+            <node id="HookShot21N_bone_id" name="HookShot21N" sid="HookShot21N" type="JOINT">
+              <translate sid="translate">1.2504 0 0</translate>
+              <rotate sid="rotateZ">0 0 1 0</rotate>
+              <rotate sid="rotateY">0 1 0 0</rotate>
+              <rotate sid="rotateX">1 0 0 0</rotate>
+              <scale sid="scale">1 1 1</scale>
+              <node id="HookShot20N_bone_id" name="HookShot20N" sid="HookShot20N" type="JOINT">
+                <translate sid="translate">1.25626 0 0</translate>
+                <rotate sid="rotateZ">0 0 1 0</rotate>
+                <rotate sid="rotateY">0 1 0 0</rotate>
+                <rotate sid="rotateX">1 0 0 0</rotate>
+                <scale sid="scale">1 1 1</scale>
+                <node id="HookShot19N_bone_id" name="HookShot19N" sid="HookShot19N" type="JOINT">
+                  <translate sid="translate">1.25039 0 0</translate>
+                  <rotate sid="rotateZ">0 0 1 0</rotate>
+                  <rotate sid="rotateY">0 1 0 0</rotate>
+                  <rotate sid="rotateX">1 0 0 0</rotate>
+                  <scale sid="scale">1 1 1</scale>
+                  <node id="HookShot18N_bone_id" name="HookShot18N" sid="HookShot18N" type="JOINT">
+                    <translate sid="translate">1.25626 0 0</translate>
+                    <rotate sid="rotateZ">0 0 1 0</rotate>
+                    <rotate sid="rotateY">0 1 0 0</rotate>
+                    <rotate sid="rotateX">1 0 0 0</rotate>
+                    <scale sid="scale">1 1 1</scale>
+                    <node id="HookShot17N_bone_id" name="HookShot17N" sid="HookShot17N" type="JOINT">
+                      <translate sid="translate">1.2504 0 0</translate>
+                      <rotate sid="rotateZ">0 0 1 0</rotate>
+                      <rotate sid="rotateY">0 1 0 0</rotate>
+                      <rotate sid="rotateX">1 0 0 0</rotate>
+                      <scale sid="scale">1 1 1</scale>
+                      <node id="HookShot16N_bone_id" name="HookShot16N" sid="HookShot16N" type="JOINT">
+                        <translate sid="translate">1.25626 0 0</translate>
+                        <rotate sid="rotateZ">0 0 1 0</rotate>
+                        <rotate sid="rotateY">0 1 0 0</rotate>
+                        <rotate sid="rotateX">1 0 0 0</rotate>
+                        <scale sid="scale">1 1 1</scale>
+                        <node id="HookShot15N_bone_id" name="HookShot15N" sid="HookShot15N" type="JOINT">
+                          <translate sid="translate">1.2504 0 0</translate>
+                          <rotate sid="rotateZ">0 0 1 0</rotate>
+                          <rotate sid="rotateY">0 1 0 0</rotate>
+                          <rotate sid="rotateX">1 0 0 0</rotate>
+                          <scale sid="scale">1 1 1</scale>
+                          <node id="HookShot14N_bone_id" name="HookShot14N" sid="HookShot14N" type="JOINT">
+                            <translate sid="translate">1.25626 0 0</translate>
+                            <rotate sid="rotateZ">0 0 1 0</rotate>
+                            <rotate sid="rotateY">0 1 0 0</rotate>
+                            <rotate sid="rotateX">1 0 0 0</rotate>
+                            <scale sid="scale">1 1 1</scale>
+                            <node id="HookShot13N_bone_id" name="HookShot13N" sid="HookShot13N" type="JOINT">
+                              <translate sid="translate">1.2504 0 0</translate>
+                              <rotate sid="rotateZ">0 0 1 0</rotate>
+                              <rotate sid="rotateY">0 1 0 0</rotate>
+                              <rotate sid="rotateX">1 0 0 0</rotate>
+                              <scale sid="scale">1 1 1</scale>
+                              <node id="HookShot12N_bone_id" name="HookShot12N" sid="HookShot12N" type="JOINT">
+                                <translate sid="translate">1.25626 0 0</translate>
+                                <rotate sid="rotateZ">0 0 1 0</rotate>
+                                <rotate sid="rotateY">0 1 0 0</rotate>
+                                <rotate sid="rotateX">1 0 0 0</rotate>
+                                <scale sid="scale">1 1 1</scale>
+                                <node id="HookShot11N_bone_id" name="HookShot11N" sid="HookShot11N" type="JOINT">
+                                  <translate sid="translate">1.25039 0 0</translate>
+                                  <rotate sid="rotateZ">0 0 1 0</rotate>
+                                  <rotate sid="rotateY">0 1 0 0</rotate>
+                                  <rotate sid="rotateX">1 0 0 0</rotate>
+                                  <scale sid="scale">1 1 1</scale>
+                                  <node id="HookShot10N_bone_id" name="HookShot10N" sid="HookShot10N" type="JOINT">
+                                    <translate sid="translate">1.25626 0 0</translate>
+                                    <rotate sid="rotateZ">0 0 1 0</rotate>
+                                    <rotate sid="rotateY">0 1 0 0</rotate>
+                                    <rotate sid="rotateX">1 0 0 0</rotate>
+                                    <scale sid="scale">1 1 1</scale>
+                                    <node id="HookShot09N_bone_id" name="HookShot09N" sid="HookShot09N" type="JOINT">
+                                      <translate sid="translate">1.2504 0 0</translate>
+                                      <rotate sid="rotateZ">0 0 1 0</rotate>
+                                      <rotate sid="rotateY">0 1 0 0</rotate>
+                                      <rotate sid="rotateX">1 0 0 0</rotate>
+                                      <scale sid="scale">1 1 1</scale>
+                                      <node id="HookShot08N_bone_id" name="HookShot08N" sid="HookShot08N" type="JOINT">
+                                        <translate sid="translate">1.25626 0 0</translate>
+                                        <rotate sid="rotateZ">0 0 1 0</rotate>
+                                        <rotate sid="rotateY">0 1 0 0</rotate>
+                                        <rotate sid="rotateX">1 0 0 0</rotate>
+                                        <scale sid="scale">1 1 1</scale>
+                                        <node id="HookShot07N_bone_id" name="HookShot07N" sid="HookShot07N" type="JOINT">
+                                          <translate sid="translate">1.2504 0 0</translate>
+                                          <rotate sid="rotateZ">0 0 1 0</rotate>
+                                          <rotate sid="rotateY">0 1 0 0</rotate>
+                                          <rotate sid="rotateX">1 0 0 0</rotate>
+                                          <scale sid="scale">1 1 1</scale>
+                                          <node id="HookShot06N_bone_id" name="HookShot06N" sid="HookShot06N" type="JOINT">
+                                            <translate sid="translate">1.25626 0 0</translate>
+                                            <rotate sid="rotateZ">0 0 1 0</rotate>
+                                            <rotate sid="rotateY">0 1 0 0</rotate>
+                                            <rotate sid="rotateX">1 0 0 0</rotate>
+                                            <scale sid="scale">1 1 1</scale>
+                                            <node id="HookShot05N_bone_id" name="HookShot05N" sid="HookShot05N" type="JOINT">
+                                              <translate sid="translate">1.2504 0 0</translate>
+                                              <rotate sid="rotateZ">0 0 1 0</rotate>
+                                              <rotate sid="rotateY">0 1 0 0</rotate>
+                                              <rotate sid="rotateX">1 0 0 0</rotate>
+                                              <scale sid="scale">1 1 1</scale>
+                                              <node id="HookShot04N_bone_id" name="HookShot04N" sid="HookShot04N" type="JOINT">
+                                                <translate sid="translate">1.25626 0 0</translate>
+                                                <rotate sid="rotateZ">0 0 1 0</rotate>
+                                                <rotate sid="rotateY">0 1 0 0</rotate>
+                                                <rotate sid="rotateX">1 0 0 0</rotate>
+                                                <scale sid="scale">1 1 1</scale>
+                                                <node id="HookShot03N_bone_id" name="HookShot03N" sid="HookShot03N" type="JOINT">
+                                                  <translate sid="translate">1.2504 0 0</translate>
+                                                  <rotate sid="rotateZ">0 0 1 0</rotate>
+                                                  <rotate sid="rotateY">0 1 0 0</rotate>
+                                                  <rotate sid="rotateX">1 0 0 0</rotate>
+                                                  <scale sid="scale">1 1 1</scale>
+                                                  <node id="HookShot02N_bone_id" name="HookShot02N" sid="HookShot02N" type="JOINT">
+                                                    <translate sid="translate">1.25626 0 0</translate>
+                                                    <rotate sid="rotateZ">0 0 1 0</rotate>
+                                                    <rotate sid="rotateY">0 1 0 0</rotate>
+                                                    <rotate sid="rotateX">1 0 0 0</rotate>
+                                                    <scale sid="scale">1 1 1</scale>
+                                                  </node>
+                                                </node>
+                                              </node>
+                                            </node>
+                                          </node>
+                                        </node>
+                                      </node>
+                                    </node>
+                                  </node>
+                                </node>
+                              </node>
+                            </node>
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node id="_0_0_node_id" name="_0_0_node" type="NODE">
+        <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_controller url="#_0_0_ctrl_id">
+          <skeleton>#TopN_bone_id</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="Mdl_0_Mtl_Crawshot_chain_3DS_mt" target="#Crawshot_chain_3DS_mt_mat_id" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#clawshotreverse_00_id" />
+  </scene>
+</COLLADA>
