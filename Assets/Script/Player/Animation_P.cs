@@ -71,6 +71,11 @@ public class Animation_P : MonoBehaviour
             //if()
         }
     }
+
+    void Move()
+    {
+
+    }
     
     void Attack()
     {
