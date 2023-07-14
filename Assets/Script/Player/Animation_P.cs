@@ -43,10 +43,20 @@ public class Animation_P : MonoBehaviour
             anim.SetBool("charged2", false);
             chargedStack = 0;
         }
+        //if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime> 0.7f && anim.GetCurrentAnimatorStateInfo(0).IsName("combo"))
+        //{
+        //    anim.SetBool("combo", false);
+        //}
+        //if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(0).IsName("combo2"))
+        //{
+        //    anim.SetBool("combo2", false);
+        //    comboStack = 0;
+        //}
         if (Time.time - lastClickedTime > maxComboDelay)
         {
             attackStack = 0;
             chargedStack = 0;
+            //comboStack = 0;
         }
         if(Time.time> nextFireTime)
         {
@@ -58,6 +68,7 @@ public class Animation_P : MonoBehaviour
             {
                 Charged();
             }
+            //if()
         }
     }
     
@@ -95,5 +106,10 @@ public class Animation_P : MonoBehaviour
             anim.SetBool("charged", false);
             anim.SetBool("charged2", true);
         }
+    }
+
+    void Combo()
+    {
+
     }
 }
