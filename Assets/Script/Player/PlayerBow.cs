@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using static SkillManager;
 
 // 사용자가 마우스 왼쪽 버튼을 누르면
@@ -24,7 +26,10 @@ public class PlayerBow : MonoBehaviour
     #endregion
 
     public GameObject arrowFactory;
-    public Transform firePosition;
+    public Transform firePosition;  // 초기 포지션
+    public CameraShake camerashake; // 카메라 쉐이크
+
+    public GameObject BowReady;
 
     bool bAutoFire;
     float currentTime;
@@ -46,6 +51,9 @@ public class PlayerBow : MonoBehaviour
             arrowObjectPool.Add(arrow);
             deActiveArrowObjectPool.Add(arrow);
         }
+
+        // 방패 칼 들고 있기
+        BowReady.SetActive(false);
     }
 
     // Update is called once per frame
@@ -67,14 +75,23 @@ public class PlayerBow : MonoBehaviour
         // 만약 사용자가 x 을 누르면 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            bAutoFire = true;
-            
+            bAutoFire = true;        
             currentTime = 0;
+
+            // 칼 방패 뒤로
+            // 방패 칼 들고 있기
+            BowReady.SetActive(true);
         }
         if (Input.GetKey(KeyCode.X))
         {
             bAutoFire = true;
+            // 카메라 앞방향
             transform.forward = Camera.main.transform.forward;
+            // 플레이어 위아래 회전 제한.
+            Vector3 dir = transform.eulerAngles;
+            dir = new Vector3(0, dir.y, 0);
+            transform.eulerAngles = dir;
+            // 스킬 상태 전환.
             SkillManager.instance.skill_state = SkillManager.Skill_state.skill_bowzoom;
             currentTime = 0;
         }
@@ -82,8 +99,9 @@ public class PlayerBow : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.X))
         {
             bAutoFire = false;
-            StartCoroutine(shotBow());
+            StartCoroutine(shotBow());            
         }
+
     }
 
     //활 쏘기.
@@ -104,6 +122,8 @@ public class PlayerBow : MonoBehaviour
         CoolTimer.instance.on_Btn();
         CoolTimer.instance.cooltime = CoolTimer.CoolTime.skill_cooltime;
 
+        // 칼 방패 없애기
+        BowReady.SetActive(false);
     }
 
     void MakeArrow()
@@ -112,8 +132,9 @@ public class PlayerBow : MonoBehaviour
         GameObject arrow = GetArrowFromObjectPool();
         if (arrow != null)
         {           
-
-            float rx = UnityEngine.Random.Range(-2.0f, 2.0f); float ry = UnityEngine.Random.Range(-2.0f, 2.0f); float rz = UnityEngine.Random.Range(-2.0f, 2.0f);
+            float rx = UnityEngine.Random.Range(-4.0f, 4.0f); float ry = UnityEngine.Random.Range(-4.0f, 4.0f); float rz = UnityEngine.Random.Range(-4.0f, 4.0f);
+            // 카메라 쉐이크.
+            camerashake.ShakeCamera();
             arrow.transform.position = firePosition.position;
             // 카메라 방향 앞
             arrow.transform.forward = Camera.main.transform.forward;
@@ -143,4 +164,5 @@ public class PlayerBow : MonoBehaviour
         arrowObjectPool.Add(newArrow);
         return newArrow;
     }
+
 }

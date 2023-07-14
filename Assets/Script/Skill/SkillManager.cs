@@ -89,7 +89,7 @@ public class SkillManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 아이템 창 panel
+        #region item Panel
         if (Input.GetKey(KeyCode.J))
         {
             if (!flag)
@@ -100,7 +100,9 @@ public class SkillManager : MonoBehaviour
             SkillUI.instance.ItemPanel.SetActive(false);
             flag = false; Time.timeScale = 1;
         }
+        #endregion
 
+        #region 스킬 창 스킬
         // 스킬 창 스킬
         if (CoolTimer.instance.cooltime == CoolTimer.CoolTime.None)
         {
@@ -144,7 +146,10 @@ public class SkillManager : MonoBehaviour
             SkillUI.instance.Skillpanel.SetActive(false);
             flag = false; Time.timeScale = 1;
         }
+        #endregion
+
     }
+
 
     private void OnCollisionEnter(Collision collision)
     {

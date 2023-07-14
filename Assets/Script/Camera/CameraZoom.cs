@@ -6,20 +6,20 @@ using UnityEngine.Rendering;
 
 public class CameraZoom : MonoBehaviour
 {
-    Vector3 fristPo = new Vector3(0, 1, -8); // ÃÊ±â À§Ä¡
-    Vector3 ZoomPo = new Vector3(1.5f, 2, -2);
+    Vector3 fristPo = new Vector3(0, 1, -10); // ÃÊ±â À§Ä¡
+    Vector3 ZoomPo = new Vector3(1.5f, 0f, -2); // ÁÜ À§Ä¡
 
-    // ÆøÅº Ä«¸Þ¶ó.
+    // È°, ÆøÅº Ä«¸Þ¶ó.
     IEnumerator ZoomCamera(Vector3 pos1, Vector3 pos2)
     {
         // zoomPosition±îÁö Update ´ëÃ¼
-        while (transform.localPosition != pos2)
+        while (Vector3.Distance(transform.localPosition, pos2)>0.1f)
         {
             transform.localPosition = Vector3.Lerp(transform.localPosition, pos2, 0.2f);
             //Debug.Log(transform.localPosition + " " + pos2);
 
-            yield return new WaitForSeconds(0.02f);
-        }     
+            yield return new WaitForSeconds(0.02f);      
+        }
     }
 
     // flag

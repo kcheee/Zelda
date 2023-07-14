@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72da7d0abcb163468e93bd3495358f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 300
   effect: {fileID: 6667962585016860510, guid: 1acb36c048514e04a96efed59e76e9d3, type: 3}
 --- !u!96 &-7367902032749322624
 TrailRenderer:
@@ -142,8 +142,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0.0034821033, b: 1, a: 1}
+      key1: {r: 0.052029163, g: 0.13841087, b: 0.745283, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -185,6 +185,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2733996199143871439}
     m_Modifications:
+    - target: {fileID: 3576414018039465955, guid: b69a0b23e727d1749985fc0643841c6d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4815599501133383645, guid: b69a0b23e727d1749985fc0643841c6d,
         type: 3}
       propertyPath: m_Name

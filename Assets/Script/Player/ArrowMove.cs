@@ -13,10 +13,13 @@ public class ArrowMove : MonoBehaviour
         this.gameObject.SetActive(true);
         rb = GetComponent<Rigidbody>();
         rb.velocity = transform.forward * speed;
+        Destroy(this.gameObject, 1);
+
     }
     void Update()
     {
         transform.forward = rb.velocity.normalized;
+        
     }
 
     private void OnCollisionEnter(Collision collision)
