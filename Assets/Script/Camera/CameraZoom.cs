@@ -19,7 +19,7 @@ public class CameraZoom : MonoBehaviour
             //Debug.Log(transform.localPosition + " " + pos2);
 
             yield return new WaitForSeconds(0.02f);
-        }
+        }     
     }
 
     // flag
