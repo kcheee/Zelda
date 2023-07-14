@@ -82,9 +82,10 @@ public class Molblin1 : MonoBehaviour
         linkDir = link.transform.position - transform.position;
         linkDir.y = 0;
         linkDir.Normalize();
+        Quaternion linkRotate = Quaternion.LookRotation(linkDir);
 
         // 그 방향을 바라본다.
-        transform.forward = linkDir;
+        transform.rotation = Quaternion.Lerp(transform.rotation, linkRotate, Time.deltaTime * 5);
         #endregion
 
         #region 거리재기
@@ -92,6 +93,35 @@ public class Molblin1 : MonoBehaviour
         Vector3 y = link.transform.position;
         y.y = transform.position.y;
         distance = Vector3.Distance(y, transform.position);
+        #endregion
+
+        #region 회피하기
+        // 만약 링크가 3M 보다 더 가까이 다가온다면
+        if(distance < 3)
+        {
+            if (isWait || isAttack)
+            {
+                // 아무일도 일어나지 않는다.
+                return;
+            }
+
+            // 30% 확률로 회피한다.
+            int dodgeValue = Random.Range(0, 10);
+            if (dodgeValue < 3 && isWait == false)
+            {
+                isWait = true;
+                state = MolblinnState.Dodge;
+                currentTime = 0;
+                // 애니메이션 실행
+                anim.SetTrigger("Dodge");
+            }
+            // 나머지 확률로
+            else
+            {
+                state = MolblinnState.Attack;
+                isWait = false;
+            }
+        }
         #endregion
 
         if (state == MolblinnState.Idle)
@@ -132,12 +162,8 @@ public class Molblin1 : MonoBehaviour
     #region Updates
     private void UpdateDodge()
     {
-        // rb.AddForce(transform.forward * -3, ForceMode.Impulse);
-        transform.position = Vector3.Lerp(transform.position, dodgePos.position, 0.8f);
         state = MolblinnState.Idle;
-
-        // 애니메이션 실행
-        //anim.SetBool("Dodge", false);
+        isWait = false;
     }
 
     bool isPohyo = false;
@@ -147,16 +173,19 @@ public class Molblin1 : MonoBehaviour
         if (distance <= detectDistance)
         {
             currentTime += Time.deltaTime;
-
-            // 포효를 하고 
-            isPohyo = true;
+            if (isPohyo == false)
+            {
+                // 포효를 하고 
+                isPohyo = true;
+                anim.SetTrigger("Buff");
+            }
 
             // 3초가 지나면
             if (currentTime > 3 && isPohyo)
             {
                 // 상태를 Move 로 변환한다.
                 state = MolblinnState.Move;
-                // anim.SetBool("Move", true);
+                anim.SetBool("Move", true);
                 currentTime = 0;
             }
         }
@@ -169,7 +198,7 @@ public class Molblin1 : MonoBehaviour
         {
             // 상태를 Idle 로 전환한다.
             state = MolblinnState.Idle;
-            //anim.SetBool("Move", false);
+            anim.SetBool("Move", false);
         }
 
         // 만약 링크와의 거리가 감지거리보다 가깝고 공격가능거리보다 멀면 이동한다.
@@ -186,8 +215,7 @@ public class Molblin1 : MonoBehaviour
             state = MolblinnState.Wait;
 
             // 애니메이션
-            //anim.SetBool("Wait", true);
-            //anim.SetBool("Move", false);
+            anim.SetBool("Move", false);
         }
     }
 
@@ -201,106 +229,131 @@ public class Molblin1 : MonoBehaviour
         {
             // 상태를 Idle 로 전환한다.
             state = MolblinnState.Idle;
-
-            // 애니메이션 실행
-            //anim.SetBool("Wait", false);
             
             isWait = false;
         }
+        // 대기 시간이 지나면 Dodge or Attack
+        if (currentTime >= waitTime)
+        {
+            // 링크가 있는 곳까지 이동한다.
+            transform.position += linkDir * speed * Time.deltaTime;
+            anim.SetBool("Move", true);
 
-        // 30% 확률로 회피한다.
-        int dodgeValue = Random.Range(0, 10);
-        if (isWait)
-        {
-            // 아무일도 일어나지 않는다.
-            return;
-        }
-        
-        if (dodgeValue < 0 && isWait == false)
-        {
-            isWait = true;
-            state = MolblinnState.Dodge;
-            currentTime = 0;
-            // 애니메이션 실행
-            //anim.SetBool("Dodge", true);
-        }
-        else
-        {
-            // 대기 시간이 지나면 Dodge or Attack
-            if (currentTime >= waitTime)
+            if (distance <= attackDistance)
             {
-                // 링크가 있는 곳까지 이동한다.
-                transform.position += linkDir * speed * Time.deltaTime;
+                anim.SetBool("Move", false);
 
-                if (distance <= attackDistance)
-                {
-                    // 공격 패턴 중 하나를 골라 실행한다.
-                    state = MolblinnState.Attack;
+                // 공격 패턴 중 하나를 골라 실행한다.
+                state = MolblinnState.Attack;
 
-                    // 시간을 초기화한다.
-                    currentTime = 0;
-                }
+                // 시간을 초기화한다.
+                currentTime = 0;
             }
-        }        
+        }   
     }
 
     private void UpdateAttack()
     {
-        int attackValue = Random.Range(0, 5);
-        // 공격패턴 1 실행
-        if (distance <= 3)  // 링크가 모리블린의 공격을 피하려고 엄청 가까이 다가오면 발길질을 함
+        isAttack = true;
+        // 링크가 모리블린의 공격을 피하려고 엄청 가까이 다가오면
+        if (distance <= 3)  
         {
-            print("1");
+            // 공격패턴 1 실행
+            anim.SetTrigger("Kick");
+            Kick();
         }
-
-        // 공격패턴 2 실행
-        if(attackValue < 3)
-        {
-            print("2");
-            isDisturb = false;
-        }
-
-        // 공격패턴 3 실행
+        // 그게 아니라면
         else
         {
-            print("3");
-            isDisturb = false;
-        }
+            int attackValue = Random.Range(0, 5);
+            // 60% 확률로 공격패턴 2 실행
+            if (attackValue < 3)
+            {
+                anim.SetTrigger("TwoHands");
+                TwoHandsAttack();
+            }
 
-        state = MolblinnState.AttackWait;
+            // 40% 확률로 공격패턴 3 실행
+            else
+            {
+                anim.SetTrigger("ComboAttack");
+                ComboAttack();
+            }
+        }
+    }
+
+    private void Kick()
+    {
+        print("1");
+
+        currentTime += Time.deltaTime;
+        if(currentTime >= 2)
+        {
+            isAttack = false;
+            state = MolblinnState.Idle;
+            currentTime = 0;
+        }        
+    }
+
+    private void TwoHandsAttack()
+    {
+        print("2");
+        
+        currentTime += Time.deltaTime;
+        if (currentTime >= 3)
+        {
+            isAttack = false;
+            isDisturb = false;
+            state = MolblinnState.Idle;
+            currentTime = 0;
+        }
+    }
+
+    private void ComboAttack()
+    {        
+        print("3");
+        
+        currentTime += Time.deltaTime;
+        if (currentTime >= 5)
+        {
+            isAttack = false;
+            isDisturb = false;
+            state = MolblinnState.Idle;
+            currentTime = 0;
+        }
     }
 
     private void UpdateAttackWait()
     {
+        isAttack = false;
         isDisturb = true;
+        state = MolblinnState.Idle;
 
-        currentTime += Time.deltaTime;
-
-        // 다음 공격시간까지 대기하는 도중에 링크가 공격거리에서 멀어지면 Idle
-        if (currentTime < 3 && distance > attackDistance)
-        {
-            // 현재시간을 초기화한다.
-            currentTime = 0;
+        //// 다음 공격시간까지 대기하는 도중에 링크가 공격거리에서 멀어지면 Idle
+        //if (currentTime < 3 && distance > attackDistance)
+        //{
+        //    // 현재시간을 초기화한다.
+        //    currentTime = 0;
             
-            // 상태를 Idle 로 바꾼다.
-            state = MolblinnState.Idle;
+        //    // 상태를 Idle 로 바꾼다.
+        //    state = MolblinnState.Idle;
 
-            //anim.SetBool("AttackWait", false);
-        }
+        //    //anim.SetBool("AttackWait", false);
+        //}
 
-        // 2초가 지나면 다시 공격
-        else if (currentTime >= 2)
-        {
-            // 현재시간을 초기화한다.
-            currentTime = 0;
+        //// 2초가 지나면 다시 공격
+        //else if (currentTime >= 2)
+        //{
+        //    // 현재시간을 초기화한다.
+        //    currentTime = 0;
 
-            // 애니메이션
-            anim.SetBool("AttackWait", true);
-            anim.SetBool("Attack", true);
+        //    // 애니메이션
+        //    anim.SetBool("AttackWait", true);
+        //    anim.SetBool("Attack", true);
 
-            // 상태를 Attack 으로 바꾼다.
-            state = MolblinnState.Attack;
-        }
+        //    // 상태를 Attack 으로 바꾼다.
+        //    state = MolblinnState.Attack;
+        //}
     }
 
     public void UpdateDamaged()
