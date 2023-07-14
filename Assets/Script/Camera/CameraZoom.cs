@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 public class CameraZoom : MonoBehaviour
 {
     Vector3 fristPo = new Vector3(0, 1, -10); // ÃÊ±â À§Ä¡
-    Vector3 ZoomPo = new Vector3(1.5f, 0f, -2); // ÁÜ À§Ä¡
+    Vector3 ZoomPo = new Vector3(1.5f, 0f, -4); // ÁÜ À§Ä¡
 
     // È°, ÆøÅº Ä«¸Þ¶ó.
     IEnumerator ZoomCamera(Vector3 pos1, Vector3 pos2)

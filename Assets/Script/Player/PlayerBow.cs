@@ -28,8 +28,12 @@ public class PlayerBow : MonoBehaviour
     public GameObject arrowFactory;
     public Transform firePosition;  // 초기 포지션
     public CameraShake camerashake; // 카메라 쉐이크
+    public GameObject bowEffect;
 
+    public GameObject Bow;
     public GameObject BowReady;
+    public GameObject[] sword_shield;
+    Animator anim;
 
     bool bAutoFire;
     float currentTime;
@@ -41,6 +45,7 @@ public class PlayerBow : MonoBehaviour
         // 태어날 때 화살을 미리 만들어서 화살목록에 등록하고 비활성화 해놓고
         arrowObjectPool = new List<GameObject>();
         deActiveArrowObjectPool = new List<GameObject>();
+        anim = GetComponent<Animator>();
 
         for (int i = 0; i < arrowObjectPoolCount; i++)
         {
@@ -54,6 +59,7 @@ public class PlayerBow : MonoBehaviour
 
         // 방패 칼 들고 있기
         BowReady.SetActive(false);
+        Bow.SetActive(false);
     }
 
     // Update is called once per frame
@@ -81,9 +87,15 @@ public class PlayerBow : MonoBehaviour
             // 칼 방패 뒤로
             // 방패 칼 들고 있기
             BowReady.SetActive(true);
+            Bow.SetActive(true);
+            sword_shield[0].SetActive(false);
+            sword_shield[1].SetActive(false);
         }
         if (Input.GetKey(KeyCode.X))
         {
+            // 활 애니메이션
+            anim.SetBool("Bow_ready", true);
+
             bAutoFire = true;
             // 카메라 앞방향
             transform.forward = Camera.main.transform.forward;
@@ -97,7 +109,8 @@ public class PlayerBow : MonoBehaviour
         }
 
         else if (Input.GetKeyUp(KeyCode.X))
-        {
+        { 
+            anim.SetBool("Bow_ready", false);
             bAutoFire = false;
             StartCoroutine(shotBow());            
         }
@@ -110,20 +123,31 @@ public class PlayerBow : MonoBehaviour
         SkillManager.instance.skill_state = SkillManager.Skill_state.skill_bow;
         yield return new WaitForSeconds(0.2f);
         MakeArrow();
+        anim.SetTrigger("Bow_shot");
+        Instantiate(bowEffect, Bow.transform.position, Bow.transform.rotation);
         yield return new WaitForSeconds(0.2f);
         MakeArrow();
+        anim.SetTrigger("Bow_shot");
+        Instantiate(bowEffect, Bow.transform.position, Bow.transform.rotation);
         yield return new WaitForSeconds(0.2f);
         MakeArrow();
+        anim.SetTrigger("Bow_shot");
+        Instantiate(bowEffect, Bow.transform.position, Bow.transform.rotation);
         yield return new WaitForSeconds(0.4f);
         MakeArrow();
+        anim.SetTrigger("Bow_shot");
+        Instantiate(bowEffect, Bow.transform.position, Bow.transform.rotation);
         yield return new WaitForSeconds(0.5f);
         SkillManager.instance.skill_state = SkillManager.Skill_state.None;
         // 스킬 쿨타임
         CoolTimer.instance.on_Btn();
         CoolTimer.instance.cooltime = CoolTimer.CoolTime.skill_cooltime;
 
-        // 칼 방패 없애기
+        // 칼 방패 손에 들기.
         BowReady.SetActive(false);
+        Bow.SetActive(false);
+        sword_shield[0].SetActive(true);
+        sword_shield[1].SetActive(true);
     }
 
     void MakeArrow()
