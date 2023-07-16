@@ -83,9 +83,6 @@ public class Bocoblin1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(distance);
-        Debug.Log(state);
-
 
         if (state == BocoblinState.Idle)
         {

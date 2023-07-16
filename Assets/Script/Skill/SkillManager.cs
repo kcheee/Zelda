@@ -36,7 +36,7 @@ public class SkillManager : MonoBehaviour
 
     // 스킬 
     public IceSkill iceskill;
-    public Bomb bomb;
+    public GameObject bomb;
 
     public Transform CameraRotation;    // 카메라 회전 값 가져옴. 폭탄 화살 던질때 사용.
     public Transform firePosition;
@@ -73,10 +73,32 @@ public class SkillManager : MonoBehaviour
 
 
     public bool Bomb_flag=false;
-    public void create_bomb()
+    public Transform Bomb_po;
+    public int Bomb_count = 0;
+    GameObject bomb1;
+    public IEnumerator create_bomb()
     {
-        Bomb_flag = true;
-        anim.speed = 0;
+        // 파티클 실행
+        Debug.Log("실행");
+       
+        // 잠깐 멈춤
+        if (Bomb_count == 0)
+        {
+            anim.speed = 0.02f;
+            yield return new WaitForSeconds(0.5f);
+            Bomb_flag = true;   // 애니메이션 상태에 붙어있는 스크립트 함수 제어
+        }
+        bomb1 = Instantiate(bomb, Bomb_po.position, CameraRotation.rotation);
+        bomb1.transform.parent = Bomb_po.transform;
+        Bomb_count++;
+        anim.speed = 1;
+       
+    }
+    public void ThrowBomb()
+    {
+        Bomb_po.transform.DetachChildren();
+        bomb1.GetComponent<Rigidbody>().useGravity = true;
+        bomb1.GetComponent<Rigidbody>().AddForce(transform.forward * 10, ForceMode.Impulse);
     }
     // 폭탄 던지는 코루틴
     IEnumerator Bomb()
@@ -84,14 +106,14 @@ public class SkillManager : MonoBehaviour
         skill_state = Skill_state.skill_bomb;
         StartCoroutine(CameraRotate());
         anim.SetTrigger("Bomb");
+        yield return new WaitForSeconds(0.7f);
+
         yield return new WaitForSeconds(0.5f);
-        Instantiate(bomb, firePosition.position, CameraRotation.rotation);
+        //Instantiate(bomb, Bomb_po.position, CameraRotation.rotation);
         yield return new WaitForSeconds(0.5f);
-        Instantiate(bomb, firePosition.position, CameraRotation.rotation);
-        yield return new WaitForSeconds(0.5f);
-        Instantiate(bomb, firePosition.position, CameraRotation.rotation);
+        //Instantiate(bomb, Bomb_po.position, CameraRotation.rotation);
         yield return new WaitForSeconds(0.8f);
-        Instantiate(bomb, firePosition.position, CameraRotation.rotation);
+        //Instantiate(bomb, Bomb_po.position, CameraRotation.rotation);
         yield return new WaitForSeconds(0.5f);
         skill_state = Skill_state.None;
         // 스킬 쿨타임

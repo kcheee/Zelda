@@ -14,13 +14,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c19d336cf9f23a6449a513ed1bc25b8f,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c19d336cf9f23a6449a513ed1bc25b8f,
+        type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.025400003
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c19d336cf9f23a6449a513ed1bc25b8f,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.025400003
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c19d336cf9f23a6449a513ed1bc25b8f,
         type: 3}
@@ -84,6 +89,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c19d336cf9f23a6449a513ed1bc25b8f,
         type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c19d336cf9f23a6449a513ed1bc25b8f,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -106,23 +116,11 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4646917836483828166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3093577203753435376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 616d8577f2f747943baedc5c802ebe0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &2085566888147457465
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -136,3 +134,15 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 21.100399
   m_Center: {x: 0.057895355, y: -0.0012550423, z: 18.673792}
+--- !u!114 &4646917836483828166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3093577203753435376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616d8577f2f747943baedc5c802ebe0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
