@@ -45,11 +45,13 @@ public class SkillManager : MonoBehaviour
     static public bool bowCamera = false;
 
     Rigidbody rb;
+    Animator anim;
 
     private void Start()
     {
         skill_state = Skill_state.None;
         rb = GetComponentInParent<Rigidbody>();
+        anim = GetComponentInParent<Animator>();
     }
 
     // 카메라 방향
@@ -58,16 +60,30 @@ public class SkillManager : MonoBehaviour
         while (skill_state == Skill_state.skill_bomb)
         {
             transform.forward = Camera.main.transform.forward;
+
+            // 플레이어 위아래 회전 제한.
+            Vector3 dir = transform.eulerAngles;
+            dir = new Vector3(0, dir.y, 0);
+            transform.eulerAngles = dir;
+
             yield return new WaitForSeconds(0.02f);
         }
         yield return null;
     }
 
+
+    public bool Bomb_flag=false;
+    public void create_bomb()
+    {
+        Bomb_flag = true;
+        anim.speed = 0;
+    }
     // 폭탄 던지는 코루틴
     IEnumerator Bomb()
     {
         skill_state = Skill_state.skill_bomb;
         StartCoroutine(CameraRotate());
+        anim.SetTrigger("Bomb");
         yield return new WaitForSeconds(0.5f);
         Instantiate(bomb, firePosition.position, CameraRotation.rotation);
         yield return new WaitForSeconds(0.5f);

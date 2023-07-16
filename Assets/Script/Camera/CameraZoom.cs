@@ -18,7 +18,7 @@ public class CameraZoom : MonoBehaviour
             transform.localPosition = Vector3.Lerp(transform.localPosition, pos2, 0.2f);
             //Debug.Log(transform.localPosition + " " + pos2);
 
-            yield return new WaitForSeconds(0.02f);      
+            yield return new WaitForSecondsRealtime(0.02f);      
         }
     }
 

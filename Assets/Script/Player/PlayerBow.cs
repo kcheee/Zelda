@@ -138,6 +138,8 @@ public class PlayerBow : MonoBehaviour
         anim.SetTrigger("Bow_shot");
         Instantiate(bowEffect, Bow.transform.position, Bow.transform.rotation);
         yield return new WaitForSeconds(0.5f);
+
+
         SkillManager.instance.skill_state = SkillManager.Skill_state.None;
         // 스킬 쿨타임
         CoolTimer.instance.on_Btn();
