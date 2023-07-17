@@ -76,6 +76,16 @@ public class Bocoblin1 : MonoBehaviour
         link = GameObject.Find("Link");
         rb = GetComponent<Rigidbody>();
         anim = gameObject.GetComponent<Animator>();
+
+        //// 하위 오브젝트들의 리지드바디에 있는 isKinetic 을 전부 꺼준다.
+        //Rigidbody[] rbs = GetComponentsInChildren<Rigidbody>();
+        //for (int i = 0; i < rbs.Length; i++)
+        //{
+        //    if (rbs[i] == rb)
+        //        continue;   // 내거는 건너뛰고 바로 i 를 증가시킴
+
+        //    rbs[i].isKinematic = true;
+        //}
     }
     #endregion
 
@@ -83,7 +93,6 @@ public class Bocoblin1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (state == BocoblinState.Idle)
         {
             UpdateIdle();
@@ -145,38 +154,27 @@ public class Bocoblin1 : MonoBehaviour
     public GameObject bocoAvatar;
     public GameObject bocoRagdoll;
     // 착지
-    private void OnCollisionEnter(Collision collision)
-    {
-        // 공중상태에 있다가 추락해서 바닥에 닿았을 때
-        if (collision.gameObject.CompareTag("Floor"))
-        {
-            isGrounded = false;
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    // 공중상태에 있다가 추락해서 바닥에 닿았을 때
+    //    if (collision.gameObject.CompareTag("Floor"))
+    //    {
+    //        isGrounded = false;
 
-            // 캡슐콜라이더를 켬
-            GetComponent<CapsuleCollider>().enabled = true;
-            // 보코블린의 Y 위치값을 0으로 초기화
-            Vector3 floorTransform = transform.position;
-            floorTransform.y = -0.6f;
-            transform.position = floorTransform;
-            // 보코블린 아바타 켬
-            bocoAvatar.SetActive(true);
-            // 보코블린 랙돌 끔
-            bocoRagdoll.SetActive(false);
-
-            // 만약 체력이 0 이상이라면
-            if (currentHP > 0)
-            {   
-                anim.SetTrigger("Down");
-                Invoke("StandUp", 2);
-            }
-            // 만약 체력이 0 이하가 되면 
-            else if (currentHP <= 0)
-            {
-                // 상태를 Die 로 전환한다.
-                state = BocoblinState.Die;
-            }
-        }
-    }
+    //        // 만약 체력이 0 이상이라면
+    //        if (currentHP > 0)
+    //        {   
+    //            anim.SetTrigger("Down");
+    //            Invoke("StandUp", 2);
+    //        }
+    //        // 만약 체력이 0 이하가 되면 
+    //        else if (currentHP <= 0)
+    //        {
+    //            // 상태를 Die 로 전환한다.
+    //            state = BocoblinState.Die;
+    //        }
+    //    }
+    //}
 
     // 일어나기
     void StandUp()
@@ -192,12 +190,11 @@ public class Bocoblin1 : MonoBehaviour
     #region 상태함수
     private void UpdateIdle()
     {
-        isAir = false;
-        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         // 보코볼린의 x,z rotation 을 0으로 해준다.
-        Vector3 t = transform.eulerAngles;
-        transform.eulerAngles = new Vector3(0, t.y, 0);
+        //Vector3 t = transform.eulerAngles;
+        //transform.eulerAngles = new Vector3(0, t.y, 0);
 
         // 링크와의 거리를 구한다.
         Vector3 y = link.transform.position;
@@ -232,9 +229,14 @@ public class Bocoblin1 : MonoBehaviour
     private void UpdateAir()
     {
         isAir = true;
-
-        //if (isGrounded)
-        //    return;
+        Destroy(bocoAvatar);
+        bocoRagdoll.SetActive(true);
+        //Rigidbody[] rbbocos = GetComponentsInChildren<Rigidbody>();
+        //for (int i = 0; i < rbbocos.Length; i++)
+        //{
+        //    rbbocos[i].AddForce(transform.up * 7 + transform.forward * -3, ForceMode.Impulse);
+        //}
+        state = BocoblinState.Die;
     }
 
     private void UpdateMove()
@@ -422,31 +424,66 @@ public class Bocoblin1 : MonoBehaviour
 
     public void UpdateDamaged()
     {
+        // 하위 오브젝트들의 리지드바디에 있는 isKinetic 을 전부 꺼준다.
+        //Rigidbody[] rbs = GetComponentsInChildren<Rigidbody>();
+        //for (int i = 0; i < rbs.Length; i++)
+        //{
+        //    if (rbs[i] == rb)
+        //        continue;   // 내거는 건너뛰고 바로 i 를 증가시킴
+
+        //    rbs[i].isKinematic = false;
+        //}
         // 체력을 감소시킨다.
         currentHP--;
-        // 상태변환
-        state = BocoblinState.Air;
-        //애니메이션실행
-        anim.SetTrigger("Damaged");
-        // 회전할 수 있게!
-        rb.freezeRotation = false;
 
-        // 캡슐콜라이더를 끔
-        //GetComponent<CapsuleCollider>().enabled = false;
+        if(currentHP > 0)
+        {
+            //애니메이션실행
+            anim.SetTrigger("Damaged");
+            // 회전할 수 있게!
+            rb.freezeRotation = false;
+        }
+        else if(currentHP <= 0)
+        {
+            state = BocoblinState.Air;
 
-        // 보코블린 아바타 끔
-        bocoAvatar.SetActive(false);
-
-        // 보코블린 랙돌 켬
-        bocoRagdoll.SetActive(true);
+        }
+    }
+    public SkinnedMeshRenderer bococlub;
+    private void UpdateDie()
+    {       
+        // 1초 후에 파괴한다.
+        Invoke("DieColor", 3);        
+        Destroy(gameObject, 4);
+        Invoke("DieEffect", 3.9f);
     }
 
-    private void UpdateDie()
+    public GameObject dieEffectFactory;
+    bool isEffect;
+
+    public void DieColor()
     {
-        GetComponent<Rigidbody>().mass = 500;
-        // 1초 후에 파괴한다.
-        Destroy(gameObject, 1);
-        // 파괴할 때 검은 먼지 파티클시스템을 실행한다.
+        // 보코블린의 몸을 까맣게 한다.
+        SkinnedMeshRenderer[] mesh = GetComponentsInChildren<SkinnedMeshRenderer>();
+        for (int i = 0; i < mesh.Length; i++)
+        {
+            if (mesh[i] == bococlub)
+            {
+                continue;
+            }
+            mesh[i].materials[0].color = Color.black;
+        }
+        
+    }
+    public void DieEffect()
+    {
+        if (isEffect == false)
+        {
+            // 파괴할 때 검은 먼지 파티클시스템을 실행한다.
+            GameObject dieEffect = Instantiate(dieEffectFactory);
+            dieEffect.transform.position = bocoRagdoll.transform.position;
+            isEffect = true;
+        }
     }
     #endregion
 }

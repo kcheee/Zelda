@@ -101,12 +101,8 @@ public class Molblin1 : MonoBehaviour
         if(distance <= 3)
         {
             isDodge = true;
-            state = MolblinnState.Dodge;
-            state = MolblinnState.Idle;
-
-
             anim.SetBool("Move", false);
-            anim.SetBool("Kick", true);
+            anim.SetTrigger("Kick");
             state = MolblinnState.Kick;
         }
 
@@ -199,6 +195,9 @@ public class Molblin1 : MonoBehaviour
         {
             // 공격선택상태로 전환한다.
             state = MolblinnState.AttackChoice;
+            anim.SetBool("Move", false);
+            anim.SetBool("Wait", true);
+
         }
     }
 
@@ -209,7 +208,7 @@ public class Molblin1 : MonoBehaviour
         {
             // 상태를 Idle 로 전환한다.
             state = MolblinnState.Idle;
-            anim.SetBool("Move", false);
+            anim.SetBool("Wait", false);
         }
 
         // 50% 확률로 양손공격 실행
@@ -224,9 +223,6 @@ public class Molblin1 : MonoBehaviour
             // 링크와의 거리가 패턴 2 거리 이하가 되면
             if (distance < pattern2Distance)
             {
-                anim.SetBool("Wait", true);
-                anim.SetBool("Move", false);
-
                 state = MolblinnState.TwoHandsAttack;
             }
         }
@@ -242,9 +238,6 @@ public class Molblin1 : MonoBehaviour
             // 링크와의 거리가 패턴 2 거리 이하가 되면
             if (distance < pattern3Distance)
             {
-                anim.SetBool("Wait", true);
-                anim.SetBool("Move", false);
-
                 state = MolblinnState.ComboAttack;
             }
         }
@@ -256,27 +249,30 @@ public class Molblin1 : MonoBehaviour
     private void Kick()
     {
         print("발차기");
-        anim.SetBool("Kick", false);
         state = MolblinnState.Idle;
     }
 
     private void UpdateDodge()
     {
-        Debug.Log(distance);
         // 애니메이션 실행
         anim.SetTrigger("Dodge");
+        anim.SetBool("Wait", false);
+        state = MolblinnState.Idle;
+        isDodge = false;
     }
 
     private void TwoHandsAttack()
     {
-        if (distance < 6)
+        if (distance < 6 && isDodge == false)
         {
             state = MolblinnState.Dodge;
+            isDodge = true;
         }
         else
         {
+            // 시간을 흐르게 한다.
             currentTime += Time.deltaTime;
-
+            // 1초 후에
             if (currentTime > 1)
             {
                 print("양손 공격");
@@ -285,20 +281,21 @@ public class Molblin1 : MonoBehaviour
                 isAttack = true;
 
                 // 양손 공격을 한다.
-                anim.SetBool("TwoHands", true);
+                anim.SetTrigger("TwoHands");
 
+                // 공격이 끝나는 시간이 되면
                 if (currentTime > 4)
                 {
-                    Debug.Log(currentTime);
-                    anim.SetBool("TwoHands", false);
-
                     isDisturb = true;
                     isTwoHands = false;
 
                     // 상태를 공격선택으로 바꾼다.
                     state = MolblinnState.AttackChoice;
+                    anim.SetBool("Wait", true);
 
                     currentTime = 0;
+
+                    isDodge = false;
                 }
             } 
         }
@@ -306,9 +303,11 @@ public class Molblin1 : MonoBehaviour
 
     private void ComboAttack()
     {
-        if (distance < 3)
+        if (distance < 3 && isDodge == false)
         {
             state = MolblinnState.Dodge;
+            anim.SetBool("ComboAttack", false);
+            isDodge = true;
         }
         else
         {
@@ -322,19 +321,21 @@ public class Molblin1 : MonoBehaviour
                 isAttack = true;
 
                 // 양손 공격을 한다.
-                anim.SetBool("ComboAttack", true);
+                anim.SetTrigger("ComboAttack");
 
                 if (currentTime > 6)
                 {
-                    anim.SetBool("ComboAttack", false);
 
                     isDisturb = true;
                     isComboAttack = false;
 
                     // 상태를 초기화 한다.
                     state = MolblinnState.AttackChoice;
+                    anim.SetBool("Wait", true);
 
                     currentTime = 0;
+
+                    isDodge = false;
                 }
             }            
         }
