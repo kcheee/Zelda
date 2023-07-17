@@ -76,10 +76,13 @@ public class SkillManager : MonoBehaviour
     public Transform Bomb_po;
     public int Bomb_count = 0;
     GameObject[] BOMB = new GameObject[4];
+
+    // 칼 집어넣기.
+    public GameObject Bomb_Ready;
+    public GameObject[] sword_shield;
     public IEnumerator create_bomb()
     {
         // 파티클과 폭탄 생성
-        Debug.Log(Bomb_count);
         BOMB[Bomb_count] = Instantiate(bomb, Bomb_po.position, CameraRotation.rotation);
         BOMB[Bomb_count].transform.parent = Bomb_po.transform;
         // 잠깐 멈춤
@@ -100,7 +103,7 @@ public class SkillManager : MonoBehaviour
         // 공 던지는 힘
         BOMB[Bomb_count].GetComponent<Rigidbody>().AddForce(transform.forward * 10+transform.up*5, ForceMode.Impulse);
         // 공 회전값 무작위로 회전함.
-        BOMB[Bomb_count].GetComponent<Rigidbody>().AddTorque(Random.insideUnitSphere * 10, ForceMode.Impulse);
+        BOMB[Bomb_count].GetComponent<Rigidbody>().AddTorque(Random.insideUnitSphere * 1.5f, ForceMode.Impulse);
         Bomb_count++;
 
         if (Bomb_count == 4) Bomb_count = 0;
@@ -109,14 +112,24 @@ public class SkillManager : MonoBehaviour
     IEnumerator Bomb()
     {
         skill_state = Skill_state.skill_bomb;
+        // 칼 방패 집어넣기
+        Bomb_Ready.SetActive(true);
+        sword_shield[0].SetActive(false); sword_shield[1].SetActive(false);
+
         StartCoroutine(CameraRotate());
         anim.SetTrigger("Bomb");
+
+
         yield return new WaitForSeconds(4f);
 
         skill_state = Skill_state.None;
         // 스킬 쿨타임
         CoolTimer.instance.on_Btn();
         CoolTimer.instance.cooltime = CoolTimer.CoolTime.skill_cooltime;
+
+        // 칼 방패 꺼내기
+        Bomb_Ready.SetActive(false);
+        sword_shield[0].SetActive(true); sword_shield[1].SetActive(true);
 
     }
     #endregion
