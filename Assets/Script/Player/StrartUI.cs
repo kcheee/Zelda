@@ -1,37 +1,27 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class ButtonHoverAnimation : MonoBehaviour
+// 버튼에 마우스 커서를 올리면 화살표가 움직이고싶다.
+// 마우스 커서를 치우면 화살표가 비활성화 되면서 보이지 않고 움직이지않는다.
+
+//1. 비활성화 상태.
+//2. 마우스를 올리면 활성화.
+
+//4. 마우스를 치우면 비활성화.
+
+public class StrartUI : MonoBehaviour ,IPointerEnterHandler,IPointerExitHandler
 {
-    public GameObject imageObject;
-    public float rotationSpeed = 100f;
+    public GameObject ImageUI;
 
-    private Button button;
-    private bool isHovering = false;
-
-    private void Start()
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        button = imageObject.GetComponent<Button>();
-        imageObject.SetActive(false);
+        ImageUI.SetActive(true); 
     }
 
-    private void Update()
+    public void OnPointerExit(PointerEventData eventData)
     {
-        if (isHovering)
-        {
-            transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
-        }
-    }
-
-    public void OnMouseEnterButton()
-    {
-        imageObject.SetActive(true);
-        isHovering = true;
-    }
-
-    public void OnMouseExitButton()
-    {
-        imageObject.SetActive(false);
-        isHovering = false;
+        ImageUI.SetActive(false);
     }
 }
+
