@@ -6,10 +6,18 @@ public class PlayerManager : MonoBehaviour
 {
     static public PlayerManager instance;
 
-    public int HP;
+    public int hp;
     int maxhp=6;
     public GameObject Healthbar;
 
+    public int HP
+    {
+        get { return hp; }
+        set
+        {
+            hp = value;
+        }
+    }
     private void Awake()
     {
         HP = Healthbar.transform.childCount;
