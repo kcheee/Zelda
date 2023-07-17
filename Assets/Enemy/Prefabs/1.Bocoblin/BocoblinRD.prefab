@@ -5673,7 +5673,7 @@ MonoBehaviour:
   dodgePos: {fileID: 0}
   waitTime: 1.2
   currentHP: 0
-  maxHP: 10
+  maxHP: 2
   bocoAvatar: {fileID: 7415693820280996362}
   bocoRagdoll: {fileID: 4351025918561357993}
   bococlub: {fileID: 5017680422450463624}
