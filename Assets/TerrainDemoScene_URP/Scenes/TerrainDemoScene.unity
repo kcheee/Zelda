@@ -12603,6 +12603,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1354998177}
   state: 0
+  comboTimeThreshold: 1
+  attackAnimations:
+  - attack1
+  - attack2
+  - attack3
+  - attack4
 --- !u!114 &1354998173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12637,6 +12643,10 @@ MonoBehaviour:
   Bomb_flag: 0
   Bomb_po: {fileID: 24666238}
   Bomb_count: 0
+  Bomb_Ready: {fileID: 422803929}
+  sword_shield:
+  - {fileID: 1161521013}
+  - {fileID: 372487901}
 --- !u!65 &1354998175
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14759,7 +14769,7 @@ PrefabInstance:
     - target: {fileID: 8524567844863556068, guid: 1efc1a7128824b84182b8a7bdadef3f9,
         type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1efc1a7128824b84182b8a7bdadef3f9, type: 3}
