@@ -123,7 +123,7 @@ public class Bocoblin1 : MonoBehaviour
         }
         else if (state == BocoblinState.Damaged)
         {
-            UpdateDamaged();
+            DamagedProcess();
         }
         else if (state == BocoblinState.Die)
         {
@@ -368,15 +368,19 @@ public class Bocoblin1 : MonoBehaviour
 
     private void UpdateAttack()
     {
-        // 링크의 데미지 함수를 호출한다.
-        // link.gameObject.GetComponent<HP>().Ondamaged();
-
         // 애니메이션 실행
         anim.SetBool("Run", false);
         anim.SetBool("Attack", false);
 
         // 보코블린의 상태를 AttackWait 으로 바꾼다.
         state = BocoblinState.AttackWait;
+    }
+
+    void Attack()
+    {
+        print("@@@@@@@@@@@@@@@@@@@");
+        // 링크의 데미지 함수를 호출한다.
+        PlayerManager.instance.HP--;
     }
 
     void UpdateAttackWait()
@@ -422,18 +426,8 @@ public class Bocoblin1 : MonoBehaviour
         }
     }
 
-    public void UpdateDamaged()
+    public void DamagedProcess()
     {
-        // 하위 오브젝트들의 리지드바디에 있는 isKinetic 을 전부 꺼준다.
-        //Rigidbody[] rbs = GetComponentsInChildren<Rigidbody>();
-        //for (int i = 0; i < rbs.Length; i++)
-        //{
-        //    if (rbs[i] == rb)
-        //        continue;   // 내거는 건너뛰고 바로 i 를 증가시킴
-
-        //    rbs[i].isKinematic = false;
-        //}
-        // 체력을 감소시킨다.
         currentHP--;
 
         if(currentHP > 0)
