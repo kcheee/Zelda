@@ -24,7 +24,7 @@ public class SceneChanger : MonoBehaviour
             if (SceneManager.GetActiveScene().name == "introScene")
             {
                 Debug.Log("½ÇÇà");
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene(2);
             }
             //if (SceneManager.GetActiveScene().name == "GetReadyfor")
             //{

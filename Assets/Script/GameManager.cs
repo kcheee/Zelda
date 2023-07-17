@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
         while (dis > 3)
         {
             Start_EndUI.transform.position = Vector3.Lerp(Start_EndUI.transform.position, UIPos, 0.2f);
-            Debug.Log(dis);
+            //Debug.Log(dis);
             dis=Vector3.Distance(Start_EndUI.transform.position, UIPos);
             yield return new WaitForSeconds(0.02f);
         }

@@ -11,7 +11,7 @@ public class Bomb : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        rb.AddForce(transform.forward * 20, ForceMode.Impulse);
+        //rb.AddForce(transform.forward * 20, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)
