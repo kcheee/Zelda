@@ -73,7 +73,7 @@ public class Bocoblin1 : MonoBehaviour
     void Start()
     {
         currentHP = maxHP;
-        link = GameObject.Find("Player");
+        link = GameObject.Find("Link");
         rb = GetComponent<Rigidbody>();
         anim = gameObject.GetComponent<Animator>();
     }
@@ -83,6 +83,7 @@ public class Bocoblin1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (state == BocoblinState.Idle)
         {
             UpdateIdle();
@@ -200,7 +201,7 @@ public class Bocoblin1 : MonoBehaviour
 
         // 링크와의 거리를 구한다.
         Vector3 y = link.transform.position;
-        y.y = 0;
+        y.y = transform.position.y;
         distance = Vector3.Distance(y, transform.position);
 
         // 만약 링크와의 거리가 감지 거리보다 가까우면
@@ -223,7 +224,6 @@ public class Bocoblin1 : MonoBehaviour
             {
                 // 상태를 Move 로 변환한다.
                 state = BocoblinState.Move;
-                anim.SetBool("Move", true);
                 currentTime = 0;
             }
         }
@@ -242,12 +242,12 @@ public class Bocoblin1 : MonoBehaviour
         #region 거리재기
         // 거리를 구한다.
         Vector3 y = link.transform.position;
-        y.y = 0;
+        y.y = transform.position.y;
         distance = Vector3.Distance(y, transform.position);
         #endregion
 
         // 만약 링크와의 거리가 감지 거리보다 멀어지면 Idle 상태로 돌아간다.
-        if (detectDistance+1 < distance)
+        if (detectDistance < distance)
         {
             // 상태를 Idle 로 전환한다.
             state = BocoblinState.Idle;
@@ -265,7 +265,7 @@ public class Bocoblin1 : MonoBehaviour
 
             // 그 방향을 바라본다.
             transform.forward = linkDir;
-
+            anim.SetBool("Move", true);
             // 링크가 있는 곳으로 이동한다.
             transform.position += linkDir * speed * Time.deltaTime;
             #endregion
@@ -291,7 +291,7 @@ public class Bocoblin1 : MonoBehaviour
         #region 거리재기 및 바라보기
         // 거리를 구한다.
         Vector3 y = link.transform.position;
-        y.y = 0;
+        y.y = transform.position.y;
         distance = Vector3.Distance(y, transform.position);
 
         // 링크가 있는 방향을 찾는다.
@@ -310,13 +310,14 @@ public class Bocoblin1 : MonoBehaviour
             state = BocoblinState.Idle;
             // 애니메이션 실행
             anim.SetBool("Wait", false);
+            anim.SetBool("Run", false);
         }
 
         // 대기 시간이 지나면 Dodge or Attack
         else if (currentTime >= waitTime)
         {
             int rValue = Random.Range(0, 10);
-            // 20% 확률로 회피
+            // 30% 확률로 회피
             if (rValue < 3 && isWait == false)
             {
                 currentTime = 0;
@@ -350,13 +351,6 @@ public class Bocoblin1 : MonoBehaviour
 
                     isWait = false;
                 }
-
-                // 달려가는 도중에 링크와의 거리가 공격가능거리보다 멀어지면 Idle
-                else if (distance > attackPossibleDistance)
-                {
-                    state = BocoblinState.Idle;
-                    anim.SetBool("Run", false);
-                }
             }
         }
     }
@@ -364,9 +358,10 @@ public class Bocoblin1 : MonoBehaviour
     private void UpdateDodge()
     {
         isWait = false;
-        state = BocoblinState.Idle;
+        state = BocoblinState.Move;
         // 애니메이션 실행
         anim.SetBool("Dodge", false);
+        anim.SetBool("Move", true);
     }
 
     private void UpdateAttack()
@@ -389,7 +384,7 @@ public class Bocoblin1 : MonoBehaviour
         #region 거리재기 및 바라보기
         // 거리를 구한다.
         Vector3 y = link.transform.position;
-        y.y = 0;
+        y.y = transform.position.y;
         distance = Vector3.Distance(y, transform.position);
 
         // 링크가 있는 방향을 찾는다.
@@ -402,7 +397,7 @@ public class Bocoblin1 : MonoBehaviour
         #endregion
 
         // 다음 공격시간까지 대기하는 도중에 링크가 공격거리에서 멀어지면 Idle
-        if (currentTime < 2 && distance > attackDistance + 1)
+        if (currentTime < 2 && distance > attackDistance)
         {
             // 상태를 Idle 로 바꾼다.
             state = BocoblinState.Idle;
@@ -411,8 +406,8 @@ public class Bocoblin1 : MonoBehaviour
             anim.SetBool("AttackWait", false);
         }
 
-        // 2초가 지나면 다시 공격
-        else if (currentTime >= 2)
+        // 4초가 지나면 다시 공격
+        else if (currentTime >= 4)
         {
             //  다시 때린다.
             // 애니메이션
@@ -437,7 +432,7 @@ public class Bocoblin1 : MonoBehaviour
         rb.freezeRotation = false;
 
         // 캡슐콜라이더를 끔
-        GetComponent<CapsuleCollider>().enabled = false;
+        //GetComponent<CapsuleCollider>().enabled = false;
 
         // 보코블린 아바타 끔
         bocoAvatar.SetActive(false);

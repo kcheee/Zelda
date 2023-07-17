@@ -36,7 +36,7 @@ public class SkillManager : MonoBehaviour
 
     // 스킬 
     public IceSkill iceskill;
-    public Bomb bomb;
+    public GameObject bomb;
 
     public Transform CameraRotation;    // 카메라 회전 값 가져옴. 폭탄 화살 던질때 사용.
     public Transform firePosition;
@@ -45,11 +45,13 @@ public class SkillManager : MonoBehaviour
     static public bool bowCamera = false;
 
     Rigidbody rb;
+    Animator anim;
 
     private void Start()
     {
         skill_state = Skill_state.None;
         rb = GetComponentInParent<Rigidbody>();
+        anim = GetComponentInParent<Animator>();
     }
 
     // 카메라 방향
@@ -58,38 +60,72 @@ public class SkillManager : MonoBehaviour
         while (skill_state == Skill_state.skill_bomb)
         {
             transform.forward = Camera.main.transform.forward;
+
+            // 플레이어 위아래 회전 제한.
+            Vector3 dir = transform.eulerAngles;
+            dir = new Vector3(0, dir.y, 0);
+            transform.eulerAngles = dir;
+
             yield return new WaitForSeconds(0.02f);
         }
         yield return null;
     }
 
+    #region 폭탄
+    public bool Bomb_flag=false;
+    public Transform Bomb_po;
+    public int Bomb_count = 0;
+    GameObject[] BOMB = new GameObject[4];
+    public IEnumerator create_bomb()
+    {
+        // 파티클과 폭탄 생성
+        Debug.Log(Bomb_count);
+        BOMB[Bomb_count] = Instantiate(bomb, Bomb_po.position, CameraRotation.rotation);
+        BOMB[Bomb_count].transform.parent = Bomb_po.transform;
+        // 잠깐 멈춤
+        if (Bomb_count == 0)
+        {
+            anim.speed = 0.02f;
+            yield return new WaitForSeconds(0.5f);
+            Bomb_flag = true;   // 애니메이션 상태에 붙어있는 스크립트 함수 제어
+        }     
+        anim.speed = 1;
+        
+    }
+    public void ThrowBomb()
+    {
+        Bomb_po.transform.DetachChildren();
+        // rigidbody 사용해서 공 던지기
+        BOMB[Bomb_count].GetComponent<Rigidbody>().useGravity = true;
+        // 공 던지는 힘
+        BOMB[Bomb_count].GetComponent<Rigidbody>().AddForce(transform.forward * 10+transform.up*5, ForceMode.Impulse);
+        // 공 회전값 무작위로 회전함.
+        BOMB[Bomb_count].GetComponent<Rigidbody>().AddTorque(Random.insideUnitSphere * 10, ForceMode.Impulse);
+        Bomb_count++;
+
+        if (Bomb_count == 4) Bomb_count = 0;
+    }
     // 폭탄 던지는 코루틴
     IEnumerator Bomb()
     {
         skill_state = Skill_state.skill_bomb;
         StartCoroutine(CameraRotate());
-        yield return new WaitForSeconds(0.5f);
-        Instantiate(bomb, firePosition.position, CameraRotation.rotation);
-        yield return new WaitForSeconds(0.5f);
-        Instantiate(bomb, firePosition.position, CameraRotation.rotation);
-        yield return new WaitForSeconds(0.5f);
-        Instantiate(bomb, firePosition.position, CameraRotation.rotation);
-        yield return new WaitForSeconds(0.8f);
-        Instantiate(bomb, firePosition.position, CameraRotation.rotation);
-        yield return new WaitForSeconds(0.5f);
+        anim.SetTrigger("Bomb");
+        yield return new WaitForSeconds(4f);
+
         skill_state = Skill_state.None;
         // 스킬 쿨타임
         CoolTimer.instance.on_Btn();
         CoolTimer.instance.cooltime = CoolTimer.CoolTime.skill_cooltime;
 
     }
-
+    #endregion
     // Time.scale 조절하는 불변수
     bool flag = false;
     // Update is called once per frame
     void Update()
     {
-        // 아이템 창 panel
+        #region item Panel
         if (Input.GetKey(KeyCode.J))
         {
             if (!flag)
@@ -100,7 +136,9 @@ public class SkillManager : MonoBehaviour
             SkillUI.instance.ItemPanel.SetActive(false);
             flag = false; Time.timeScale = 1;
         }
+        #endregion
 
+        #region 스킬 창 스킬
         // 스킬 창 스킬
         if (CoolTimer.instance.cooltime == CoolTimer.CoolTime.None)
         {
@@ -144,7 +182,10 @@ public class SkillManager : MonoBehaviour
             SkillUI.instance.Skillpanel.SetActive(false);
             flag = false; Time.timeScale = 1;
         }
+        #endregion
+
     }
+
 
     private void OnCollisionEnter(Collision collision)
     {
