@@ -5021,7 +5021,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1056732757}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.51, z: 0}
+  m_LocalPosition: {x: -4.155, y: -0.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13379,29 +13379,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1422937221989131709, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
         type: 3}
-      propertyPath: maxHP
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2243891651257988863, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
+      propertyPath: dieEffectFactory
+      value: 
+      objectReference: {fileID: 7834402645691306137, guid: 9ed2ddf86cc2d9e408309f616d65e0dd,
         type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2758867655073613512, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3087400244985037850, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5455352234162346110, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6610246748950431413, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
         type: 3}
       propertyPath: m_RootOrder
@@ -13410,7 +13391,7 @@ PrefabInstance:
     - target: {fileID: 6610246748950431413, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 16.89
       objectReference: {fileID: 0}
     - target: {fileID: 6610246748950431413, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
         type: 3}
@@ -13457,11 +13438,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6610246748950431413, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6610246748950431415, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
         type: 3}
       propertyPath: m_Name
@@ -13470,16 +13446,6 @@ PrefabInstance:
     - target: {fileID: 6610246748950431415, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7075192245303833008, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7899883919596116144, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

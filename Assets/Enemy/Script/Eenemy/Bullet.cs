@@ -40,7 +40,7 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.name.Contains("Boco"))
         {
             // Unity_B.instance.state = Unity_B.UnityState.Damaged;
-            collision.gameObject.GetComponent<Bocoblin>().state = Bocoblin.BocoblinState.Damaged;
+            collision.gameObject.GetComponent<Bocoblin1>().state = Bocoblin1.BocoblinState.Damaged;
         }
         else if (collision.gameObject.name.Contains("Moblin"))
         {

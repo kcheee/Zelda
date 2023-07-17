@@ -686,8 +686,6 @@ GameObject:
   - component: {fileID: 6658548978013396155}
   - component: {fileID: 1469566269183213452}
   - component: {fileID: 1469566269183213455}
-  - component: {fileID: 1469566269183213449}
-  - component: {fileID: 1469566269183213454}
   m_Layer: 0
   m_Name: BigBocoblinRD
   m_TagString: Untagged
@@ -799,28 +797,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!33 &1469566269183213449
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1469566269183213489}
-  m_Mesh: {fileID: -6160177445945214424, guid: 776ed2070abceaf4fa9f02225e34e4b8, type: 3}
---- !u!64 &1469566269183213454
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1469566269183213489}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -6160177445945214424, guid: 776ed2070abceaf4fa9f02225e34e4b8, type: 3}
 --- !u!1 &1498596283154840036
 GameObject:
   m_ObjectHideFlags: 0
