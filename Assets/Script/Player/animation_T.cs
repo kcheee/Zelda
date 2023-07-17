@@ -51,6 +51,7 @@ public class animation_T : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("move"))
             state = ani_state.move;
 
+        if(state == ani_state.attack)  AttackCollider.enabled = true;     else AttackCollider.enabled = false;
         //Attackmotion();
         //Chargedmotion();
         //CheckCharged2Input();
@@ -63,15 +64,18 @@ public class animation_T : MonoBehaviour
     private float lastAttackTime = 0f; // 마지막 공격 시간
     public float comboTimeThreshold = 1f; // 콤보 시간 제한
     public string[] attackAnimations; // 공격 애니메이션 이름 배열
+    public BoxCollider AttackCollider;
 
     void AttackCombo()
     {
         // 공격 버튼을 눌렀을 때
         if (Input.GetKeyDown(KeyCode.Space))
-        {
+        {   
+            state = ani_state.attack;
             // 콤보 시간 내에 공격 버튼이 눌리면 콤보 카운트 증가
             if (Time.time - lastAttackTime < comboTimeThreshold)
             {
+                
                 comboCount++;
                 // 콤보 카운트에 따라 공격 애니메이션 재생
                 if (comboCount < attackAnimations.Length)
@@ -90,6 +94,7 @@ public class animation_T : MonoBehaviour
                 // 콤보 시간을 초과한 경우 콤보 초기화
                 comboCount = 0;
                 animator.SetTrigger(attackAnimations[0]);
+                
             }
             lastAttackTime = Time.time;
         }

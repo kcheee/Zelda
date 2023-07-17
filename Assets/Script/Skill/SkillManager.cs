@@ -118,8 +118,7 @@ public class SkillManager : MonoBehaviour
 
         StartCoroutine(CameraRotate());
         anim.SetTrigger("Bomb");
-
-
+      
         yield return new WaitForSeconds(4f);
 
         skill_state = Skill_state.None;
