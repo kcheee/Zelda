@@ -4,22 +4,41 @@ using UnityEngine;
 
 public class RagdollController : MonoBehaviour
 {
-    public Rigidbody rb;
+    Rigidbody[] rb;
+    Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb.isKinematic = true;
+        anim = GetComponent<Animator>();
+        rb = GetComponentsInChildren<Rigidbody>();
+        for (int i = 0; i < rb.Length; i++)
+        {
+            rb[i].isKinematic = true;
+        }
     }
 
-    public void OnRagdoll()
-    {
-        rb.isKinematic = false;
-        GetComponent<RagdollBocoblin>().state = RagdollBocoblin.BocoblinState.Damaged;
+    private void Update()
+    {        
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            anim.enabled = false;
+            for (int i = 0; i < rb.Length; i++)
+            {
+                rb[i].isKinematic = false;
+                Debug.Log(rb[i].isKinematic);
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.B))
+        {
+            for (int i = 0; i < rb.Length; i++)
+            {
+                rb[i].isKinematic = true;
+                Debug.Log(rb[i].isKinematic);
+            }
+            anim.enabled = true;
+            anim.SetTrigger("StacdUp");
+        }
     }
 
-    public void OffRagdoll()
-    {
-        rb.isKinematic = false;
-    }
 }

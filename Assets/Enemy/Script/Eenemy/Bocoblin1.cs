@@ -180,9 +180,15 @@ public class Bocoblin1 : MonoBehaviour
     void StandUp()
     {
         anim.SetTrigger("StandUp");
-        // Idle 상태로 전환한다.
-        state = BocoblinState.Idle;
-        isGrounded = true;
+        currentTime += Time.deltaTime;
+        if(currentTime >= 3)
+        {
+            bocoRagdoll.transform.position = this.transform.position;
+            // Idle 상태로 전환한다.
+            state = BocoblinState.Idle;
+            currentTime = 0;
+
+        }
     }
 
     #endregion
@@ -190,7 +196,8 @@ public class Bocoblin1 : MonoBehaviour
     #region 상태함수
     private void UpdateIdle()
     {
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        // rb.constraints = RigidbodyConstraints.FreezeRotation;
+        //rb.freezeRotation = true;
 
         // 보코볼린의 x,z rotation 을 0으로 해준다.
         //Vector3 t = transform.eulerAngles;
@@ -228,15 +235,22 @@ public class Bocoblin1 : MonoBehaviour
 
     private void UpdateAir()
     {
-        isAir = true;
-        Destroy(bocoAvatar);
-        bocoRagdoll.SetActive(true);
+        //bocoAvatar.SetActive(false);
+        //bocoRagdoll.SetActive(true);
         //Rigidbody[] rbbocos = GetComponentsInChildren<Rigidbody>();
         //for (int i = 0; i < rbbocos.Length; i++)
         //{
         //    rbbocos[i].AddForce(transform.up * 7 + transform.forward * -3, ForceMode.Impulse);
         //}
-        state = BocoblinState.Die;
+        //state = BocoblinState.Die;
+        currentTime += Time.deltaTime;
+        if(currentTime > 5)
+        {
+            bocoAvatar.SetActive(true);
+            bocoRagdoll.SetActive(false);
+            StandUp();
+            currentTime = 0;
+        }
     }
 
     private void UpdateMove()
@@ -429,18 +443,23 @@ public class Bocoblin1 : MonoBehaviour
     public void DamagedProcess()
     {
         currentHP--;
+        bocoAvatar.SetActive(false);
+        bocoRagdoll.SetActive(true);
 
-        if(currentHP > 0)
+        if (currentHP > 0)
         {
             //애니메이션실행
-            anim.SetTrigger("Damaged");
+            //anim.SetTrigger("Damaged");
             // 회전할 수 있게!
-            rb.freezeRotation = false;
+            //rb.freezeRotation = false;
+            // rb.AddTorque(Random.insideUnitSphere * 100);
+
+            state = BocoblinState.Air;
         }
         else if(currentHP <= 0)
         {
-            state = BocoblinState.Air;
-
+            // state = BocoblinState.Air;
+            state = BocoblinState.Die;
         }
     }
     public SkinnedMeshRenderer bococlub;

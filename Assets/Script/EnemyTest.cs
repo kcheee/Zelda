@@ -9,7 +9,7 @@ public class EnemyTest : MonoBehaviour
     {
         // 제일 위에있는 오브젝트 접근 후 첫번째 자식 접근 (Link)
         Debug.Log(other.transform.root.GetChild(0).forward);
-        
+
         Rigidbody rb = transform.GetComponent<Rigidbody>();
         if (!Trail.strongatt)
         {
