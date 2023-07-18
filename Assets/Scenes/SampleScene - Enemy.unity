@@ -2342,6 +2342,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 502760174}
   m_CullTransparentMesh: 1
+--- !u!137 &506054986 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5017680422450463624, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1422937221053082411}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &506812908
 GameObject:
   m_ObjectHideFlags: 0
@@ -4483,6 +4489,87 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdfa9617188f602499cd09fcdfe52dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &891295619
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1870820031, guid: 58cc74a459d49c448bd811fa2d77df32, type: 3}
+      propertyPath: bococlub
+      value: 
+      objectReference: {fileID: 506054986}
+    - target: {fileID: 1870820031, guid: 58cc74a459d49c448bd811fa2d77df32, type: 3}
+      propertyPath: bocoAvatar
+      value: 
+      objectReference: {fileID: 1994792449}
+    - target: {fileID: 1870820031, guid: 58cc74a459d49c448bd811fa2d77df32, type: 3}
+      propertyPath: bocoRagdoll
+      value: 
+      objectReference: {fileID: 2040842214}
+    - target: {fileID: 2636130207312919172, guid: 58cc74a459d49c448bd811fa2d77df32,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636130207312919172, guid: 58cc74a459d49c448bd811fa2d77df32,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636130207312919172, guid: 58cc74a459d49c448bd811fa2d77df32,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636130207312919172, guid: 58cc74a459d49c448bd811fa2d77df32,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636130207312919172, guid: 58cc74a459d49c448bd811fa2d77df32,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636130207312919172, guid: 58cc74a459d49c448bd811fa2d77df32,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636130207312919172, guid: 58cc74a459d49c448bd811fa2d77df32,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636130207312919172, guid: 58cc74a459d49c448bd811fa2d77df32,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636130207312919172, guid: 58cc74a459d49c448bd811fa2d77df32,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636130207312919172, guid: 58cc74a459d49c448bd811fa2d77df32,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636130207312919172, guid: 58cc74a459d49c448bd811fa2d77df32,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3449399803469914174, guid: 58cc74a459d49c448bd811fa2d77df32,
+        type: 3}
+      propertyPath: m_Name
+      value: RagdollBokoblin
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 58cc74a459d49c448bd811fa2d77df32, type: 3}
 --- !u!1 &897086350
 GameObject:
   m_ObjectHideFlags: 0
@@ -5450,7 +5537,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1147880399
 Transform:
   m_ObjectHideFlags: 0
@@ -9083,9 +9170,14 @@ MonoBehaviour:
   skill_state: 0
   iceskill: {fileID: 4663434555921693915, guid: 870e36c4086f59e42b6c6b8930a17e00,
     type: 3}
-  bomb: {fileID: 7905854191558516765, guid: 90148f87342ddec4f991cc2ae43692f5, type: 3}
+  bomb: {fileID: 0}
   CameraRotation: {fileID: 1383688653}
   firePosition: {fileID: 2118445312}
+  Bomb_flag: 0
+  Bomb_po: {fileID: 0}
+  Bomb_count: 0
+  Bomb_Ready: {fileID: 0}
+  sword_shield: []
 --- !u!114 &1670379318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9132,6 +9224,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1670379320}
   state: 0
+  comboTimeThreshold: 1
+  attackAnimations: []
+  AttackCollider: {fileID: 0}
 --- !u!114 &1670379322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9147,6 +9242,11 @@ MonoBehaviour:
   arrowFactory: {fileID: 8335338953368106266, guid: aa0ba71ad1571ce4c85a1d4561adb379,
     type: 3}
   firePosition: {fileID: 2118445312}
+  camerashake: {fileID: 0}
+  bowEffect: {fileID: 0}
+  Bow: {fileID: 0}
+  BowReady: {fileID: 0}
+  sword_shield: []
   fireTime: 0.2
 --- !u!114 &1670379323
 MonoBehaviour:
@@ -9278,7 +9378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fdece8d4fd6d73459c023e5ac8b784a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 0
+  hp: 0
   Healthbar: {fileID: 2129855670}
 --- !u!1 &1693308281
 GameObject:
@@ -11711,6 +11811,12 @@ Transform:
   m_Father: {fileID: 864071181}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1994792449 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7415693820280996362, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1422937221053082411}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2017363429
 GameObject:
   m_ObjectHideFlags: 0
@@ -11811,6 +11917,12 @@ Transform:
   m_Father: {fileID: 1250427317}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2040842214 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4351025918561357993, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1422937221053082411}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2059507978
 GameObject:
   m_ObjectHideFlags: 0
@@ -13383,6 +13495,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7834402645691306137, guid: 9ed2ddf86cc2d9e408309f616d65e0dd,
         type: 3}
+    - target: {fileID: 4351025918561357993, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6610246748950431413, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
         type: 3}
       propertyPath: m_RootOrder
@@ -13444,6 +13561,11 @@ PrefabInstance:
       value: BocoblinRD
       objectReference: {fileID: 0}
     - target: {fileID: 6610246748950431415, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415693820280996362, guid: 82adbf391ee4d6b4482a8ea14d498f8a,
         type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -17230,7 +17352,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0654931fe80274e4591f84198fc36465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
 --- !u!114 &6188248234347557983
 MonoBehaviour:
   m_ObjectHideFlags: 0
