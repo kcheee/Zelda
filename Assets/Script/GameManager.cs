@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 using DG.Tweening;
+using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour
 {
@@ -84,6 +85,9 @@ public class GameManager : MonoBehaviour
         }
        
     }
+
+    #endregion
+
     // fade 함수
     private IEnumerator Fade(CanvasGroup group, float startAlpha, float targetAlpha, float duration)
     {
@@ -97,6 +101,52 @@ public class GameManager : MonoBehaviour
         }
         group.alpha = targetAlpha;
     }
+
+    #region Defeat state
+    public GameObject Defeat_T;
+    public GameObject Defeat_B;
+    public Camera_PlayerMove cameraPlayerMove_onoff;
+    public Volume volume;
+    public IEnumerator Playerdie()
+    {
+        state = State.Die;
+        // 죽고 나서 딜레이 주고 UI
+        yield return new WaitForSeconds(2);
+        // 카메라 플레이어 이동 꺼짐.
+        cameraPlayerMove_onoff.enabled = false;
+        Start_EndUI.SetActive(true);
+        Defeat_T.SetActive(true);
+        Defeat_B.SetActive(true);
+        StartCoroutine(Fade(Defeat_B.GetComponent<CanvasGroup>(), 0, 1, 1));
+        // 피사계 심도
+        volume.enabled = true;
+
+        yield return new WaitForSeconds(1);
+        Time.timeScale = 0f;
+    }
+    // button
+    public void Retry()
+    {
+        Time.timeScale = 1f;
+        // 피사계 심도
+        volume.enabled = false;
+        // UI false
+        Start_EndUI.SetActive(false);
+        Defeat_T.SetActive(false);
+        Defeat_B.SetActive(false);
+
+        // 카메라 플레이어 이동 킴
+        cameraPlayerMove_onoff.enabled = true;
+
+        // 체력 채움
+        PlayerManager.instance.PlayerRetry();
+    }
+    // button
+    public void BattleStop()
+    {
+        // LoadScene(0);
+    }
+
     #endregion
 
     #region KillCount UI and KillcntUpdate() 함수
@@ -111,11 +161,11 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-
     private void Update()
     {
         // 킬수 테스트,  보코블린 Destory시에 KillcntUpdate()실행 해줘야 함.
         if (Input.GetKeyDown(KeyCode.M)) { KillcntUpdate(); StartCoroutine(EndUI()); }
+        if(Input.GetKeyDown(KeyCode.C)) { StartCoroutine(Playerdie()); }
     }
 
 }
