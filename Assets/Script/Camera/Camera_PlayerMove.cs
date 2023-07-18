@@ -124,7 +124,6 @@ public class Camera_PlayerMove : MonoBehaviour
             // move 상태로 바꿈
             if (animation_T.instance.state != animation_T.ani_state.attack)
             {
-                animation_T.instance.state = animation_T.ani_state.move;
                 transform.position += moveDir * Time.deltaTime * speed;
             }
             
