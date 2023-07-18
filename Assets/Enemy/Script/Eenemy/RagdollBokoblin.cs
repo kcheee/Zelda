@@ -55,8 +55,9 @@ public class RagdollBokoblin : MonoBehaviour
     // 애니메이션
     Animator anim;
 
-    // 스킨메시렌더러
+    // 보코볼린 클럽
     public SkinnedMeshRenderer bococlub;
+    public BoxCollider club;
 
     // 체력
     public int currentHP;
@@ -66,10 +67,8 @@ public class RagdollBokoblin : MonoBehaviour
     public GameObject dieEffectFactory;
     
     // 리지드바디
-    Rigidbody[] rb;
-
-    // 박스콜라이더
-    BoxCollider box;
+    Rigidbody[] rbs;
+    Transform hipBone;
 
     // bool
     bool isWait;
@@ -82,17 +81,11 @@ public class RagdollBokoblin : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentHP = maxHP;                              // 현재체력을 최대체력으로 한다.
-        link = GameObject.Find("Link");                 // 링크를 찾는다.
-        box = GetComponent<BoxCollider>();              // 박스콜라이더를 가져온다.
-        anim = gameObject.GetComponent<Animator>();     // 애니메이터를 가져온다.
-        rb = GetComponentsInChildren<Rigidbody>();      // 하위 오브젝트의 리지드바디를 가져온다.
-
-        // 하위 오브젝트들의 리지드바디에 있는 isKinetic 을 전부 켜놓는다.
-        for (int i = 0; i < rb.Length; i++)
-        {
-            rb[i].isKinematic = true;   // 애니메이션과 트랜스폼으로 행동
-        }
+        currentHP = maxHP;                                      // 현재체력을 최대체력으로 한다.
+        link = GameObject.Find("Link");                         // 링크를 찾는다.
+        anim = gameObject.GetComponent<Animator>();             // 애니메이터를 가져온다.
+        rbs = GetComponentsInChildren<Rigidbody>();             // 하위 오브젝트의 리지드바디를 가져온다.
+        hipBone = anim.GetBoneTransform(HumanBodyBones.Hips);   // hipBone 위치를 가져온다.
     }
     #endregion
 
@@ -140,6 +133,10 @@ public class RagdollBokoblin : MonoBehaviour
 
     private void UpdateIdle()
     {
+        SoundManager.instance.isBuffSoundPlaying = false;
+        SoundManager.instance.isAttackSoundPlaying = false;
+        SoundManager.instance.isDieSoundPlaying = false;
+
         // 링크와의 거리를 구한다.
         Vector3 y = link.transform.position;
         y.y = transform.position.y;
@@ -207,12 +204,18 @@ public class RagdollBokoblin : MonoBehaviour
         // 링크가 공격 거리 안으로 들어오면 기다린다.
         else if (distance <= attackPossibleDistance)
         {
+            if (SoundManager.instance.isBuffSoundPlaying == false)
+            {
+                SoundManager.instance.OnMyBuffSound();
+            }
+
             // 공격대기상태로 전환한다.
             state = BocoblinState.Wait;
 
             // 애니메이션
             anim.SetBool("Wait", true);
             anim.SetBool("Move", false);
+
         }
     }
 
@@ -221,37 +224,21 @@ public class RagdollBokoblin : MonoBehaviour
         // 5초 후에 일어난다.
         currentTime += Time.deltaTime;
         if (currentTime > 6)
-        {
-            // 하위 오브젝트의 리지드바디 컴포넌트 안의 isKinematic 을 활성화 한다.
-            for (int i = 0; i < rb.Length; i++)
-            {
-                rb[i].isKinematic = true;
-            }
+        {           
             // 애니메이터를 활성화 한다.
             anim.enabled = true;
 
-            // 박스콜라이더 활성화
-            // box.enabled = true;
+            transform.position = new Vector3(hipBone.position.x, transform.position.y, hipBone.position.z);
 
-            StandUp();
-
-            currentTime = 0;
-        }
-    }
-
-    void StandUp()
-    {
-        anim.SetTrigger("StandUp");
-        currentTime += Time.deltaTime;
-        if (currentTime >= 2)
-        {
-            state = BocoblinState.Idle;
+            anim.SetTrigger("StandUp");
             anim.SetBool("Wait", false);
             anim.SetBool("Move", false);
             anim.SetBool("Run", false);
             anim.SetBool("AttackWait", false);
             anim.SetBool("Dodge", false);
 
+            state = BocoblinState.Idle;
+            
             currentTime = 0;
         }
     }
@@ -339,6 +326,11 @@ public class RagdollBokoblin : MonoBehaviour
 
     private void UpdateAttack()
     {
+        if (SoundManager.instance.isAttackSoundPlaying == false)
+        {
+            SoundManager.instance.OnMyAttackSound();
+        }
+
         // 애니메이션 실행
         anim.SetBool("Run", false);
         anim.SetBool("Attack", false);
@@ -347,13 +339,16 @@ public class RagdollBokoblin : MonoBehaviour
         state = BocoblinState.AttackWait;
     }
 
-    public BoxCollider club;
+
     public void Attack()
     {
         club.enabled = true;
     }
+
     private void UpdateAttackWait()
     {
+        SoundManager.instance.isAttackSoundPlaying = false;
+
         currentTime += Time.deltaTime;
 
         #region 거리재기 및 바라보기
@@ -397,18 +392,16 @@ public class RagdollBokoblin : MonoBehaviour
 
     public void DamagedProcess()
     {
-        //box.enabled = false;
         // 애니메이터를 비활성화 한다.
         anim.enabled = false;
         
-        // 하위 오브젝트의 리지드바디 컴포넌트 안의 isKinematic 을 비활성화 한다.
-        for (int i = 0; i < rb.Length; i++)
-        {
-            rb[i].isKinematic = false;
-        }
-
         // 체력을 1 감소한다.
         currentHP--;
+
+        foreach (Rigidbody rb in rbs)
+        {
+            rb.AddForce(Vector3.up * 3, ForceMode.Impulse);
+        }
 
         // 만약 체력이 0보다 크다면
         if (currentHP > 0)
@@ -424,12 +417,26 @@ public class RagdollBokoblin : MonoBehaviour
         }
     }
 
+    bool isDie;
+
     private void UpdateDie()
     {
-        // 색깔을 검게 바꾸고
-        Invoke("DieColor", 3);
-        // 사망이펙트와 함께 게임오브젝트를 파괴한다.
-        Invoke("DieEffect", 4);
+        if(isDie == false)
+        {
+            isDie = true;
+
+            if (SoundManager.instance.isDieSoundPlaying == false)
+            {
+                SoundManager.instance.OnMyDieSound();
+            }
+
+            GameManager.instance.KillcntUpdate();
+
+            // 색깔을 검게 바꾸고
+            Invoke("DieColor", 3);
+            // 사망이펙트와 함께 게임오브젝트를 파괴한다.
+            Invoke("DieEffect", 4);
+        }
     }
 
     public void DieColor()
@@ -451,7 +458,7 @@ public class RagdollBokoblin : MonoBehaviour
         {
             // 파괴할 때 검은 먼지 파티클시스템을 실행한다.
             GameObject dieEffect = Instantiate(dieEffectFactory);
-            dieEffect.transform.position = transform.position;
+            dieEffect.transform.position = hipBone.position;
             isEffect = true;    // 한번만 실행할 수 있게
 
             // 게임오브젝트를 파괴한다.

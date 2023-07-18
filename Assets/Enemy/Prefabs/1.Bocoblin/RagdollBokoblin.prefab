@@ -986,7 +986,6 @@ GameObject:
   - component: {fileID: 2636130207312919172}
   - component: {fileID: 1870820030}
   - component: {fileID: 1870820029}
-  - component: {fileID: 1870820031}
   - component: {fileID: 1870820032}
   - component: {fileID: 81994998}
   m_Layer: 7
@@ -1051,33 +1050,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0654931fe80274e4591f84198fc36465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1870820031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3449399803469914174}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cf35046f17e6eb4c87296e268a29cc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 0
-  speed: 3
-  runSpeed: 4
-  detectDistance: 15
-  attackPossibleDistance: 8
-  attackDistance: 3.2
-  dodgePos: {fileID: 0}
-  waitTime: 1.2
-  currentHP: 0
-  maxHP: 2
-  bocoAvatar: {fileID: 0}
-  bocoRagdoll: {fileID: 0}
-  bococlub: {fileID: 0}
-  dieEffectFactory: {fileID: 7834402645691306137, guid: 9ed2ddf86cc2d9e408309f616d65e0dd,
-    type: 3}
 --- !u!114 &1870820032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1102,7 +1074,7 @@ MonoBehaviour:
   maxHP: 443
   dieEffectFactory: {fileID: 7834402645691306137, guid: 9ed2ddf86cc2d9e408309f616d65e0dd,
     type: 3}
-  club: {fileID: 0}
+  club: {fileID: 240215404}
 --- !u!114 &81994998
 MonoBehaviour:
   m_ObjectHideFlags: 0

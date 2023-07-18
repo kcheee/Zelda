@@ -77,15 +77,16 @@ public class Bocoblin1 : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = gameObject.GetComponent<Animator>();
 
-        //// 하위 오브젝트들의 리지드바디에 있는 isKinetic 을 전부 꺼준다.
-        //Rigidbody[] rbs = GetComponentsInChildren<Rigidbody>();
-        //for (int i = 0; i < rbs.Length; i++)
-        //{
-        //    if (rbs[i] == rb)
-        //        continue;   // 내거는 건너뛰고 바로 i 를 증가시킴
+        // 하위 오브젝트들의 리지드바디에 있는 isKinetic 을 전부 꺼준다.
+        Rigidbody[] rbs = GetComponentsInChildren<Rigidbody>();
+        for (int i = 0; i < rbs.Length; i++)
+        {
+            if (rbs[i] == rb)
+                continue;   // 내거는 건너뛰고 바로 i 를 증가시킴
 
-        //    rbs[i].isKinematic = true;
-        //}
+            //rbs[i].isKinematic = true;
+            rbs[i].useGravity = false;
+        }
     }
     #endregion
 
