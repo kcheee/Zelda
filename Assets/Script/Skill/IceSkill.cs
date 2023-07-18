@@ -12,7 +12,8 @@ public class IceSkill : MonoBehaviour
     }
     IEnumerator delay()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(4);
+        SkillManager.flag_icemaker = false;
         Destroy(gameObject);
     }
 
@@ -21,11 +22,11 @@ public class IceSkill : MonoBehaviour
     {
         if (transform.localScale.magnitude < 8f)
         {
-            transform.localScale += new Vector3(0, 1.5f, 0) * Time.deltaTime * 10;
+            transform.localScale += new Vector3(0, 1.5f, 0) * Time.deltaTime * 20;
         }
         else
-        {
-        StartCoroutine(delay());
+        {         
+             StartCoroutine(delay());
         }
     }
 

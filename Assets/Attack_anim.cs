@@ -8,4 +8,6 @@ public class Attack_anim : StateMachineBehaviour
     {
         animation_T.instance.state = animation_T.ani_state.attack;
     }
+
+    // 회전값 고정..
 }

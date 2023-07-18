@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4663434555050360076}
   - component: {fileID: 4663434555050360075}
   - component: {fileID: 4663434555050360074}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Ice
-  m_TagString: Untagged
+  m_TagString: IceMaker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,9 +108,9 @@ GameObject:
   - component: {fileID: 4663434555921693914}
   - component: {fileID: 4663434555921693915}
   - component: {fileID: -7348813459286654038}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: IceSkill
-  m_TagString: Untagged
+  m_TagString: IceMaker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

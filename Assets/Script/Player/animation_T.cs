@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class animation_T : MonoBehaviour
 {
@@ -51,7 +53,7 @@ public class animation_T : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("move"))
             state = ani_state.move;
 
-        if (state == ani_state.attack)
+        if (state == ani_state.attack|| G_state == Ground_state.air)
         {
             AttackCollider.enabled = true;
             animator.applyRootMotion = true;
@@ -67,6 +69,8 @@ public class animation_T : MonoBehaviour
         //Combomotion();
 
         AttackCombo();
+        CheckGrounded();
+        
     }
 
     private int comboCount = 0; // 현재 콤보 카운트
@@ -106,6 +110,46 @@ public class animation_T : MonoBehaviour
 
             }
             lastAttackTime = Time.time;
+        }
+    }
+
+    #region 공중에 뜬 상태
+
+    public enum Ground_state
+    {
+        grounded,
+        air
+    }
+
+    public Ground_state G_state;
+
+    #endregion
+    bool isGrounded;
+
+    private void CheckGrounded()
+    {
+        Vector3 dir = new Vector3(transform.position.x, transform.position.y+0.5f, transform.position.z);  
+        // 발밑으로 레이캐스트를 쏴서 지면과의 충돌을 체크
+        Debug.DrawRay(dir, -transform.up);
+        isGrounded = Physics.Raycast(dir, -transform.up, 5, LayerMask.NameToLayer("Ground"));
+
+        RaycastHit hitinfo;
+        if (Physics.Raycast(transform.position, -transform.up*1f, out hitinfo))
+        {
+            if (hitinfo.collider.CompareTag("Floor"))
+            {
+
+
+            }
+            
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Floor"))
+        {
+                
         }
     }
 
