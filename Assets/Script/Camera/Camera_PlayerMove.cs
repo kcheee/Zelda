@@ -68,7 +68,6 @@ public class Camera_PlayerMove : MonoBehaviour
         if (isMove)
         {
             // animation_T 상황전환
-            animation_T.instance.state = animation_T.ani_state.move;
             animation_T.instance.animator.SetBool("move", true);
 
             // 카메라의 x,z 값만 가져와서 정규화 해줌 y값은 0으로 고정시키는 이유는 캐릭터가 위아래로 움직이는 것 방지
@@ -114,17 +113,21 @@ public class Camera_PlayerMove : MonoBehaviour
 
             //// 캐릭터의 앞방향을 카메라 앞방향으로 설정.
 
-
             // 회전 값
             /*
             Quaternion look = Quaternion.LookRotation(lookdir);
             transform.rotation = Quaternion.Lerp(transform.rotation, look, Time.deltaTime * 5);
             */
 
-            characterBody.forward = moveDir;
-            transform.position += moveDir * Time.deltaTime*speed;
             
-
+            characterBody.forward = moveDir;
+            // move 상태로 바꿈
+            if (animation_T.instance.state != animation_T.ani_state.attack)
+            {
+                animation_T.instance.state = animation_T.ani_state.move;
+                transform.position += moveDir * Time.deltaTime * speed;
+            }
+            
             //transform.position = new Vector3(transform.position.x, characterBody.transform.localPosition.y, transform.position.z);
         }
         else 
