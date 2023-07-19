@@ -151,7 +151,7 @@ public class animation_T : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Bokoblin"))
+        if (other.CompareTag("Bokoblin_sword"))
         {
             Debug.Log(other.gameObject);
             animator.SetTrigger("Hit");

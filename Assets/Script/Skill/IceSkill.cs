@@ -33,18 +33,26 @@ public class IceSkill : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Collider[] cols = Physics.OverlapBox(collision.transform.position, new Vector3(6f,7,6f));
-       
+
         for (int i = 0; i < cols.Length; i++)
         {
-            // 폭탄 반경에 있는 오브젝트 rigidbody 가져옴
-            if (cols[i].name.Contains("Boko_collider"))
+            if (cols[i].CompareTag("Bokoblin"))
             {
-                Rigidbody rigid = cols[i].GetComponent<Rigidbody>();
-                // (폭발의 힘, 영향이 미치는 구의 중심, 영향이 미치는 구의 반경, 위로 솟구치는 힘)
-                rigid.AddForce(collision.transform.forward*10,ForceMode.Impulse);
-                rigid.AddExplosionForce(300, this.transform.position, 10, 30);
+                Rigidbody[] rigid = cols[i].GetComponentsInChildren<Rigidbody>();
+                foreach (Rigidbody rb in rigid)
+                {
+                    //rb.velocity = new Vector3(0, 0, 0);
+                    //rb.angularVelocity = new Vector3(0, 0, 0);
+                    rb.AddForce(Vector3.up * 5, ForceMode.Impulse);
+                    rb.AddExplosionForce(5 * rb.mass, collision.contacts[0].point, 20, 6 * rb.mass, ForceMode.Impulse);
+                }
+
+                // 폭탄 데미지
+                RagdollBokoblin.Damage = 3;
+                cols[i].GetComponentInParent<RagdollBokoblin>().state = RagdollBokoblin.BocoblinState.Damaged;
 
             }
+
         }
     }
 }

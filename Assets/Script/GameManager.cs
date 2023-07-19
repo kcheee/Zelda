@@ -177,8 +177,9 @@ public class GameManager : MonoBehaviour
         // 보코블린 잡을 때 게이지 줄어듦
         // 2. 20퍼 남았을 때 보스 출현
         // 3. 종료 후 UI 
-        
-        // 종료 UI 한번만 실행되게 해야함..
+         
+
+        // 종료 UI 한번만 실행되게 해야함.
         if(BossGage.GetComponent<Slider>().value<=0&& !EndUI_flag)
         {
             StartCoroutine(EndUI());
@@ -188,7 +189,8 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    
+
+
     private void Update()
     {
         // 킬수 테스트,  보코블린 Destory시에 KillcntUpdate()실행 해줘야 함.
