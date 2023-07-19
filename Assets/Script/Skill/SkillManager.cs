@@ -76,10 +76,13 @@ public class SkillManager : MonoBehaviour
     public Transform Bomb_po;
     public int Bomb_count = 0;
     GameObject[] BOMB = new GameObject[4];
+
+    // 칼 집어넣기.
+    public GameObject Bomb_Ready;
+    public GameObject[] sword_shield;
     public IEnumerator create_bomb()
     {
         // 파티클과 폭탄 생성
-        Debug.Log(Bomb_count);
         BOMB[Bomb_count] = Instantiate(bomb, Bomb_po.position, CameraRotation.rotation);
         BOMB[Bomb_count].transform.parent = Bomb_po.transform;
         // 잠깐 멈춤
@@ -100,7 +103,7 @@ public class SkillManager : MonoBehaviour
         // 공 던지는 힘
         BOMB[Bomb_count].GetComponent<Rigidbody>().AddForce(transform.forward * 10+transform.up*5, ForceMode.Impulse);
         // 공 회전값 무작위로 회전함.
-        BOMB[Bomb_count].GetComponent<Rigidbody>().AddTorque(Random.insideUnitSphere * 10, ForceMode.Impulse);
+        BOMB[Bomb_count].GetComponent<Rigidbody>().AddTorque(Random.insideUnitSphere * 1.5f, ForceMode.Impulse);
         Bomb_count++;
 
         if (Bomb_count == 4) Bomb_count = 0;
@@ -109,8 +112,13 @@ public class SkillManager : MonoBehaviour
     IEnumerator Bomb()
     {
         skill_state = Skill_state.skill_bomb;
+        // 칼 방패 집어넣기
+        Bomb_Ready.SetActive(true);
+        sword_shield[0].SetActive(false); sword_shield[1].SetActive(false);
+
         StartCoroutine(CameraRotate());
         anim.SetTrigger("Bomb");
+      
         yield return new WaitForSeconds(4f);
 
         skill_state = Skill_state.None;
@@ -118,10 +126,17 @@ public class SkillManager : MonoBehaviour
         CoolTimer.instance.on_Btn();
         CoolTimer.instance.cooltime = CoolTimer.CoolTime.skill_cooltime;
 
+        // 칼 방패 꺼내기
+        Bomb_Ready.SetActive(false);
+        sword_shield[0].SetActive(true); sword_shield[1].SetActive(true);
+
     }
     #endregion
     // Time.scale 조절하는 불변수
     bool flag = false;
+
+    // Icemaker 중력 변수
+   static public bool flag_icemaker=false;
     // Update is called once per frame
     void Update()
     {
@@ -152,13 +167,15 @@ public class SkillManager : MonoBehaviour
                 {
                     SkillUI.instance.Skillpanel.SetActive(false);
                     flag = true; Time.timeScale = 1;
-
+                    gameObject.GetComponent<Animator>().applyRootMotion = true;
+                    gameObject.GetComponent<Animator>().SetTrigger("charged2");
                     // 스킬 쿨타임
                     CoolTimer.instance.cooltime = CoolTimer.CoolTime.skill_cooltime;
-
+                    flag_icemaker = true;
+                    StartCoroutine(IcemakerGravity());
                     transform.position = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
-                    rb.AddForce(transform.up * 10 * rb.mass, ForceMode.Impulse);
-                    Instantiate(iceskill, new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z)
+                    rb.AddForce(transform.up * 15 * rb.mass, ForceMode.Impulse);                   
+                     Instantiate(iceskill, new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z)
                         , transform.rotation);
                 }
                 #endregion
@@ -183,9 +200,20 @@ public class SkillManager : MonoBehaviour
             flag = false; Time.timeScale = 1;
         }
         #endregion
-
     }
 
+    // 수정 필요 IceSkill에서 제어
+    IEnumerator IcemakerGravity()
+    {
+        yield return new WaitForSeconds(0.5f);
+       
+        while (flag_icemaker)
+        {
+            // 밑으로 주는 힘.
+            rb.AddForce(Vector3.down * 40 * rb.mass);
+            yield return new WaitForSeconds(0.02f);
+        }
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -197,6 +225,12 @@ public class SkillManager : MonoBehaviour
 
             rb.AddForce(Vector3.up * 10 + -transform.forward * 15, ForceMode.Impulse);
             //rb.velocity=GMrb.velocity*2.1f;
+        }
+
+        if (collision.collider.CompareTag("IceMaker"))
+        {
+            // 수정 필요
+            gameObject.GetComponent<Animator>().applyRootMotion = false;    // 루트모션 해제
         }
     }
 }

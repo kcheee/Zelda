@@ -25,7 +25,7 @@ public class UIscript_T : MonoBehaviour
         secondImage.gameObject.SetActive(false);
 
         startbutton = GetComponent<Button>();
-        startbutton.onClick.AddListener(SwitchImage);
+        //startbutton.onClick.AddListener(SwitchImage);
 
     }
     public void SwitchImage()
@@ -47,6 +47,6 @@ public class UIscript_T : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         videoPlayer.Stop();
-        SceneManager.LoadScene("MainScene");//임시. 씬이름. 게임 씬 이름 작성해야지 이동함. 
+        SceneManager.LoadScene(1);//임시. 씬이름. 게임 씬 이름 작성해야지 이동함. 
     }
 }

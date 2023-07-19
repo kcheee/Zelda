@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4663434555050360076}
   - component: {fileID: 4663434555050360075}
   - component: {fileID: 4663434555050360074}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Ice
-  m_TagString: Untagged
+  m_TagString: IceMaker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9b9a6a31867fd4748b94836658c932f1, type: 2}
+  - {fileID: 2100000, guid: c6d38711520119c4e89ddf1ea6adc007, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,9 +108,9 @@ GameObject:
   - component: {fileID: 4663434555921693914}
   - component: {fileID: 4663434555921693915}
   - component: {fileID: -7348813459286654038}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: IceSkill
-  m_TagString: Untagged
+  m_TagString: IceMaker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

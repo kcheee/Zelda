@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class animation_T : MonoBehaviour
 {
@@ -19,6 +21,7 @@ public class animation_T : MonoBehaviour
 
     public ani_state state;
 
+    #region 민경님 변수
     int anistack = 0;
     int chargestack = 0;
     int combostack = 0;
@@ -29,6 +32,7 @@ public class animation_T : MonoBehaviour
     bool isCharged = false;
     bool isCharged2Ready = false;
     bool isCharged2WindowActive = false;
+    #endregion 
 
     private void Awake()
     {
@@ -49,12 +53,100 @@ public class animation_T : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("move"))
             state = ani_state.move;
 
-        Attackmotion();
-        Chargedmotion();
-        CheckCharged2Input();
-        Combomotion();
+        if (state == ani_state.attack|| G_state == Ground_state.air)
+        {
+            //AttackCollider.enabled = true;
+            animator.applyRootMotion = true;
+        }
+        else
+        {
+            //AttackCollider.enabled = false;
+            animator.applyRootMotion = false;
+        }
+        //Attackmotion();
+        //Chargedmotion();
+        //CheckCharged2Input();
+        //Combomotion();
+
+        AttackCombo();
+        CheckGrounded();
+        
     }
 
+    private int comboCount = 0; // 현재 콤보 카운트
+    private float lastAttackTime = 0f; // 마지막 공격 시간
+    public float comboTimeThreshold = 1f; // 콤보 시간 제한
+    public string[] attackAnimations; // 공격 애니메이션 이름 배열
+    public BoxCollider AttackCollider;
+
+    void AttackCombo()
+    {
+        // 공격 버튼을 눌렀을 때
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            state = ani_state.attack;
+            // 콤보 시간 내에 공격 버튼이 눌리면 콤보 카운트 증가
+            if (Time.time - lastAttackTime < comboTimeThreshold)
+            {
+
+                comboCount++;
+                // 콤보 카운트에 따라 공격 애니메이션 재생
+                if (comboCount < attackAnimations.Length)
+                {
+                    animator.SetTrigger(attackAnimations[comboCount]);
+                }
+                else
+                {
+                    // 콤보가 끝났을 때 초기화
+                    comboCount = 0;
+                    animator.SetTrigger(attackAnimations[0]);
+                }
+            }
+            else
+            {
+                // 콤보 시간을 초과한 경우 콤보 초기화
+                comboCount = 0;
+                animator.SetTrigger(attackAnimations[0]);
+
+            }
+            lastAttackTime = Time.time;
+        }
+    }
+
+    #region 공중에 뜬 상태
+
+    public enum Ground_state
+    {
+        grounded,
+        air
+    }
+
+    public Ground_state G_state;
+
+    #endregion
+    bool isGrounded;
+
+    // 그라운드 체크  공중에 있을때 링크 애니메이션
+    private void CheckGrounded()
+    {
+        RaycastHit hitinfo;
+        Vector3 dir = new Vector3(transform.position.x, transform.position.y + 0.1f,transform.position.z);
+        Debug.DrawRay(dir, -transform.up,Color.red);
+        if (Physics.Raycast(dir, -transform.up, out hitinfo,1))
+        {
+            if (hitinfo.collider.CompareTag("Floor")|| hitinfo.collider.CompareTag("IceMaker"))
+            {
+                animator.SetBool("AirBorne", false);
+            }
+        }
+        else
+        {
+            Debug.Log("공중");
+            animator.SetBool("AirBorne", true);
+        }
+    }
+
+    #region 민경님 코드
     void Attackmotion()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -132,7 +224,7 @@ public class animation_T : MonoBehaviour
             {
                 animator.SetTrigger("combo");
             }
-            else if(combostack == 2)
+            else if (combostack == 2)
             {
                 animator.SetTrigger("combo2");
             }
@@ -164,4 +256,6 @@ public class animation_T : MonoBehaviour
         isCharged2Ready = false;
         isCharged = false;
     }
+
+    #endregion
 }

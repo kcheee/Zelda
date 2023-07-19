@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Potion
   - Floor
+  - IceMaker
   layers:
   - Default
   - TransparentFX
@@ -21,11 +22,11 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Ground
   - Bomb
   - PlayerUI
-  - 
-  - 
+  - Sword
+  - postprocessing
   - 
   - 
   - 

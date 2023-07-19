@@ -37,8 +37,6 @@ public class Molblin1 : MonoBehaviour
     float distance;
     public float detectDistance;
     public float attackPossibleDistance;
-    public float attackDistance;
-    public Transform dodgePos;
 
     // 시간
     float currentTime;
@@ -63,6 +61,8 @@ public class Molblin1 : MonoBehaviour
     bool isDisturb = true;
     bool isTwoHands;
     bool isComboAttack;
+    bool isKick;
+
     #endregion
 
     #region Start
@@ -70,7 +70,7 @@ public class Molblin1 : MonoBehaviour
     void Start()
     {
         currentHP = maxHP;
-        link = GameObject.Find("Player");
+        link = GameObject.Find("Link");
         rb = GetComponent<Rigidbody>();
         anim = gameObject.GetComponentInChildren<Animator>();
     }
@@ -79,6 +79,7 @@ public class Molblin1 : MonoBehaviour
     #region Update
     void Update()
     {
+        Debug.Log(distance);
         #region 바라보기
         // 링크가 있는 방향을 찾는다.
         linkDir = link.transform.position - transform.position;
@@ -100,14 +101,14 @@ public class Molblin1 : MonoBehaviour
         // 발차기
         if(distance <= 3)
         {
-            isDodge = true;
-            state = MolblinnState.Dodge;
-            state = MolblinnState.Idle;
-
-
-            anim.SetBool("Move", false);
-            anim.SetBool("Kick", true);
-            state = MolblinnState.Kick;
+            if (isKick == false)
+            {
+                isDodge = true;
+                anim.SetBool("Move", false);
+                anim.SetBool("Wait", false);
+                state = MolblinnState.Kick;
+                isKick = true;
+            }
         }
 
         #region 상태함수
@@ -189,9 +190,9 @@ public class Molblin1 : MonoBehaviour
         // 만약 링크와의 거리가 감지거리보다 가깝고 공격가능거리보다 멀면 이동한다.
         else if (detectDistance > distance && distance > attackPossibleDistance)
         {
+            anim.SetBool("Move", true);
             // 링크가 있는 곳으로 이동한다.
             transform.position += linkDir * speed * Time.deltaTime;
-            anim.SetBool("Move", true);
         }
 
         // 링크가 공격 거리 안으로 들어오면
@@ -209,7 +210,7 @@ public class Molblin1 : MonoBehaviour
         {
             // 상태를 Idle 로 전환한다.
             state = MolblinnState.Idle;
-            anim.SetBool("Move", false);
+            anim.SetBool("Wait", false);
         }
 
         // 50% 확률로 양손공격 실행
@@ -224,9 +225,6 @@ public class Molblin1 : MonoBehaviour
             // 링크와의 거리가 패턴 2 거리 이하가 되면
             if (distance < pattern2Distance)
             {
-                anim.SetBool("Wait", true);
-                anim.SetBool("Move", false);
-
                 state = MolblinnState.TwoHandsAttack;
             }
         }
@@ -242,9 +240,6 @@ public class Molblin1 : MonoBehaviour
             // 링크와의 거리가 패턴 2 거리 이하가 되면
             if (distance < pattern3Distance)
             {
-                anim.SetBool("Wait", true);
-                anim.SetBool("Move", false);
-
                 state = MolblinnState.ComboAttack;
             }
         }
@@ -256,27 +251,34 @@ public class Molblin1 : MonoBehaviour
     private void Kick()
     {
         print("발차기");
-        anim.SetBool("Kick", false);
+        anim.SetTrigger("Kick");
         state = MolblinnState.Idle;
+        isKick = false;
     }
 
     private void UpdateDodge()
     {
-        Debug.Log(distance);
         // 애니메이션 실행
         anim.SetTrigger("Dodge");
+        state = MolblinnState.Idle;
+        isDodge = false;
     }
 
     private void TwoHandsAttack()
     {
-        if (distance < 6)
+        if (distance < 6 && isDodge == false)
         {
+            anim.SetBool("Move", false);
+            anim.SetBool("Wait", false);
+
             state = MolblinnState.Dodge;
+            isDodge = true;
         }
         else
         {
+            // 시간을 흐르게 한다.
             currentTime += Time.deltaTime;
-
+            // 1초 후에
             if (currentTime > 1)
             {
                 print("양손 공격");
@@ -285,18 +287,17 @@ public class Molblin1 : MonoBehaviour
                 isAttack = true;
 
                 // 양손 공격을 한다.
-                anim.SetBool("TwoHands", true);
+                anim.SetTrigger("TwoHands");
 
-                if (currentTime > 4)
+                // 공격이 끝나는 시간이 되면
+                if (currentTime > 6)
                 {
-                    Debug.Log(currentTime);
-                    anim.SetBool("TwoHands", false);
-
                     isDisturb = true;
                     isTwoHands = false;
+                    isDodge = false;
 
                     // 상태를 공격선택으로 바꾼다.
-                    state = MolblinnState.AttackChoice;
+                    state = MolblinnState.Idle;
 
                     currentTime = 0;
                 }
@@ -306,9 +307,13 @@ public class Molblin1 : MonoBehaviour
 
     private void ComboAttack()
     {
-        if (distance < 3)
+        if (distance < 3 && isDodge == false)
         {
+            anim.SetBool("Move", false);
+            anim.SetBool("Wait", false);
+
             state = MolblinnState.Dodge;
+            isDodge = true;
         }
         else
         {
@@ -322,17 +327,17 @@ public class Molblin1 : MonoBehaviour
                 isAttack = true;
 
                 // 양손 공격을 한다.
-                anim.SetBool("ComboAttack", true);
+                anim.SetTrigger("ComboAttack");
 
-                if (currentTime > 6)
+                if (currentTime > 9)
                 {
-                    anim.SetBool("ComboAttack", false);
 
                     isDisturb = true;
                     isComboAttack = false;
+                    isDodge = false;
 
                     // 상태를 초기화 한다.
-                    state = MolblinnState.AttackChoice;
+                    state = MolblinnState.Idle;
 
                     currentTime = 0;
                 }

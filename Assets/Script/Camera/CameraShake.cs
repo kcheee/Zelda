@@ -21,7 +21,7 @@ public class CameraShake : MonoBehaviour
 
         while (elapsed < shakeDuration)
         {
-            // 랜덤한 방향으로 쉐이크 효과 적용
+            // 랜덤한 방향으로 쉐이크 효과 적용   // Random.indisdeUnitSphere 사용 가능.
             float x = Random.Range(-1f, 1f) * shakeMagnitude;
             float y = Random.Range(-1f, 1f) * shakeMagnitude;
 
