@@ -13,4 +13,9 @@ public class BokoDamageManager : MonoBehaviour
         }
 
     }
+    public GameObject Follow;
+    private void Update()
+    {
+        //transform.position = Follow.transform.position;
+    }
 }
