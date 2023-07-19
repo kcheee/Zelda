@@ -3657,7 +3657,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1237190245
 MeshCollider:
@@ -3871,7 +3871,7 @@ RectTransform:
   - {fileID: 238240346}
   - {fileID: 1454052487}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5164,7 +5164,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1670379314}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b54e2c4ec6a3fd24183ff12e7b5e137c, type: 3}
   m_Name: 
@@ -6766,12 +6766,22 @@ PrefabInstance:
     - target: {fileID: 4611051848277051864, guid: bd47639a7f1281b4493f924f4c7c5021,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5309997345767194963, guid: bd47639a7f1281b4493f924f4c7c5021,
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: dfb3df95eea64ec4589cc660a918a57a, type: 2}
+      objectReference: {fileID: 9100000, guid: 65551772c8475d14aab2eb7964bf1a1c, type: 2}
+    - target: {fileID: 5309997345767194963, guid: bd47639a7f1281b4493f924f4c7c5021,
+        type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'Skl_Root'\n\tTransform 'ElbowL'\n\tTransform
+        'ShoulderR'\n\tTransform 'LegR'\n\tTransform 'HandL'\n\tTransform 'Spine2'\n\tTransform
+        'ArmL'\n\tTransform 'Thumb1L'\n\tTransform 'Finger1L'\n\tTransform 'KneeL'\n\tand
+        more ...\n\tFrom animation clip 'comboattack'"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd47639a7f1281b4493f924f4c7c5021, type: 3}
