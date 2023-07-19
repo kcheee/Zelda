@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 #region 목표
@@ -422,6 +423,9 @@ public class RagdollBokoblin : MonoBehaviour
             rb.angularVelocity = new Vector3(0, 0, 0);
           
             rb.AddForce(Vector3.up * power, ForceMode.Impulse);
+
+            Debug.Log("실행");
+
         }
 
         // 만약 체력이 0보다 크다면
@@ -449,6 +453,13 @@ public class RagdollBokoblin : MonoBehaviour
             SoundManager.instance.OnMyDieSound();           
 
             GameManager.instance.KillcntUpdate();
+
+            // 보스전일때 보코블린 죽으면 점령게이지 줄어듦.
+            if(GameManager.instance.state == GameManager.State.Boss)
+            {
+                // 점령게이지 줄어듦
+                GameManager.instance.BossGage.GetComponent<Slider>().value -= 4;
+            }
 
             // 색깔을 검게 바꾸고
             Invoke("DieColor", 3);

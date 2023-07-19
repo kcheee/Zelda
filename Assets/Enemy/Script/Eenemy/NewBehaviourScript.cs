@@ -38,7 +38,6 @@ public class NewBehaviourScript : MonoBehaviour
 
             anim.SetTrigger("Wakeup");
 
-
         }
     }
 }

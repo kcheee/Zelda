@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class animation_T : MonoBehaviour
 {
@@ -51,14 +53,14 @@ public class animation_T : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("move"))
             state = ani_state.move;
 
-        if (state == ani_state.attack)
+        if (state == ani_state.attack|| G_state == Ground_state.air)
         {
-            AttackCollider.enabled = true;
+            //AttackCollider.enabled = true;
             animator.applyRootMotion = true;
         }
         else
         {
-            AttackCollider.enabled = false;
+            //AttackCollider.enabled = false;
             animator.applyRootMotion = false;
         }
         //Attackmotion();
@@ -67,6 +69,8 @@ public class animation_T : MonoBehaviour
         //Combomotion();
 
         AttackCombo();
+        CheckGrounded();
+        
     }
 
     private int comboCount = 0; // 현재 콤보 카운트
@@ -106,6 +110,39 @@ public class animation_T : MonoBehaviour
 
             }
             lastAttackTime = Time.time;
+        }
+    }
+
+    #region 공중에 뜬 상태
+
+    public enum Ground_state
+    {
+        grounded,
+        air
+    }
+
+    public Ground_state G_state;
+
+    #endregion
+    bool isGrounded;
+
+    // 그라운드 체크  공중에 있을때 링크 애니메이션
+    private void CheckGrounded()
+    {
+        RaycastHit hitinfo;
+        Vector3 dir = new Vector3(transform.position.x, transform.position.y + 0.1f,transform.position.z);
+        Debug.DrawRay(dir, -transform.up,Color.red);
+        if (Physics.Raycast(dir, -transform.up, out hitinfo,1))
+        {
+            if (hitinfo.collider.CompareTag("Floor")|| hitinfo.collider.CompareTag("IceMaker"))
+            {
+                animator.SetBool("AirBorne", false);
+            }
+        }
+        else
+        {
+            Debug.Log("공중");
+            animator.SetBool("AirBorne", true);
         }
     }
 

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Enemy/assets/PartyMonsterRumblePBR/SRP/HDRP.Zip.meta
 guid: 94021da079647024aa169ec143d4646a
+========
+guid: f0dc6c2fa94df594aaa63aca69a33e07
+>>>>>>>> main:Assets/Skill/Ice_maker_Material/Scene/Stylize Water.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
