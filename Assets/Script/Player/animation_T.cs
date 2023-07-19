@@ -126,30 +126,23 @@ public class animation_T : MonoBehaviour
     #endregion
     bool isGrounded;
 
+    // 그라운드 체크  공중에 있을때 링크 애니메이션
     private void CheckGrounded()
     {
-        Vector3 dir = new Vector3(transform.position.x, transform.position.y+0.5f, transform.position.z);  
-        // 발밑으로 레이캐스트를 쏴서 지면과의 충돌을 체크
-        Debug.DrawRay(dir, -transform.up);
-        isGrounded = Physics.Raycast(dir, -transform.up, 5, LayerMask.NameToLayer("Ground"));
-
         RaycastHit hitinfo;
-        if (Physics.Raycast(transform.position, -transform.up*1f, out hitinfo))
+        Vector3 dir = new Vector3(transform.position.x, transform.position.y + 0.1f,transform.position.z);
+        Debug.DrawRay(dir, -transform.up,Color.red);
+        if (Physics.Raycast(dir, -transform.up, out hitinfo,1))
         {
-            if (hitinfo.collider.CompareTag("Floor"))
+            if (hitinfo.collider.CompareTag("Floor")|| hitinfo.collider.CompareTag("IceMaker"))
             {
-
-
+                animator.SetBool("AirBorne", false);
             }
-            
         }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.CompareTag("Floor"))
+        else
         {
-                
+            Debug.Log("공중");
+            animator.SetBool("AirBorne", true);
         }
     }
 
