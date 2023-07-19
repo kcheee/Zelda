@@ -67,7 +67,8 @@ public class GameManager : MonoBehaviour
     #region 종료 UI
     public CanvasGroup[] endUI;
     public CanvasGroup BackGround;
-    
+    public GameObject minimap;
+    public GameObject PlayerUI;
     IEnumerator EndUI()
     {
         // 3초 후 
@@ -76,8 +77,14 @@ public class GameManager : MonoBehaviour
         Start_EndUI.SetActive(true);
 
         // 다른 모든 UI 꺼지게
-        //BossGage.SetActive(false);
-        
+        PlayerUI.SetActive(false);
+        minimap.SetActive(false);
+        // 보스 게이지 상태는 테스트 할때 안켜둠으로 null 체크
+        if (BossGage.activeSelf)
+        BossGage.SetActive(false);
+
+
+
 
         // victory 켜짐
         yield return new WaitForSeconds(1f);

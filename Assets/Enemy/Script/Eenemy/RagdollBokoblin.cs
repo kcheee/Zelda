@@ -397,6 +397,7 @@ public class RagdollBokoblin : MonoBehaviour
         }
     }
 
+    // 다른 스크립트에서 데미지 관리변수
     static public int Damage=1;
 
     public void DamagedProcess()
@@ -407,12 +408,12 @@ public class RagdollBokoblin : MonoBehaviour
         // 체력 감소.
         currentHP-= Damage;
 
-        foreach (Rigidbody rb in rbs)
-        {
-            //rb.velocity = new Vector3(0, 0, 0);
-            //rb.angularVelocity = new Vector3(0, 0, 0);
-            //rb.AddForce(Vector3.up * 5, ForceMode.Impulse);
-        }
+        //foreach (Rigidbody rb in rbs)
+        //{
+        //    rb.velocity = new Vector3(0, 0, 0);
+        //    rb.angularVelocity = new Vector3(0, 0, 0);
+        //    rb.AddForce(Vector3.up * 5, ForceMode.Impulse);
+        //}
 
         // 만약 체력이 0보다 크다면
         if (currentHP > 0)
