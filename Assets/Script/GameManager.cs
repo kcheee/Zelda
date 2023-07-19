@@ -190,7 +190,6 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-
     private void Update()
     {
         // 킬수 테스트,  보코블린 Destory시에 KillcntUpdate()실행 해줘야 함.

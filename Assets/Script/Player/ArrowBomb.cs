@@ -24,7 +24,6 @@ public class ArrowBomb : MonoBehaviour
                 {
                     //rb.velocity = new Vector3(0, 0, 0);
                     //rb.angularVelocity = new Vector3(0, 0, 0);
-                    rb.AddForce(Vector3.up * 5, ForceMode.Impulse);
                     rb.AddExplosionForce(5 * rb.mass, transform.position, 10, 8 * rb.mass, ForceMode.Impulse);
                 }
 

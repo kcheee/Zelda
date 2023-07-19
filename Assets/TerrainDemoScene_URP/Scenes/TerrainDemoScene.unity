@@ -13714,7 +13714,7 @@ PrefabInstance:
     - target: {fileID: 2953078959226718342, guid: 4ca67e00abe9f794ca37f543568b6674,
         type: 3}
       propertyPath: maxHP
-      value: 20
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2953078959226718351, guid: 4ca67e00abe9f794ca37f543568b6674,
         type: 3}
@@ -27285,6 +27285,10 @@ MonoBehaviour:
   maxHP: 30
   pattern2Distance: 8.5
   pattern3Distance: 6
+  isDamaged: 0
+  power: 5
+  dieEffectFactory: {fileID: 0}
+  molClub: {fileID: 0}
   footBoxCollider: {fileID: 5053951224861949735}
   clubBoxCollider: {fileID: 821754555}
 --- !u!1 &5053951226117105948

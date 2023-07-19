@@ -43,8 +43,8 @@ public class IceSkill : MonoBehaviour
                 {
                     //rb.velocity = new Vector3(0, 0, 0);
                     //rb.angularVelocity = new Vector3(0, 0, 0);
-                    rb.AddForce(Vector3.up * 5, ForceMode.Impulse);
-                    rb.AddExplosionForce(5 * rb.mass, collision.contacts[0].point, 20, 6 * rb.mass, ForceMode.Impulse);
+                    //rb.AddForce(Vector3.up * 5, ForceMode.Impulse);
+                    rb.AddExplosionForce(5 * rb.mass, collision.contacts[0].point, 20, 10 * rb.mass, ForceMode.Impulse);
                 }
 
                 // ÆøÅº µ¥¹ÌÁö

@@ -81,8 +81,8 @@ public class Molblin1 : MonoBehaviour
     #region Update
     void Update()
     {
-        print("isAttack" + isAttack);
-        print("isDisturb" + isDisturb);
+        //print("isAttack" + isAttack);
+        //print("isDisturb" + isDisturb);
 
         #region 바라보기
         // 링크가 있는 방향을 찾는다.

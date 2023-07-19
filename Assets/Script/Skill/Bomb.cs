@@ -34,7 +34,6 @@ public class Bomb : MonoBehaviour
                 {
                     //rb.velocity = new Vector3(0, 0, 0);
                     //rb.angularVelocity = new Vector3(0, 0, 0);
-                    rb.AddForce(Vector3.up * 5, ForceMode.Impulse);
                     rb.AddExplosionForce(15 * rb.mass, collision.contacts[0].point, 20, 15 * rb.mass, ForceMode.Impulse);
                 }
 
