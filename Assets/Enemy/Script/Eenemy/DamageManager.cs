@@ -6,7 +6,7 @@ public class DamageManager : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        print(other.gameObject.name);
+        //print(other.gameObject.name);
         if (other.gameObject.layer == 17)
         {
             GetComponentInParent<RagdollBokoblin>().state = RagdollBokoblin.BocoblinState.Damaged;

@@ -55,12 +55,12 @@ public class animation_T : MonoBehaviour
 
         if (state == ani_state.attack|| G_state == Ground_state.air)
         {
-            AttackCollider.enabled = true;
+            //AttackCollider.enabled = true;
             animator.applyRootMotion = true;
         }
         else
         {
-            AttackCollider.enabled = false;
+            //AttackCollider.enabled = false;
             animator.applyRootMotion = false;
         }
         //Attackmotion();
