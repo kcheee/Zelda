@@ -1565,8 +1565,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  speed: 5
-  runSpeed: 8
+  speed: 3
+  runSpeed: 4
   detectDistance: 15
   attackPossibleDistance: 8
   attackDistance: 2
@@ -1575,7 +1575,7 @@ MonoBehaviour:
   club: {fileID: 6912272295497885453}
   bokoBox: {fileID: 2953078959583227936}
   currentHP: 0
-  maxHP: 123
+  maxHP: 195
   dieEffectFactory: {fileID: 7834402645691306137, guid: 9ed2ddf86cc2d9e408309f616d65e0dd,
     type: 3}
   power: 4
@@ -1594,7 +1594,7 @@ GameObject:
   - component: {fileID: 2953078959583227942}
   - component: {fileID: 2953078959583227937}
   - component: {fileID: 2953078959583227936}
-  - component: {fileID: 2953078959583227939}
+  - component: {fileID: 7495650420488721178}
   m_Layer: 7
   m_Name: Boko_collider
   m_TagString: Untagged
@@ -1678,9 +1678,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.7719641, z: 1.1699219}
-  m_Center: {x: 0, y: -0.074818134, z: -0.08496094}
---- !u!114 &2953078959583227939
+  m_Size: {x: 1, y: 2.0221395, z: 1.1699219}
+  m_Center: {x: 0, y: -0.19990587, z: -0.08496094}
+--- !u!114 &7495650420488721178
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

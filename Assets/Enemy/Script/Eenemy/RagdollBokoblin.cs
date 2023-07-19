@@ -342,11 +342,11 @@ public class RagdollBokoblin : MonoBehaviour
         state = BocoblinState.AttackWait;
     }
 
-
     public void StartAttack()
     {
         club.enabled = true;
     }
+
     public void StopAttack()
     {
         club.enabled = false;

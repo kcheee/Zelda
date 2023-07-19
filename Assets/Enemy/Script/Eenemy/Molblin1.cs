@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class Molblin1 : MonoBehaviour
@@ -19,10 +20,10 @@ public class Molblin1 : MonoBehaviour
     // 상태 열거
     public enum MolblinnState
     {
-        Idle, 
-        Move, 
-        Dodge, 
-        AttackChoice, 
+        Idle,
+        Move,
+        Dodge,
+        AttackChoice,
         Kick,
         TwoHandsAttack,
         ComboAttack,
@@ -71,14 +72,18 @@ public class Molblin1 : MonoBehaviour
     {
         currentHP = maxHP;
         link = GameObject.Find("Link");
-        rb = GetComponent<Rigidbody>();
+        rbs = GetComponentsInChildren<Rigidbody>();
         anim = gameObject.GetComponentInChildren<Animator>();
+        hipBone = anim.GetBoneTransform(HumanBodyBones.Hips);
     }
     #endregion
 
     #region Update
     void Update()
     {
+        print("isAttack" + isAttack);
+        print("isDisturb" + isDisturb);
+
         #region 바라보기
         // 링크가 있는 방향을 찾는다.
         linkDir = link.transform.position - transform.position;
@@ -98,7 +103,7 @@ public class Molblin1 : MonoBehaviour
         #endregion
 
         // 발차기
-        if(distance <= 3)
+        if (distance <= 3 && isAttack == false)
         {
             if (isKick == false)
             {
@@ -131,11 +136,11 @@ public class Molblin1 : MonoBehaviour
         {
             Kick();
         }
-        else if(state == MolblinnState.TwoHandsAttack)
+        else if (state == MolblinnState.TwoHandsAttack)
         {
             TwoHandsAttack();
         }
-        else if(state == MolblinnState.ComboAttack)
+        else if (state == MolblinnState.ComboAttack)
         {
             ComboAttack();
         }
@@ -195,7 +200,7 @@ public class Molblin1 : MonoBehaviour
         }
 
         // 링크가 공격 거리 안으로 들어오면
-        else if (distance < attackPossibleDistance)                                 
+        else if (distance < attackPossibleDistance)
         {
             // 공격선택상태로 전환한다.
             state = MolblinnState.AttackChoice;
@@ -322,7 +327,7 @@ public class Molblin1 : MonoBehaviour
         {
             currentTime += Time.deltaTime;
 
-            if (currentTime >= 1)
+            if (currentTime >= 2)
             {
                 print("콤보 공격");
 
@@ -331,7 +336,7 @@ public class Molblin1 : MonoBehaviour
 
                 // 콤보 공격을 한다.
                 anim.SetBool("Wait", false);
-                anim.SetBool("ComboAttack", true);    
+                anim.SetBool("ComboAttack", true);
             }
             if (currentTime > 5)
             {
@@ -349,25 +354,103 @@ public class Molblin1 : MonoBehaviour
             }
         }
     }
-
+    public bool isDamaged;
     public void UpdateDamaged()
     {
         // 체력을 감소시킨다.
         currentHP--;
+        HPCheck();        
+    }
 
-        if (isDisturb == true)
+    public void HPCheck()
+    {
+        if (currentHP > 0)
         {
-            anim.SetTrigger("Damage");
+            if (isDisturb == true)
+            {
+                anim.SetTrigger("Damage");
+                state = MolblinnState.Idle;
+            }
+        }
+
+        else if (currentHP <= 0)
+        {
+            state = MolblinnState.Die;
         }
     }
 
+    public float power = 5;
+    Rigidbody[] rbs;
+    bool isDie;
+    bool isEffect;
+
+    public GameObject dieEffectFactory;
+
+
+
     private void UpdateDie()
     {
-        GetComponent<Rigidbody>().mass = 500;
-        // 1초 후에 파괴한다.
-        Destroy(gameObject, 2);
-        // 파괴할 때 검은 먼지 파티클시스템을 실행한다.
+        if (isDie == false)
+        {
+            isDie = true;
 
+            // SoundManager.instance.OnMyDieSound();
+
+            // GameManager.instance.KillcntUpdate();
+
+            anim.enabled = false;
+
+            foreach (Rigidbody rb in rbs)
+            {
+                rb.velocity = new Vector3(0, 0, 0);
+                rb.angularVelocity = new Vector3(0, 0, 0);
+
+                rb.AddForce(Vector3.up * power, ForceMode.Impulse);
+            }
+
+            // 보스전일때 보코블린 죽으면 점령게이지 줄어듦.
+            if (GameManager.instance.state == GameManager.State.Boss)
+            {
+                // 점령게이지 줄어듦
+                GameManager.instance.BossGage.GetComponent<Slider>().value -= 4;
+            }
+
+            // 색깔을 검게 바꾸고
+            Invoke("DieColor", 3);
+            // 사망이펙트와 함께 게임오브젝트를 파괴한다.
+            Invoke("DieEffect", 4);
+        }
+
+    }
+
+    public SkinnedMeshRenderer molClub;
+    Transform hipBone;
+
+    public void DieColor()
+    {
+        // 모리블린의 몸을 까맣게 한다.
+        SkinnedMeshRenderer[] mesh = GetComponentsInChildren<SkinnedMeshRenderer>();
+        for (int i = 0; i < mesh.Length; i++)
+        {
+            if (mesh[i] == molClub)
+            {
+                continue;
+            }
+            mesh[i].materials[0].color = Color.black;
+        }
+    }
+    public void DieEffect()
+    {
+        if (isEffect == false)
+        {
+            // 파괴할 때 검은 먼지 파티클시스템을 실행한다.
+            GameObject dieEffect = Instantiate(dieEffectFactory);
+            dieEffect.transform.position = hipBone.position;
+            isEffect = true;    // 한번만 실행할 수 있게
+
+            // 게임오브젝트를 파괴한다.
+            Destroy(gameObject);
+        }
     }
     #endregion
 

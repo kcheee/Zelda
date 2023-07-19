@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageManager : MonoBehaviour
+public class BokoDamageManager : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
