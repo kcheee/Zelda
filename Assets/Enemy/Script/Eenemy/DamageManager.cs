@@ -11,6 +11,7 @@ public class DamageManager : MonoBehaviour
         {
             GetComponentInParent<RagdollBokoblin>().state = RagdollBokoblin.BocoblinState.Damaged;
         }
+
     }
     public GameObject Follow;
     private void Update()
