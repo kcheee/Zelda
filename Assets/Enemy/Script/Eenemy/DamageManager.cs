@@ -11,5 +11,6 @@ public class DamageManager : MonoBehaviour
         {
             GetComponentInParent<RagdollBokoblin>().state = RagdollBokoblin.BocoblinState.Damaged;
         }
+
     }
 }

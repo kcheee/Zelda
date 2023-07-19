@@ -1572,14 +1572,15 @@ MonoBehaviour:
   runSpeed: 8
   detectDistance: 15
   attackPossibleDistance: 8
-  attackDistance: 2.6
+  attackDistance: 2.3
   waitTime: 1.2
   bococlub: {fileID: 716207686300234110}
   club: {fileID: 6912272295497885453}
   currentHP: 0
-  maxHP: 4
+  maxHP: 132
   dieEffectFactory: {fileID: 7834402645691306137, guid: 9ed2ddf86cc2d9e408309f616d65e0dd,
     type: 3}
+  power: 3
 --- !u!1 &2953078959583227949
 GameObject:
   m_ObjectHideFlags: 0
@@ -1594,7 +1595,7 @@ GameObject:
   - component: {fileID: 2953078959583227936}
   - component: {fileID: 2953078959583227939}
   m_Layer: 7
-  m_Name: Cube
+  m_Name: Boko_collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3062,7 +3063,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6912272296414307157}
   m_LocalRotation: {x: 0.019545726, y: 0.077981904, z: -0.9966778, w: 0.013049672}
-  m_LocalPosition: {x: -0.078863725, y: -0.07116685, z: -0.0228213}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
