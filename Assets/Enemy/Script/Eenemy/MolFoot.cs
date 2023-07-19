@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BokoClub : MonoBehaviour
+public class MolFoot : MonoBehaviour
 {
-    public static BokoClub instance;
+    public static MolFoot instance;
 
     private void Awake()
     {
@@ -14,7 +14,7 @@ public class BokoClub : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject.name);
-        if(other.gameObject.name == "Link")
+        if (other.gameObject.name == "Link")
         {
             print("@@@@@@@@@@@@@@@@@@@");
 

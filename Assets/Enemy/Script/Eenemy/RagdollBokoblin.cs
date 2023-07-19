@@ -56,9 +56,10 @@ public class RagdollBokoblin : MonoBehaviour
     // 애니메이션
     Animator anim;
 
-    // 보코볼린 클럽
+    // 보코볼린
     public SkinnedMeshRenderer bococlub;
     public BoxCollider club;
+    public BoxCollider bokoBox;
 
     // 체력
     public int currentHP;
@@ -137,7 +138,9 @@ public class RagdollBokoblin : MonoBehaviour
             UpdateDie();
         }
     }
+    #endregion
 
+    #region
     private void UpdateIdle()
     {
         isBuffSoundPlaying = false;
@@ -232,13 +235,10 @@ public class RagdollBokoblin : MonoBehaviour
             // 애니메이터를 활성화 한다.
             anim.enabled = true;
 
-            transform.position = new Vector3(hipBone.position.x, transform.position.y, hipBone.position.z);
+            // 박스콜라이더 활성화
+            bokoBox.enabled = true;
 
-            anim.SetBool("Move", false);
-            anim.SetBool("Wait", false);
-            anim.SetBool("Run", false);
-            anim.SetBool("AttackWait", false);
-            anim.SetBool("Dodge", false);
+            transform.position = new Vector3(hipBone.position.x, transform.position.y, hipBone.position.z);
 
             anim.SetTrigger("StandUp");
 
@@ -400,22 +400,9 @@ public class RagdollBokoblin : MonoBehaviour
     {
         // 애니메이터를 비활성화 한다.
         anim.enabled = false;
-        
+
         // 체력을 1 감소한다.
         currentHP--;
-
-        //for (int i = 0; i < rbs.Length; i++)
-        //{
-        //    if (!rbs[0])
-        //    {
-        //        continue;
-        //    }
-
-        //    rbs[i].velocity = new Vector3(0, 0, 0);
-        //    rbs[i].angularVelocity = new Vector3(0, 0, 0);
-
-        //    rbs[i].AddForce(Vector3.up * power, ForceMode.Impulse);
-        //}
 
         foreach (Rigidbody rb in rbs)
         {
@@ -425,7 +412,6 @@ public class RagdollBokoblin : MonoBehaviour
             rb.AddForce(Vector3.up * power, ForceMode.Impulse);
 
             Debug.Log("실행");
-
         }
 
         // 만약 체력이 0보다 크다면
@@ -494,6 +480,5 @@ public class RagdollBokoblin : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     #endregion
 }

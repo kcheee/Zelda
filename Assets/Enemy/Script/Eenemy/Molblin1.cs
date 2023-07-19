@@ -79,7 +79,6 @@ public class Molblin1 : MonoBehaviour
     #region Update
     void Update()
     {
-        Debug.Log(distance);
         #region 바라보기
         // 링크가 있는 방향을 찾는다.
         linkDir = link.transform.position - transform.position;
@@ -225,6 +224,8 @@ public class Molblin1 : MonoBehaviour
             // 링크와의 거리가 패턴 2 거리 이하가 되면
             if (distance < pattern2Distance)
             {
+                anim.SetBool("Wait", true);
+                anim.SetBool("Move", false);
                 state = MolblinnState.TwoHandsAttack;
             }
         }
@@ -240,6 +241,8 @@ public class Molblin1 : MonoBehaviour
             // 링크와의 거리가 패턴 2 거리 이하가 되면
             if (distance < pattern3Distance)
             {
+                anim.SetBool("Wait", true);
+                anim.SetBool("Move", false);
                 state = MolblinnState.ComboAttack;
             }
         }
@@ -279,7 +282,7 @@ public class Molblin1 : MonoBehaviour
             // 시간을 흐르게 한다.
             currentTime += Time.deltaTime;
             // 1초 후에
-            if (currentTime > 1)
+            if (currentTime >= 1)
             {
                 print("양손 공격");
 
@@ -287,21 +290,21 @@ public class Molblin1 : MonoBehaviour
                 isAttack = true;
 
                 // 양손 공격을 한다.
-                anim.SetTrigger("TwoHands");
+                anim.SetBool("Wait", false);
+                anim.SetBool("TwoHands", true);
+            }
+            // 공격이 끝나는 시간이 되면
+            if (currentTime > 2)
+            {
+                isDisturb = true;
+                isTwoHands = false;
+                isDodge = false;
+                anim.SetBool("TwoHands", false);
+                // 상태를 공격선택으로 바꾼다.
+                state = MolblinnState.Idle;
 
-                // 공격이 끝나는 시간이 되면
-                if (currentTime > 6)
-                {
-                    isDisturb = true;
-                    isTwoHands = false;
-                    isDodge = false;
-
-                    // 상태를 공격선택으로 바꾼다.
-                    state = MolblinnState.Idle;
-
-                    currentTime = 0;
-                }
-            } 
+                currentTime = 0;
+            }
         }
     }
 
@@ -319,29 +322,31 @@ public class Molblin1 : MonoBehaviour
         {
             currentTime += Time.deltaTime;
 
-            if (currentTime > 1)
+            if (currentTime >= 1)
             {
                 print("콤보 공격");
 
                 isDisturb = false;
                 isAttack = true;
 
-                // 양손 공격을 한다.
-                anim.SetTrigger("ComboAttack");
+                // 콤보 공격을 한다.
+                anim.SetBool("Wait", false);
+                anim.SetBool("ComboAttack", true);    
+            }
+            if (currentTime > 5)
+            {
 
-                if (currentTime > 9)
-                {
+                isDisturb = true;
+                isComboAttack = false;
+                isDodge = false;
 
-                    isDisturb = true;
-                    isComboAttack = false;
-                    isDodge = false;
+                anim.SetBool("ComboAttack", false);
 
-                    // 상태를 초기화 한다.
-                    state = MolblinnState.Idle;
+                // 상태를 초기화 한다.
+                state = MolblinnState.Idle;
 
-                    currentTime = 0;
-                }
-            }            
+                currentTime = 0;
+            }
         }
     }
 
@@ -363,6 +368,43 @@ public class Molblin1 : MonoBehaviour
         Destroy(gameObject, 2);
         // 파괴할 때 검은 먼지 파티클시스템을 실행한다.
 
+    }
+    #endregion
+
+    #region Attack Event
+    public BoxCollider footBoxCollider;
+    public BoxCollider clubBoxCollider;
+    public void StartKick()
+    {
+        // 발 콜라이더 활성화
+        footBoxCollider.enabled = true;
+    }
+    public void EndKick()
+    {
+        // 발 콜라이더 비활성화
+        footBoxCollider.enabled = false;
+    }
+
+    public void StartTwoHandAttack()
+    {
+        // 무기 콜라이더 활성화
+        clubBoxCollider.enabled = true;
+    }
+    public void EndTwoHandAttack()
+    {
+        // 무기 콜라이더 비활성화
+        clubBoxCollider.enabled = false;
+    }
+
+    public void StartComboAttack()
+    {
+        // 무기 콜라이더 활성화
+        clubBoxCollider.enabled = true;
+    }
+    public void EndComboAttack()
+    {
+        // 무기 콜라이더 비활성화
+        clubBoxCollider.enabled = false;
     }
     #endregion
 }
