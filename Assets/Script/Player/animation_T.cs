@@ -16,7 +16,7 @@ public class animation_T : MonoBehaviour
         move,
         dash,
         run,
-        attack
+        attack,
     }
 
     public ani_state state;
@@ -67,6 +67,8 @@ public class animation_T : MonoBehaviour
         //Chargedmotion();
         //CheckCharged2Input();
         //Combomotion();
+
+        
 
         AttackCombo();
         CheckGrounded();
@@ -143,6 +145,17 @@ public class animation_T : MonoBehaviour
         {
             Debug.Log("АјСп");
             animator.SetBool("AirBorne", true);
+        }
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Bokoblin"))
+        {
+            Debug.Log(other.gameObject);
+            animator.SetTrigger("Hit");
+            PlayerManager.instance.PlayerDamaged();
         }
     }
 

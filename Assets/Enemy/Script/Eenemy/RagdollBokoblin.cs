@@ -399,14 +399,13 @@ public class RagdollBokoblin : MonoBehaviour
         // 체력을 1 감소한다.
         currentHP--;
 
-
-
         foreach (Rigidbody rb in rbs)
         {
             rb.velocity = new Vector3(0, 0, 0);
             rb.angularVelocity = new Vector3(0, 0, 0);
             rb.AddForce(transform.up * 5, ForceMode.Impulse);
-            Debug.Log("실행");
+            rb.AddForce(-transform.forward * 2, ForceMode.Impulse);
+            //Debug.Log("실행");
         }
 
         // 만약 체력이 0보다 크다면

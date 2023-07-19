@@ -97,11 +97,15 @@ public class SkillManager : MonoBehaviour
     }
     public void ThrowBomb()
     {
+        // 부모를 뗌 호로자식..
         Bomb_po.transform.DetachChildren();
         // rigidbody 사용해서 공 던지기
         BOMB[Bomb_count].GetComponent<Rigidbody>().useGravity = true;
         // 공 던지는 힘
-        BOMB[Bomb_count].GetComponent<Rigidbody>().AddForce(transform.forward * 10+transform.up*5, ForceMode.Impulse);
+        if (Bomb_count <3)
+        BOMB[Bomb_count].GetComponent<Rigidbody>().AddForce(transform.forward * 12+transform.up*3, ForceMode.Impulse);
+        else
+            BOMB[Bomb_count].GetComponent<Rigidbody>().AddForce(transform.forward * 25 + transform.up * 5, ForceMode.Impulse);
         // 공 회전값 무작위로 회전함.
         BOMB[Bomb_count].GetComponent<Rigidbody>().AddTorque(Random.insideUnitSphere * 1.5f, ForceMode.Impulse);
         Bomb_count++;

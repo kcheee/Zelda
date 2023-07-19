@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
         Start_EndUI.SetActive(true);
 
         // ´Ù¸¥ ¸ðµç UI ²¨Áö°Ô
-        BossGage.SetActive(false);
+        //BossGage.SetActive(false);
         
 
         // victory ÄÑÁü
