@@ -43,7 +43,7 @@ public class SoundManager : MonoBehaviour
     {
         if (RagdollBokoblin.instance.isDieSoundPlaying == false)
         {
-            AudioSource.PlayClipAtPoint(audios[1], transform.position);
+            AudioSource.PlayClipAtPoint(audios[2], transform.position);
             RagdollBokoblin.instance.isDieSoundPlaying = true;
         }
         else if (RagdollBokoblin.instance.isDieSoundPlaying)
