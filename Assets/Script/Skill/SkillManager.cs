@@ -80,6 +80,7 @@ public class SkillManager : MonoBehaviour
     // 칼 집어넣기.
     public GameObject Bomb_Ready;
     public GameObject[] sword_shield;
+    public GameObject Bomb_startEffect;
     public IEnumerator create_bomb()
     {
         // 파티클과 폭탄 생성
@@ -88,6 +89,7 @@ public class SkillManager : MonoBehaviour
         // 잠깐 멈춤
         if (Bomb_count == 0)
         {
+            Instantiate(Bomb_startEffect, Bomb_po.position, CameraRotation.rotation);
             anim.speed = 0.02f;
             yield return new WaitForSeconds(0.5f);
             Bomb_flag = true;   // 애니메이션 상태에 붙어있는 스크립트 함수 제어
@@ -103,7 +105,7 @@ public class SkillManager : MonoBehaviour
         BOMB[Bomb_count].GetComponent<Rigidbody>().useGravity = true;
         // 공 던지는 힘
         if (Bomb_count <3)
-        BOMB[Bomb_count].GetComponent<Rigidbody>().AddForce(transform.forward * 12+transform.up*3, ForceMode.Impulse);
+        BOMB[Bomb_count].GetComponent<Rigidbody>().AddForce(transform.forward * Random.Range(12,20) + transform.up*3, ForceMode.Impulse);
         else
             BOMB[Bomb_count].GetComponent<Rigidbody>().AddForce(transform.forward * 25 + transform.up * 5, ForceMode.Impulse);
         // 공 회전값 무작위로 회전함.

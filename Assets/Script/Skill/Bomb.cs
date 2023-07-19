@@ -8,6 +8,8 @@ public class Bomb : MonoBehaviour
 {
     Rigidbody rb;
     Rigidbody[] rbs;
+    public GameObject Bomb_Explosion_Effect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +22,7 @@ public class Bomb : MonoBehaviour
     {
         Destroy(gameObject);
 
-
+        Instantiate(Bomb_Explosion_Effect, collision.contacts[0].point, Quaternion.identity);
         // 구 반경으로 위치를 가져옴.
         Collider[] cols = Physics.OverlapSphere(collision.contacts[0].point, 20);
 
@@ -28,7 +30,8 @@ public class Bomb : MonoBehaviour
         {
             // 폭탄 반경에 있는 오브젝트 rigidbody 가져옴
             if (cols[i].CompareTag("Bokoblin"))
-            {               
+            {
+                
                 Rigidbody[] rigid = cols[i].GetComponentsInChildren<Rigidbody>();
                 foreach (Rigidbody rb in rigid)
                 {

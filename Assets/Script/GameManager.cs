@@ -66,11 +66,15 @@ public class GameManager : MonoBehaviour
     // 클리어 타임 변수, koCnt 넣어야 함.
     #region 종료 UI
     public CanvasGroup[] endUI;
+    public TextMeshProUGUI[] ScoreText;
     public CanvasGroup BackGround;
     public GameObject minimap;
     public GameObject PlayerUI;
+    float clearTime = 0;
+
     IEnumerator EndUI()
     {
+        state = State.Victory;
         // 3초 후 
         yield return new WaitForSeconds(3f);
         // 시작 UI 켜짐
@@ -83,8 +87,18 @@ public class GameManager : MonoBehaviour
         if (BossGage.activeSelf)
         BossGage.SetActive(false);
 
+        // 클리어 타임
+        ScoreText[0].text = Mathf.FloorToInt(clearTime).ToString(); // 소수점 버리기
+        ScoreText[1].text = (100+clearTime).ToString();
 
+        // 킬 카운트
+        ScoreText[3].text = ScoreText[2].text;
+        ScoreText[4].text = ScoreText[3].text;
 
+        // 합계 수정요망.
+        //int a = int.Parse(ScoreText[1].text);
+        //int b = int.Parse(ScoreText[4].text);
+        //ScoreText[5].text = (a+b).ToString();
 
         // victory 켜짐
         yield return new WaitForSeconds(1f);
@@ -199,6 +213,9 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if(state!=State.Victory)
+        clearTime += Time.deltaTime;
+
         // 킬수 테스트,  보코블린 Destory시에 KillcntUpdate()실행 해줘야 함.
         if (Input.GetKeyDown(KeyCode.M)) {  StartCoroutine(EndUI()); }
         
