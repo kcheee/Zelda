@@ -21,7 +21,8 @@ public class Trail : MonoBehaviour
 
     public BoxCollider sword;
 
-    #region
+    #region 애니메이션에 붙어있음
+    // 강공격 bool 변수
     static public bool strongatt = false;
     void StartHit()
     { 
@@ -43,6 +44,7 @@ public class Trail : MonoBehaviour
     } 
     void StrongAttack(){ strongatt =true; }
     #endregion
+
 
     private void Awake()
     {

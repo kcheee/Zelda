@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 1750173064121220160}
   m_Layer: 7
   m_Name: Skl_Root
-  m_TagString: Untagged
+  m_TagString: Bokoblin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4573,6 +4573,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 31
       objectReference: {fileID: 0}
+    - target: {fileID: 4549767174543438385, guid: de97f5684505bf1429f89c6aab07693d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Bokoblin_sword
+      objectReference: {fileID: 0}
     - target: {fileID: 5926959826961183327, guid: de97f5684505bf1429f89c6aab07693d,
         type: 3}
       propertyPath: m_Layer
@@ -4610,18 +4615,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.41802323, y: 0.35830554, z: 1.155684}
   m_Center: {x: -0.01865023, y: 0.020534193, z: 0.6321275}
---- !u!114 &2889161330274130570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6974200210813826057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1fc62addb72719458562e26c9975b55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &7746902230199135923 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3778473423145314443, guid: de97f5684505bf1429f89c6aab07693d,

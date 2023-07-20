@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -396,29 +397,30 @@ public class RagdollBokoblin : MonoBehaviour
         }
     }
 
+    // 다른 스크립트에서 데미지 관리변수
+    static public int Damage=1;
+
     public void DamagedProcess()
     {
         // 애니메이터를 비활성화 한다.
         anim.enabled = false;
 
-        // 체력을 1 감소한다.
-        currentHP--;
+        // 체력 감소.
+        currentHP-= Damage;
 
-        foreach (Rigidbody rb in rbs)
-        {
-            rb.velocity = new Vector3(0, 0, 0);
-            rb.angularVelocity = new Vector3(0, 0, 0);
-          
-            rb.AddForce(Vector3.up * power, ForceMode.Impulse);
-
-            Debug.Log("실행");
-        }
+        //foreach (Rigidbody rb in rbs)
+        //{
+        //    rb.velocity = new Vector3(0, 0, 0);
+        //    rb.angularVelocity = new Vector3(0, 0, 0);
+        //    rb.AddForce(Vector3.up * 5, ForceMode.Impulse);
+        //}
 
         // 만약 체력이 0보다 크다면
         if (currentHP > 0)
         {
             // 공중상태로 바꾼다.
             state = BocoblinState.Air;
+            Damage = 1;
         }
         // 만약 체력이 0이 되면
         else if (currentHP <= 0)
@@ -426,7 +428,10 @@ public class RagdollBokoblin : MonoBehaviour
             // 사망상태로 바꾼다.
             state = BocoblinState.Die;
         }
+
+        // 데미지 1로 초기화  
     }
+
 
     bool isDie;
 
@@ -444,7 +449,7 @@ public class RagdollBokoblin : MonoBehaviour
             if(GameManager.instance.state == GameManager.State.Boss)
             {
                 // 점령게이지 줄어듦
-                GameManager.instance.BossGage.GetComponent<Slider>().value -= 4;
+                GameManager.instance.BossGage.GetComponent<Slider>().value -= 1;
             }
 
             // 색깔을 검게 바꾸고

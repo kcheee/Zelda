@@ -8,6 +8,7 @@ TagManager:
   - Floor
   - IceMaker
   - Bokoblin
+  - Bokoblin_sword
   layers:
   - Default
   - TransparentFX
