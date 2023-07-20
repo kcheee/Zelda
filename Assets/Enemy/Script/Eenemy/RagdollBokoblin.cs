@@ -141,7 +141,7 @@ public class RagdollBokoblin : MonoBehaviour
     }
     #endregion
 
-    #region
+    #region Update States
     private void UpdateIdle()
     {
         isBuffSoundPlaying = false;
