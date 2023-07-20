@@ -32,8 +32,11 @@ public class PlayerManager : MonoBehaviour
         healthUI++;
 
         // 피가 0이되는 상황
-        if(HP==0)
-        StartCoroutine(GameManager.instance.Playerdie());
+        if (HP == 0)
+        {
+            StartCoroutine(GameManager.instance.Playerdie());
+            animation_T.instance.animator.SetTrigger("Die");
+        }
     }
 
     // 플레이어 체력 채움
@@ -42,6 +45,7 @@ public class PlayerManager : MonoBehaviour
         HP = maxhp;
         healthUI=0;
         for (int i = 0; i < maxhp; i++) health[i].SetActive(true);
+        animation_T.instance.animator.SetTrigger("retry");
     }
 
     private void Awake()

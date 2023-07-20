@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -56,9 +57,10 @@ public class RagdollBokoblin : MonoBehaviour
     // 애니메이션
     Animator anim;
 
-    // 보코볼린 클럽
+    // 보코볼린
     public SkinnedMeshRenderer bococlub;
     public BoxCollider club;
+    public BoxCollider bokoBox;
 
     // 체력
     public int currentHP;
@@ -71,11 +73,17 @@ public class RagdollBokoblin : MonoBehaviour
     Rigidbody[] rbs;
     Transform hipBone;
 
+    // 날아가는 힘
+    public float power = 3;
+
     // bool
     bool isWait;
     bool isAir;
     bool isAttack;
     bool isEffect;
+    public bool isBuffSoundPlaying;
+    public bool isAttackSoundPlaying;
+    public bool isDieSoundPlaying;
     #endregion
 
     #region Start
@@ -131,12 +139,14 @@ public class RagdollBokoblin : MonoBehaviour
             UpdateDie();
         }
     }
+    #endregion
 
+    #region
     private void UpdateIdle()
     {
-        SoundManager.instance.isBuffSoundPlaying = false;
-        SoundManager.instance.isAttackSoundPlaying = false;
-        SoundManager.instance.isDieSoundPlaying = false;
+        isBuffSoundPlaying = false;
+        isAttackSoundPlaying = false;
+        isDieSoundPlaying = false;
 
         // 링크와의 거리를 구한다.
         Vector3 y = link.transform.position;
@@ -205,10 +215,7 @@ public class RagdollBokoblin : MonoBehaviour
         // 링크가 공격 거리 안으로 들어오면 기다린다.
         else if (distance <= attackPossibleDistance)
         {
-            if (SoundManager.instance.isBuffSoundPlaying == false)
-            {
-                SoundManager.instance.OnMyBuffSound();
-            }
+            SoundManager.instance.OnMyBuffSound();
 
             // 공격대기상태로 전환한다.
             state = BocoblinState.Wait;
@@ -229,14 +236,12 @@ public class RagdollBokoblin : MonoBehaviour
             // 애니메이터를 활성화 한다.
             anim.enabled = true;
 
+            // 박스콜라이더 활성화
+            bokoBox.enabled = true;
+
             transform.position = new Vector3(hipBone.position.x, transform.position.y, hipBone.position.z);
 
             anim.SetTrigger("StandUp");
-            anim.SetBool("Wait", false);
-            anim.SetBool("Move", false);
-            anim.SetBool("Run", false);
-            anim.SetBool("AttackWait", false);
-            anim.SetBool("Dodge", false);
 
             state = BocoblinState.Idle;
             
@@ -327,10 +332,7 @@ public class RagdollBokoblin : MonoBehaviour
 
     private void UpdateAttack()
     {
-        if (SoundManager.instance.isAttackSoundPlaying == false)
-        {
-            SoundManager.instance.OnMyAttackSound();
-        }
+        SoundManager.instance.OnMyAttackSound();
 
         // 애니메이션 실행
         anim.SetBool("Run", false);
@@ -340,15 +342,19 @@ public class RagdollBokoblin : MonoBehaviour
         state = BocoblinState.AttackWait;
     }
 
-
-    public void Attack()
+    public void StartAttack()
     {
         club.enabled = true;
     }
 
+    public void StopAttack()
+    {
+        club.enabled = false;
+    }
+
     private void UpdateAttackWait()
     {
-        SoundManager.instance.isAttackSoundPlaying = false;
+        isAttackSoundPlaying = false;
 
         currentTime += Time.deltaTime;
 
@@ -391,29 +397,30 @@ public class RagdollBokoblin : MonoBehaviour
         }
     }
 
+    // 다른 스크립트에서 데미지 관리변수
+    static public int Damage=1;
+
     public void DamagedProcess()
     {
         // 애니메이터를 비활성화 한다.
         anim.enabled = false;
-        
-        // 체력을 1 감소한다.
-        currentHP--;
 
+        // 체력 감소.
+        currentHP-= Damage;
 
-
-        foreach (Rigidbody rb in rbs)
-        {
-            rb.velocity = new Vector3(0, 0, 0);
-            rb.angularVelocity = new Vector3(0, 0, 0);
-            rb.AddForce(transform.up * 5, ForceMode.Impulse);
-            Debug.Log("실행");
-        }
+        //foreach (Rigidbody rb in rbs)
+        //{
+        //    rb.velocity = new Vector3(0, 0, 0);
+        //    rb.angularVelocity = new Vector3(0, 0, 0);
+        //    rb.AddForce(Vector3.up * 5, ForceMode.Impulse);
+        //}
 
         // 만약 체력이 0보다 크다면
         if (currentHP > 0)
         {
             // 공중상태로 바꾼다.
             state = BocoblinState.Air;
+            Damage = 1;
         }
         // 만약 체력이 0이 되면
         else if (currentHP <= 0)
@@ -421,7 +428,10 @@ public class RagdollBokoblin : MonoBehaviour
             // 사망상태로 바꾼다.
             state = BocoblinState.Die;
         }
+
+        // 데미지 1로 초기화  
     }
+
 
     bool isDie;
 
@@ -431,10 +441,7 @@ public class RagdollBokoblin : MonoBehaviour
         {
             isDie = true;
 
-            if (SoundManager.instance.isDieSoundPlaying == false)
-            {
-                SoundManager.instance.OnMyDieSound();
-            }
+            SoundManager.instance.OnMyDieSound();           
 
             GameManager.instance.KillcntUpdate();
 
@@ -442,7 +449,7 @@ public class RagdollBokoblin : MonoBehaviour
             if(GameManager.instance.state == GameManager.State.Boss)
             {
                 // 점령게이지 줄어듦
-                GameManager.instance.BossGage.GetComponent<Slider>().value -= 4;
+                GameManager.instance.BossGage.GetComponent<Slider>().value -= 1;
             }
 
             // 색깔을 검게 바꾸고
@@ -478,6 +485,5 @@ public class RagdollBokoblin : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     #endregion
 }

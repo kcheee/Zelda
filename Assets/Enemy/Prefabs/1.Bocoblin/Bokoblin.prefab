@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 1750173064121220160}
   m_Layer: 7
   m_Name: Skl_Root
-  m_TagString: Untagged
+  m_TagString: Bokoblin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1477,9 +1477,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1c13863e945e3449bd4b445c378e63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBuffSoundPlaying: 0
-  isAttackSoundPlaying: 0
-  isDieSoundPlaying: 0
   audios:
   - {fileID: 8300000, guid: 8cd3960681e59b946a1687ec5ad2279d, type: 3}
   - {fileID: 8300000, guid: 15cc2ed54068c3647be610b7a83d933c, type: 3}
@@ -1568,18 +1565,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  speed: 5
-  runSpeed: 8
+  speed: 3
+  runSpeed: 4
   detectDistance: 15
   attackPossibleDistance: 8
-  attackDistance: 2.6
+  attackDistance: 2
   waitTime: 1.2
   bococlub: {fileID: 716207686300234110}
   club: {fileID: 6912272295497885453}
+  bokoBox: {fileID: 2953078959583227936}
   currentHP: 0
-  maxHP: 4
+  maxHP: 195
   dieEffectFactory: {fileID: 7834402645691306137, guid: 9ed2ddf86cc2d9e408309f616d65e0dd,
     type: 3}
+  power: 4
+  isBuffSoundPlaying: 0
+  isAttackSoundPlaying: 0
+  isDieSoundPlaying: 0
 --- !u!1 &2953078959583227949
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,9 +1594,9 @@ GameObject:
   - component: {fileID: 2953078959583227942}
   - component: {fileID: 2953078959583227937}
   - component: {fileID: 2953078959583227936}
-  - component: {fileID: 2953078959583227939}
+  - component: {fileID: 7495650420488721178}
   m_Layer: 7
-  m_Name: Cube
+  m_Name: Boko_collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1676,9 +1678,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.7719641, z: 1.1699219}
-  m_Center: {x: 0, y: -0.074818134, z: -0.08496094}
---- !u!114 &2953078959583227939
+  m_Size: {x: 1, y: 2.0221395, z: 1.1699219}
+  m_Center: {x: 0, y: -0.19990587, z: -0.08496094}
+--- !u!114 &7495650420488721178
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3062,7 +3064,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6912272296414307157}
   m_LocalRotation: {x: 0.019545726, y: 0.077981904, z: -0.9966778, w: 0.013049672}
-  m_LocalPosition: {x: -0.078863725, y: -0.07116685, z: -0.0228213}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4484,7 +4486,7 @@ PrefabInstance:
     - target: {fileID: 1323913483098721651, guid: de97f5684505bf1429f89c6aab07693d,
         type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 3778473423145314443, guid: de97f5684505bf1429f89c6aab07693d,
         type: 3}
@@ -4569,17 +4571,22 @@ PrefabInstance:
     - target: {fileID: 4549767174543438385, guid: de97f5684505bf1429f89c6aab07693d,
         type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549767174543438385, guid: de97f5684505bf1429f89c6aab07693d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Bokoblin_sword
       objectReference: {fileID: 0}
     - target: {fileID: 5926959826961183327, guid: de97f5684505bf1429f89c6aab07693d,
         type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 9178082501684488442, guid: de97f5684505bf1429f89c6aab07693d,
         type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 31
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de97f5684505bf1429f89c6aab07693d, type: 3}

@@ -13,14 +13,13 @@ public class BokoClub : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.name == "Link")
+        Debug.Log(other.gameObject.name);
+        if(other.gameObject.name == "Link")
         {
             print("@@@@@@@@@@@@@@@@@@@");
 
             // 링크의 데미지 함수를 호출한다.
             PlayerManager.instance.HP--;
-
-            RagdollBokoblin.instance.club.enabled = false;
         }
     }
 }

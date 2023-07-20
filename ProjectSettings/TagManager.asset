@@ -7,6 +7,8 @@ TagManager:
   - Potion
   - Floor
   - IceMaker
+  - Bokoblin
+  - Bokoblin_sword
   layers:
   - Default
   - TransparentFX
@@ -16,7 +18,7 @@ TagManager:
   - UI
   - Player
   - Boco
-  - 
+  - Boko_collider
   - 
   - 
   - 
@@ -36,10 +38,10 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Molblin
+  - MolFoot
+  - MolClub
+  - BokoClub
   m_SortingLayers:
   - name: Default
     uniqueID: 0

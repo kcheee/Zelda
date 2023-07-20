@@ -66,23 +66,48 @@ public class GameManager : MonoBehaviour
     // 클리어 타임 변수, koCnt 넣어야 함.
     #region 종료 UI
     public CanvasGroup[] endUI;
+    public TextMeshProUGUI[] ScoreText;
     public CanvasGroup BackGround;
-    
+    public GameObject minimap;
+    public GameObject PlayerUI;
+    float clearTime = 0;
+
     IEnumerator EndUI()
     {
+        state = State.Victory;
         // 3초 후 
         yield return new WaitForSeconds(3f);
         // 시작 UI 켜짐
         Start_EndUI.SetActive(true);
 
         // 다른 모든 UI 꺼지게
+        PlayerUI.SetActive(false);
+        minimap.SetActive(false);
+        // 보스 게이지 상태는 테스트 할때 안켜둠으로 null 체크
+        if (BossGage.activeSelf)
         BossGage.SetActive(false);
-        
+
+        // 클리어 타임
+        Debug.Log(Mathf.FloorToInt(clearTime));
+        ScoreText[0].text = Mathf.FloorToInt(clearTime).ToString(); // 소수점 버리기
+        ScoreText[1].text = (100+ Mathf.FloorToInt(clearTime)).ToString();
+
+        // 킬 카운트
+        ScoreText[3].text = ScoreText[2].text;
+        ScoreText[4].text = ScoreText[3].text;
+
+        // 합계
+        int a = int.Parse(ScoreText[1].text);
+        int b = int.Parse(ScoreText[4].text);
+        ScoreText[5].text = (300+(a + b)).ToString();
 
         // victory 켜짐
         yield return new WaitForSeconds(1f);
         VictoryText.SetActive(true);
         yield return new WaitForSeconds(3f);
+        // 모리블린 죽이는 장면 캡쳐
+        //string path = "D:\\zelda\\Assets\\Screenshots\\Resources\\ending_screenshot.png";
+        //ScreenCapture.CaptureScreenshot(path);
         StartCoroutine(Fade(BackGround, 0f, 1f, 1f));
         yield return new WaitForSeconds(3f);
         StartCoroutine(Fade(BackGround, 1f, 0.6f, 0.5f));
@@ -171,14 +196,22 @@ public class GameManager : MonoBehaviour
 
     #region 보스방 입장
     public GameObject BossGage;
+    public GameObject Mobline;
     bool EndUI_flag = false;
+    bool boss_enable = true;
     void UpdateBoss()
     {
         // 보코블린 잡을 때 게이지 줄어듦
         // 2. 20퍼 남았을 때 보스 출현
         // 3. 종료 후 UI 
-        
-        // 종료 UI 한번만 실행되게 해야함..
+         
+        if(BossGage.GetComponent<Slider>().value<=50&& boss_enable)
+        {
+            boss_enable =false;
+            Mobline.SetActive(true);
+        }
+
+        // 종료 UI 한번만 실행되게 해야함.
         if(BossGage.GetComponent<Slider>().value<=0&& !EndUI_flag)
         {
             StartCoroutine(EndUI());
@@ -188,9 +221,12 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    
+
     private void Update()
     {
+        if(state!=State.Victory)
+        clearTime += Time.deltaTime;
+
         // 킬수 테스트,  보코블린 Destory시에 KillcntUpdate()실행 해줘야 함.
         if (Input.GetKeyDown(KeyCode.M)) {  StartCoroutine(EndUI()); }
         
