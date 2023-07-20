@@ -404,11 +404,6 @@ public class Molblin1 : MonoBehaviour
         }      
     }
 
-    public void HPCheck()
-    {
-        
-    }
-
     public float power = 5;
     Rigidbody[] rbs;
     bool isDie;
