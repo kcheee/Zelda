@@ -10,13 +10,15 @@ public class animation_T : MonoBehaviour
 
     public Animator animator;
 
+    //public List<Slash> slashes;
     public enum ani_state
     {
         idle,
         move,
         dash,
         run,
-        attack
+        attack,
+        charged
     }
 
     public ani_state state;
@@ -41,6 +43,7 @@ public class animation_T : MonoBehaviour
 
     private void Start()
     {
+        //DisableSlashes();
         state = ani_state.idle;
         anistack = 0;
     }
@@ -63,6 +66,15 @@ public class animation_T : MonoBehaviour
             //AttackCollider.enabled = false;
             animator.applyRootMotion = false;
         }
+
+        //if(state == ani_state.charged||G_state == Ground_state.air)
+        //{
+        //    animator.applyRootMotion = true;
+        //}
+        //else
+        //{
+        //    animator.applyRootMotion = false;
+        //}
         //Attackmotion();
         //Chargedmotion();
         //CheckCharged2Input();
@@ -70,7 +82,9 @@ public class animation_T : MonoBehaviour
 
         AttackCombo();
         CheckGrounded();
-        
+        Chargedmotion();
+
+
     }
 
     private int comboCount = 0; // ÇöÀç ÄÞº¸ Ä«¿îÆ®
@@ -145,7 +159,54 @@ public class animation_T : MonoBehaviour
             animator.SetBool("AirBorne", true);
         }
     }
+    //°­°ø°Ý
+    private void Chargedmotion()
+    {
+        
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            state = ani_state.charged;
+            chargestack++;
 
+            if (chargestack == 1 && anistack == 0)
+            {
+                animator.SetTrigger("charged");
+                isCharged = true;
+                isCharged2WindowActive = true;
+                StartCoroutine(Charged2WindowCoroutine());
+            }
+            else if (chargestack == 2 && anistack == 0 && isCharged2Ready)
+            {
+                animator.SetTrigger("charged2");
+                chargestack = 0;
+                isCharged = false;
+                isCharged2Ready = false;
+                isCharged2WindowActive = false;
+                StopCoroutine(Charged2WindowCoroutine());
+            }
+        }
+    }
+    //IEnumerator SlashAttack()
+    //{
+    //    for(int i=0; i<slashes.Count; i++)
+    //    {
+    //        yield return new WaitForSeconds(slashes[i].delay);
+    //        slashes[i].slashvfx.SetActive(true);
+    //    }
+    //    yield return new WaitForSeconds(0.1f);
+    //    DisableSlashes();
+    //}
+    //void DisableSlashes()
+    //{
+    //    for (int i = 0; i < slashes.Count; i++)
+    //        slashes[i].slashvfx.SetActive(false);
+    //}
+    //[System.Serializable]
+    //public class Slash
+    //{
+    //    public GameObject slashvfx;
+    //    public float delay;
+    //}
     #region ¹Î°æ´Ô ÄÚµå
     void Attackmotion()
     {
@@ -170,30 +231,7 @@ public class animation_T : MonoBehaviour
         }
     }
 
-    void Chargedmotion()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            chargestack++;
-
-            if (chargestack == 1 && anistack == 0)
-            {
-                animator.SetTrigger("charged");
-                isCharged = true;
-                isCharged2WindowActive = true;
-                StartCoroutine(Charged2WindowCoroutine());
-            }
-            else if (chargestack == 2 && anistack == 0 && isCharged2Ready)
-            {
-                animator.SetTrigger("charged2");
-                chargestack = 0;
-                isCharged = false;
-                isCharged2Ready = false;
-                isCharged2WindowActive = false;
-                StopCoroutine(Charged2WindowCoroutine());
-            }
-        }
-    }
+    
 
     void CheckCharged2Input()
     {
