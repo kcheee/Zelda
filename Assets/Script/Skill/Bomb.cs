@@ -14,7 +14,6 @@ public class Bomb : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-     
         //rb.AddForce(transform.forward * 20, ForceMode.Impulse);
     }
 
