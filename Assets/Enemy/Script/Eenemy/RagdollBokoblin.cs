@@ -144,9 +144,6 @@ public class RagdollBokoblin : MonoBehaviour
     #region Update States
     private void UpdateIdle()
     {
-        isBuffSoundPlaying = false;
-        isAttackSoundPlaying = false;
-        isDieSoundPlaying = false;
 
         // 링크와의 거리를 구한다.
         Vector3 y = link.transform.position;
@@ -215,7 +212,6 @@ public class RagdollBokoblin : MonoBehaviour
         // 링크가 공격 거리 안으로 들어오면 기다린다.
         else if (distance <= attackPossibleDistance)
         {
-            SoundManager.instance.OnMyBuffSound();
 
             // 공격대기상태로 전환한다.
             state = BocoblinState.Wait;
@@ -332,7 +328,6 @@ public class RagdollBokoblin : MonoBehaviour
 
     private void UpdateAttack()
     {
-        SoundManager.instance.OnMyAttackSound();
 
         // 애니메이션 실행
         anim.SetBool("Run", false);
@@ -354,7 +349,6 @@ public class RagdollBokoblin : MonoBehaviour
 
     private void UpdateAttackWait()
     {
-        isAttackSoundPlaying = false;
 
         currentTime += Time.deltaTime;
 
@@ -439,9 +433,7 @@ public class RagdollBokoblin : MonoBehaviour
     {
         if(isDie == false)
         {
-            isDie = true;
-
-            SoundManager.instance.OnMyDieSound();           
+            isDie = true;      
 
             GameManager.instance.KillcntUpdate();
 
