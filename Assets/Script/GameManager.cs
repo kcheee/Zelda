@@ -87,6 +87,9 @@ public class GameManager : MonoBehaviour
         if (BossGage.activeSelf)
         BossGage.SetActive(false);
 
+        string path = "D:\\zelda\\Assets\\Screenshots\\Resources\\ending_screenshot.png";
+        ScreenCapture.CaptureScreenshot(path);
+
         // 클리어 타임
         Debug.Log(Mathf.FloorToInt(clearTime));
         ScoreText[0].text = Mathf.FloorToInt(clearTime).ToString(); // 소수점 버리기
@@ -105,9 +108,13 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         VictoryText.SetActive(true);
         yield return new WaitForSeconds(3f);
+
+        var obj = Resources.Load(path);
+        Debug.Log(obj);
         // 모리블린 죽이는 장면 캡쳐
         //string path = "D:\\zelda\\Assets\\Screenshots\\Resources\\ending_screenshot.png";
         //ScreenCapture.CaptureScreenshot(path);
+
         StartCoroutine(Fade(BackGround, 0f, 1f, 1f));
         yield return new WaitForSeconds(3f);
         StartCoroutine(Fade(BackGround, 1f, 0.6f, 0.5f));
