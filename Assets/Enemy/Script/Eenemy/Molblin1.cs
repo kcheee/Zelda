@@ -27,6 +27,7 @@ public class Molblin1 : MonoBehaviour
         Kick,
         TwoHandsAttack,
         ComboAttack,
+        AttackDelay,
         Damaged,
         Die
     }
@@ -38,10 +39,13 @@ public class Molblin1 : MonoBehaviour
     float distance;
     public float detectDistance;
     public float attackPossibleDistance;
+    public float pattern2Distance = 7;
+    public float pattern3Distance = 5;
 
     // 시간
     float currentTime;
     public float waitTime;
+    public float delayTime = 2;
 
     // 플레이어(링크)
     GameObject link;
@@ -63,6 +67,8 @@ public class Molblin1 : MonoBehaviour
     bool isTwoHands;
     bool isComboAttack;
     bool isKick;
+    bool isPohyo;
+    public bool isDamaged;
 
     #endregion
 
@@ -81,8 +87,8 @@ public class Molblin1 : MonoBehaviour
     #region Update
     void Update()
     {
-        print("isAttack" + isAttack);
-        print("isDisturb" + isDisturb);
+        // print("isAttack" + isAttack);
+        // print("isDisturb" + isDisturb);
 
         #region 바라보기
         // 링크가 있는 방향을 찾는다.
@@ -144,6 +150,10 @@ public class Molblin1 : MonoBehaviour
         {
             ComboAttack();
         }
+        else if (state == MolblinnState.AttackDelay)
+        {
+            UpdateAttackDelay();
+        }
         else if (state == MolblinnState.Damaged)
         {
             UpdateDamaged();
@@ -157,7 +167,7 @@ public class Molblin1 : MonoBehaviour
     #endregion
 
     #region Update States
-    bool isPohyo = false;
+
     private void UpdateIdle()
     {
         // 만약 링크와의 거리가 감지 거리보다 가까우면
@@ -209,6 +219,7 @@ public class Molblin1 : MonoBehaviour
 
     private void UpdateAttackChoice()
     {
+        anim.SetBool("Move", true);
         // 선택 시간 중에 링크가 공격가능 거리 보다 멀어진다면 Idle        
         if (distance > attackPossibleDistance)
         {
@@ -253,9 +264,6 @@ public class Molblin1 : MonoBehaviour
         }
     }
 
-    public float pattern2Distance = 7;
-    public float pattern3Distance = 5;
-
     private void Kick()
     {
         print("발차기");
@@ -290,23 +298,22 @@ public class Molblin1 : MonoBehaviour
             if (currentTime >= 1)
             {
                 print("양손 공격");
+                anim.SetBool("TwoHands", true);
 
                 isDisturb = false;
                 isAttack = true;
 
                 // 양손 공격을 한다.
                 anim.SetBool("Wait", false);
-                anim.SetBool("TwoHands", true);
             }
             // 공격이 끝나는 시간이 되면
-            if (currentTime > 2)
+            if (currentTime > 3)
             {
                 isDisturb = true;
                 isTwoHands = false;
                 isDodge = false;
-                anim.SetBool("TwoHands", false);
-                // 상태를 공격선택으로 바꾼다.
-                state = MolblinnState.Idle;
+
+                state = MolblinnState.AttackDelay;
 
                 currentTime = 0;
             }
@@ -327,7 +334,7 @@ public class Molblin1 : MonoBehaviour
         {
             currentTime += Time.deltaTime;
 
-            if (currentTime >= 2)
+            if (currentTime >= 1)
             {
                 print("콤보 공격");
 
@@ -340,53 +347,75 @@ public class Molblin1 : MonoBehaviour
             }
             if (currentTime > 5)
             {
-
                 isDisturb = true;
                 isComboAttack = false;
                 isDodge = false;
 
-                anim.SetBool("ComboAttack", false);
-
-                // 상태를 초기화 한다.
-                state = MolblinnState.Idle;
+                state = MolblinnState.AttackDelay;
 
                 currentTime = 0;
             }
         }
     }
-    public bool isDamaged;
-    public void UpdateDamaged()
+
+    void UpdateAttackDelay()
     {
-        // 체력을 감소시킨다.
-        currentHP--;
-        HPCheck();        
+        anim.SetBool("ComboAttack", false);
+        anim.SetBool("TwoHands", false);
+
+        currentTime += Time.deltaTime;
+
+        if(currentTime >= delayTime)
+        {
+            // 상태를 공격선택으로 바꾼다.
+            state = MolblinnState.Idle;
+
+            currentTime = 0;
+        }
     }
 
-    public void HPCheck()
+    public void UpdateDamaged()
     {
         if (currentHP > 0)
         {
             if (isDisturb == true)
             {
+                currentHP--;
                 anim.SetTrigger("Damage");
                 state = MolblinnState.Idle;
+            }
+            else if (isDisturb == false && isDamaged == false)
+            {
+                currentHP--;
+
+                isDamaged = true;
+
+                currentTime += Time.deltaTime;
+                if (currentTime >= 0.5f)
+                {
+                    isDamaged = false;
+                }
             }
         }
 
         else if (currentHP <= 0)
         {
             state = MolblinnState.Die;
-        }
+        }      
+    }
+
+    public void HPCheck()
+    {
+        
     }
 
     public float power = 5;
     Rigidbody[] rbs;
     bool isDie;
     bool isEffect;
-
     public GameObject dieEffectFactory;
-
-
+    public SkinnedMeshRenderer molClub;
+    Transform hipBone;
 
     private void UpdateDie()
     {
@@ -423,9 +452,6 @@ public class Molblin1 : MonoBehaviour
 
     }
 
-    public SkinnedMeshRenderer molClub;
-    Transform hipBone;
-
     public void DieColor()
     {
         // 모리블린의 몸을 까맣게 한다.
@@ -439,6 +465,7 @@ public class Molblin1 : MonoBehaviour
             mesh[i].materials[0].color = Color.black;
         }
     }
+
     public void DieEffect()
     {
         if (isEffect == false)

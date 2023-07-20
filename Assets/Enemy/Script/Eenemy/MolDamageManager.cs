@@ -11,6 +11,5 @@ public class MolDamageManager : MonoBehaviour
         {
             GetComponentInParent<Molblin1>().state = Molblin1.MolblinnState.Damaged;
         }
-
     }
 }
