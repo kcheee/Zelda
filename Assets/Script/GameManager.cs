@@ -105,6 +105,9 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         VictoryText.SetActive(true);
         yield return new WaitForSeconds(3f);
+        // 모리블린 죽이는 장면 캡쳐
+        //string path = "D:\\zelda\\Assets\\Screenshots\\Resources\\ending_screenshot.png";
+        //ScreenCapture.CaptureScreenshot(path);
         StartCoroutine(Fade(BackGround, 0f, 1f, 1f));
         yield return new WaitForSeconds(3f);
         StartCoroutine(Fade(BackGround, 1f, 0.6f, 0.5f));
@@ -193,13 +196,20 @@ public class GameManager : MonoBehaviour
 
     #region 보스방 입장
     public GameObject BossGage;
+    public GameObject Mobline;
     bool EndUI_flag = false;
+    bool boss_enable = true;
     void UpdateBoss()
     {
         // 보코블린 잡을 때 게이지 줄어듦
         // 2. 20퍼 남았을 때 보스 출현
         // 3. 종료 후 UI 
          
+        if(BossGage.GetComponent<Slider>().value<=50&& boss_enable)
+        {
+            boss_enable =false;
+            Mobline.SetActive(true);
+        }
 
         // 종료 UI 한번만 실행되게 해야함.
         if(BossGage.GetComponent<Slider>().value<=0&& !EndUI_flag)

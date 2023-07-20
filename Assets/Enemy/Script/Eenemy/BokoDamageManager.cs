@@ -28,8 +28,13 @@ public class BokoDamageManager : MonoBehaviour
                 {
                     Debug.Log("½ÇÇà");
                     rb.AddForce(transform.up * 5 + (-transform.forward * 2.5f), ForceMode.Impulse);
+                    RagdollBokoblin.Damage = 4;
                 }
-                else rb.AddForce(-transform.forward * 10 + transform.up * 10, ForceMode.Impulse);
+                else
+                {
+                    rb.AddForce(-transform.forward * 10 + transform.up * 10, ForceMode.Impulse);
+                    RagdollBokoblin.Damage = 2;
+                }
             }
 
             GetComponentInParent<RagdollBokoblin>().state = RagdollBokoblin.BocoblinState.Damaged;
