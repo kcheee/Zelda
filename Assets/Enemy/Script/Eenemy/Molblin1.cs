@@ -68,7 +68,6 @@ public class Molblin1 : MonoBehaviour
     bool isTwoHands;
     bool isComboAttack;
     bool isKick;
-    bool isPohyo;
     public bool isDamaged;
 
     #endregion
@@ -144,7 +143,7 @@ public class Molblin1 : MonoBehaviour
         }
         else if (state == MolblinState.Damaged)
         {
-            DamageProcess();
+            UpdateDamaged();
         }
         else if (state == MolblinState.Die)
         {
@@ -365,9 +364,10 @@ public class Molblin1 : MonoBehaviour
             state = MolblinState.Idle;
 
             currentTime = 0;
+        }
     }
 
-    public void DamageProcess()
+    public void UpdateDamaged()
     {
             currentHP--;
         if (currentHP > 0)
@@ -375,7 +375,7 @@ public class Molblin1 : MonoBehaviour
             if (isDisturb == true)
             {
                 anim.SetTrigger("Damage");
-                state = MolblinnState.Idle;
+                state = MolblinState.Idle;
             }
         }
 
@@ -393,7 +393,7 @@ public class Molblin1 : MonoBehaviour
 
         else if (currentHP <= 0)
         {
-            state = MolblinnState.Die;
+            state = MolblinState.Die;
         }      
     }
 

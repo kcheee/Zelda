@@ -9,7 +9,7 @@ public class MolDamageManager : MonoBehaviour
         //print(other.gameObject.name);
         if (other.gameObject.layer == 17)
         {
-            GetComponentInParent<Molblin1>().state = Molblin1.MolblinnState.Damaged;
+            GetComponentInParent<Molblin1>().state = Molblin1.MolblinState.Damaged;
         }
     }
 }
