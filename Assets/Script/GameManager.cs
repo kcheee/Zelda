@@ -88,17 +88,18 @@ public class GameManager : MonoBehaviour
         BossGage.SetActive(false);
 
         // 클리어 타임
+        Debug.Log(Mathf.FloorToInt(clearTime));
         ScoreText[0].text = Mathf.FloorToInt(clearTime).ToString(); // 소수점 버리기
-        ScoreText[1].text = (100+clearTime).ToString();
+        ScoreText[1].text = (100+ Mathf.FloorToInt(clearTime)).ToString();
 
         // 킬 카운트
         ScoreText[3].text = ScoreText[2].text;
         ScoreText[4].text = ScoreText[3].text;
 
-        // 합계 수정요망.
-        //int a = int.Parse(ScoreText[1].text);
-        //int b = int.Parse(ScoreText[4].text);
-        //ScoreText[5].text = (a+b).ToString();
+        // 합계
+        int a = int.Parse(ScoreText[1].text);
+        int b = int.Parse(ScoreText[4].text);
+        ScoreText[5].text = (300+(a + b)).ToString();
 
         // victory 켜짐
         yield return new WaitForSeconds(1f);

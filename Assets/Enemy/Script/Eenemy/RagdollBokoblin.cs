@@ -449,7 +449,7 @@ public class RagdollBokoblin : MonoBehaviour
             if(GameManager.instance.state == GameManager.State.Boss)
             {
                 // 점령게이지 줄어듦
-                GameManager.instance.BossGage.GetComponent<Slider>().value -= 4;
+                GameManager.instance.BossGage.GetComponent<Slider>().value -= 1;
             }
 
             // 색깔을 검게 바꾸고
