@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -143,7 +143,7 @@ public class animation_T : MonoBehaviour
         }
         else
         {
-            Debug.Log("공중");
+            //Debug.Log("공중");
             animator.SetBool("AirBorne", true);
         }
     }

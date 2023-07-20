@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering.LookDev;
+using UnityEditor;
 using UnityEngine;
 
 public class Camera_PlayerMove : MonoBehaviour
