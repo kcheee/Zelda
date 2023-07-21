@@ -14,7 +14,7 @@ public class Camera_PlayerMove : MonoBehaviour
      public float speed = 10;
     float NORMALspeed = 10;
     private float DASHstack = 0;
-    private float DASHspeed = 30;
+    public float DASHspeed = 30;
     private float RUNspeed = 20;
 
     private int ATTACKstack = 0;
