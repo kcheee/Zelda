@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -69,6 +70,7 @@ public class Molblin1 : MonoBehaviour
     bool isComboAttack;
     bool isKick;
     public bool isDamaged;
+    static public bool anim_rotation = false;
 
     #endregion
 
@@ -98,7 +100,9 @@ public class Molblin1 : MonoBehaviour
         Quaternion linkRotate = Quaternion.LookRotation(linkDir);
 
         // 그 방향을 바라본다.
-        transform.rotation = Quaternion.Lerp(transform.rotation, linkRotate, Time.deltaTime * 5);
+        if(!Molblin1.anim_rotation)
+            transform.rotation = Quaternion.Lerp(transform.rotation, linkRotate, Time.deltaTime * 5);
+        
         #endregion
 
         #region 거리재기
@@ -266,16 +270,15 @@ public class Molblin1 : MonoBehaviour
         state = MolblinState.Idle;
         isDodge = false;
     }
-
+    
     private void TwoHandsAttack()
     {
-
             // 시간을 흐르게 한다.
             currentTime += Time.deltaTime;
             // 1초 후에
             if (currentTime >= 1)
             {
-                print("양손 공격");
+                //print("양손 공격");
                 anim.SetBool("TwoHands", true);
 
                 //isDisturb = false;
@@ -290,7 +293,7 @@ public class Molblin1 : MonoBehaviour
                 //isDisturb = true;
                 isTwoHands = false;
                 isDodge = false;
-
+                Debug.Log("tlfgpd");
                 anim.SetTrigger("AttackDelay");
                 state = MolblinState.AttackDelay;
 
