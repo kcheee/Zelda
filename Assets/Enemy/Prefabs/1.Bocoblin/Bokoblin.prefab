@@ -1565,23 +1565,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  speed: 3
-  runSpeed: 4
-  detectDistance: 15
-  attackPossibleDistance: 8
+  speed: 4.55
+  runSpeed: 7.8
+  detectDistance: 80.3
+  attackPossibleDistance: 32.3
   attackDistance: 2
-  waitTime: 1.2
+  waitTime: 1
   bococlub: {fileID: 716207686300234110}
   club: {fileID: 6912272295497885453}
   bokoBox: {fileID: 2953078959583227936}
   currentHP: 0
-  maxHP: 195
+  maxHP: 5
   dieEffectFactory: {fileID: 7834402645691306137, guid: 9ed2ddf86cc2d9e408309f616d65e0dd,
     type: 3}
   power: 4
   isBuffSoundPlaying: 0
   isAttackSoundPlaying: 0
   isDieSoundPlaying: 0
+  minX: -5
+  maxX: 5
+  minY: -5
+  maxY: 5
 --- !u!1 &2953078959583227949
 GameObject:
   m_ObjectHideFlags: 0
@@ -1595,7 +1599,7 @@ GameObject:
   - component: {fileID: 2953078959583227937}
   - component: {fileID: 2953078959583227936}
   - component: {fileID: 7495650420488721178}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Boko_collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

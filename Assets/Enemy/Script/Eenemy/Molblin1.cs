@@ -28,7 +28,6 @@ public class Molblin1 : MonoBehaviour
         TwoHandsAttack,
         ComboAttack,
         AttackDelay,
-        Damaged,
         Die
     }
 
@@ -57,8 +56,20 @@ public class Molblin1 : MonoBehaviour
     // 체력
     public int currentHP;
     public int maxHP = 30;
+    public Slider sliderHP;
 
-    Rigidbody rb;
+    public int HP
+    {
+        get { return currentHP; }
+        set
+        {
+            currentHP = value;
+            sliderHP.value = currentHP;
+        }
+    }
+
+    // 모리블린
+    SkinnedMeshRenderer[] mesh;
 
     // bool
     bool isPohyo;
@@ -73,14 +84,15 @@ public class Molblin1 : MonoBehaviour
     #endregion
 
     #region Start
-    // Start is called before the first frame update
     void Start()
     {
-        currentHP = maxHP;
+        sliderHP.maxValue = maxHP;
+        HP = maxHP;
         link = GameObject.Find("Link");
         rbs = GetComponentsInChildren<Rigidbody>();
         anim = gameObject.GetComponentInChildren<Animator>();
         hipBone = anim.GetBoneTransform(HumanBodyBones.Hips);
+        mesh = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
     #endregion
 
@@ -98,7 +110,13 @@ public class Molblin1 : MonoBehaviour
         Quaternion linkRotate = Quaternion.LookRotation(linkDir);
 
         // 그 방향을 바라본다.
-        transform.rotation = Quaternion.Lerp(transform.rotation, linkRotate, Time.deltaTime * 5);
+        if(state != MolblinState.TwoHandsAttack)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, linkRotate, Time.deltaTime * 5);
+        }
+        else
+            Debug.Log("dfsdf");
+
         #endregion
 
         #region 거리재기
@@ -140,10 +158,6 @@ public class Molblin1 : MonoBehaviour
         else if (state == MolblinState.AttackDelay)
         {
             UpdateAttackDelay();
-        }
-        else if (state == MolblinState.Damaged)
-        {
-            UpdateDamaged();
         }
         else if (state == MolblinState.Die)
         {
@@ -278,7 +292,7 @@ public class Molblin1 : MonoBehaviour
                 print("양손 공격");
                 anim.SetBool("TwoHands", true);
 
-                //isDisturb = false;
+                isDisturb = false;
                 isAttack = true;
 
                 // 양손 공격을 한다.
@@ -295,8 +309,7 @@ public class Molblin1 : MonoBehaviour
                 state = MolblinState.AttackDelay;
 
                 currentTime = 0;
-            }
-        
+            }        
     }
 
     private void ComboAttack()
@@ -308,7 +321,7 @@ public class Molblin1 : MonoBehaviour
             {
                 print("콤보 공격");
 
-                //isDisturb = false;
+                isDisturb = false;
                 isAttack = true;
 
                 // 콤보 공격을 한다.
@@ -367,32 +380,42 @@ public class Molblin1 : MonoBehaviour
         }
     }
 
+
+
+
     public void UpdateDamaged()
     {
-            currentHP--;
+        // 체력 감소
+        HP--;
+        // 만약 체력이 0 보다 크다면
         if (currentHP > 0)
         {
+            // 그리고 공격방해가 가능한 상태라면
             if (isDisturb == true)
             {
+                // 모리블린 색 변화
+                MaterialChange.instance.DoDamage();
+
+                // 방어게이지 1칸 깎임
+                
+
+                // 애니메이션
                 anim.SetTrigger("Damage");
+
+                // 상태 초기화
                 state = MolblinState.Idle;
             }
+           // 그리고 공격방해가 불가능한 상태라면
+           else if(isDisturb == false)
+           {
+                print("332423432423423432");                
+           }
         }
 
-        //if (currentHP > 0)
-        //{
-        //    if (isDisturb == true)
-        //    {
-        //        // 체력을 감소시킨다.
-        //        currentHP--;
-
-        //        anim.SetTrigger("Damage");
-        //        state = MolblinState.Idle;
-        //    }
-        //}
-
+        // 그게 아니라 체력이 0 이하가 되면
         else if (currentHP <= 0)
         {
+            // 상태를 사망으로 바꾼다.
             state = MolblinState.Die;
         }      
     }
@@ -444,7 +467,6 @@ public class Molblin1 : MonoBehaviour
     public void DieColor()
     {
         // 모리블린의 몸을 까맣게 한다.
-        SkinnedMeshRenderer[] mesh = GetComponentsInChildren<SkinnedMeshRenderer>();
         for (int i = 0; i < mesh.Length; i++)
         {
             if (mesh[i] == molClub)     // 모리블린 무기는 까맣게 하지 않는다.

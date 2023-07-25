@@ -68,7 +68,7 @@ public class RagdollBokoblin : MonoBehaviour
 
     // 사망이펙트팩토리
     public GameObject dieEffectFactory;
-    
+
     // 리지드바디
     Rigidbody[] rbs;
     Transform hipBone;
@@ -141,6 +141,16 @@ public class RagdollBokoblin : MonoBehaviour
     }
     #endregion
 
+    void GetPatrolPosition()
+    {
+        print("kdkd");
+        Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), transform.position.y, Random.Range(minY, maxY));
+        Vector3 patrolDir = randomPosition - transform.position;
+        patrolDir.Normalize();
+
+        transform.position += patrolDir * speed * Time.deltaTime;
+    }
+
     #region Update States
     private void UpdateIdle()
     {
@@ -153,9 +163,49 @@ public class RagdollBokoblin : MonoBehaviour
         y.y = transform.position.y;
         distance = Vector3.Distance(y, transform.position);
 
-        // 만약 링크와의 거리가 감지 거리보다 가까우면
-        if (distance <= detectDistance)
+        currentTime += Time.deltaTime;
+        if (currentTime >= 5 && distance > detectDistance)
         {
+            int patrolRandomValue = Random.Range(0, 10);
+            // 50% 확률로 댄스
+            if (patrolRandomValue < 0)
+            {
+                anim.SetBool("Dance", true);
+
+                bococlub.enabled = false;
+            }
+
+            //// 50% 확률로 패트롤
+            else if(patrolRandomValue >= 0)
+            {
+                
+                GetPatrolPosition();
+            //// 무작위 장소를 고른다.
+            //moveSpot.position = new Vector3(Random.Range(minX,maxX), transform.position.y, Random.Range(minY, maxY));
+            //// 무작위 장소를 향하는 방향을 구한다.
+            //Vector3 patrolDir = moveSpot.position - transform.position;
+            //patrolDir.Normalize();
+            //// 무작위 장소를 향해 이동한다.
+            //transform.position += patrolDir * speed * Time.deltaTime;
+            //anim.SetBool("Patrol", true);
+            //// 무작위 장소까지 가게 되면
+            //if(Vector3.Distance(moveSpot.position, transform.position) <= 0.8f)
+            //{
+            //    // 새로운 무작위 장소를 찾아 이동한다.
+            //    print("ddd");
+            //}
+            }
+
+            // Vector2 r = new Vector2(-1, -1) + Random.insideUnitCircle * 2;
+
+            currentTime = 0;
+        }
+        // 만약 링크와의 거리가 감지 거리보다 가까우면
+        else if (distance <= detectDistance)
+        {
+            anim.SetBool("Dance", false);
+            anim.SetBool("Patrol", false);
+
             #region 바라보기
             // 링크가 있는 방향을 찾는다.
             Vector3 linkDir = link.transform.position - transform.position;
@@ -166,16 +216,31 @@ public class RagdollBokoblin : MonoBehaviour
             transform.forward = linkDir;
             #endregion
 
+            bococlub.enabled = true;
+
             currentTime += Time.deltaTime;
 
-            // 2초가 지나면
-            if (currentTime > 2)
+            if (currentTime >= 1)
             {
                 // 상태를 Move 로 변환한다.
                 state = BocoblinState.Move;
+
                 currentTime = 0;
             }
         }
+    }
+
+    // public Transform moveSpot;
+    public float minX = -2f;
+    public float maxX = 2;
+    public float minY = -2f;
+    public float maxY = 2;
+
+
+
+    public void DoPatrol()
+    {
+
     }
 
     private void UpdateMove()
@@ -232,7 +297,7 @@ public class RagdollBokoblin : MonoBehaviour
         // 5초 후에 일어난다.
         currentTime += Time.deltaTime;
         if (currentTime > 6)
-        {           
+        {
             // 애니메이터를 활성화 한다.
             anim.enabled = true;
 
@@ -244,7 +309,7 @@ public class RagdollBokoblin : MonoBehaviour
             anim.SetTrigger("StandUp");
 
             state = BocoblinState.Idle;
-            
+
             currentTime = 0;
         }
     }
@@ -384,7 +449,7 @@ public class RagdollBokoblin : MonoBehaviour
         }
 
         // 4초가 지나면 다시 공격
-        else if (currentTime >= 4)
+        else if (currentTime >= 3f)
         {
             //  다시 때린다.
             // 애니메이션
@@ -398,7 +463,7 @@ public class RagdollBokoblin : MonoBehaviour
     }
 
     // 다른 스크립트에서 데미지 관리변수
-    static public int Damage=1;
+    static public int Damage = 1;
 
     public void DamagedProcess()
     {
@@ -406,7 +471,7 @@ public class RagdollBokoblin : MonoBehaviour
         anim.enabled = false;
 
         // 체력 감소.
-        currentHP-= Damage;
+        currentHP -= Damage;
 
         //foreach (Rigidbody rb in rbs)
         //{
@@ -437,16 +502,16 @@ public class RagdollBokoblin : MonoBehaviour
 
     private void UpdateDie()
     {
-        if(isDie == false)
+        if (isDie == false)
         {
             isDie = true;
 
-            SoundManager.instance.OnMyDieSound();           
+            SoundManager.instance.OnMyDieSound();
 
             GameManager.instance.KillcntUpdate();
 
             // 보스전일때 보코블린 죽으면 점령게이지 줄어듦.
-            if(GameManager.instance.state == GameManager.State.Boss)
+            if (GameManager.instance.state == GameManager.State.Boss)
             {
                 // 점령게이지 줄어듦
                 GameManager.instance.BossGage.GetComponent<Slider>().value -= 1;
