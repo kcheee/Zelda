@@ -15,28 +15,28 @@ public class SoundManager : MonoBehaviour
 
     public void OnMyBuffSound()
     {
-        if(RagdollBokoblin.instance.isBuffSoundPlaying == false)
-        {
+        // if(RagdollBokoblin.instance.isBuffSoundPlaying == false)
+        // {
             AudioSource.PlayClipAtPoint(audios[0], transform.position);
-            RagdollBokoblin.instance.isBuffSoundPlaying = true;
-        }
-        else if (RagdollBokoblin.instance.isBuffSoundPlaying)
-        {
-            return;
-        }
+            //RagdollBokoblin.instance.isBuffSoundPlaying = true;
+        // }
+        // else if (RagdollBokoblin.instance.isBuffSoundPlaying)
+        // {
+            // return;
+        // }
     }
 
     public void OnMyAttackSound()
     {
-        if (RagdollBokoblin.instance.isAttackSoundPlaying == false)
-        {
+        //if (RagdollBokoblin.instance.isAttackSoundPlaying == false)
+        //{
             AudioSource.PlayClipAtPoint(audios[1], transform.position);
-            RagdollBokoblin.instance.isAttackSoundPlaying = true;
-        }
-        else if (RagdollBokoblin.instance.isAttackSoundPlaying)
-        {
-            return;
-        }
+        //    RagdollBokoblin.instance.isAttackSoundPlaying = true;
+        //}
+        //else if (RagdollBokoblin.instance.isAttackSoundPlaying)
+        //{
+        //    return;
+        //}
     }
 
     public void OnMyDieSound()
