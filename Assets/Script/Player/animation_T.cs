@@ -166,6 +166,7 @@ public class animation_T : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
+            //Psoundscript.arraysound.ATTACKI();
             state = ani_state.charged;
             animator.SetTrigger("charged");
             //animator.SetTrigger("charged1");
