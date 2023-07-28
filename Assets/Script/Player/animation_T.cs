@@ -189,6 +189,11 @@ public class animation_T : MonoBehaviour
             //}
 
         }
+        if (Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            state = ani_state.charged;
+            animator.SetTrigger("chargedcombo");
+        }
     }
     #region юс╫ц
     //IEnumerator Charged2WindowCoroutine()
