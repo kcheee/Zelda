@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -17,6 +17,7 @@ public class animation_T : MonoBehaviour
         dash,
         run,
         attack,
+        FinishAttack
     }
 
     public ani_state state;
@@ -53,7 +54,7 @@ public class animation_T : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("move"))
             state = ani_state.move;
 
-        if (state == ani_state.attack|| G_state == Ground_state.air)
+        if (state == ani_state.attack|| FinishAttack_.Finishattack || G_state == Ground_state.air)
         {
             //AttackCollider.enabled = true;
             animator.applyRootMotion = true;
@@ -67,8 +68,6 @@ public class animation_T : MonoBehaviour
         //Chargedmotion();
         //CheckCharged2Input();
         //Combomotion();
-
-        
 
         AttackCombo();
         CheckGrounded();
@@ -143,7 +142,7 @@ public class animation_T : MonoBehaviour
         }
         else
         {
-            Debug.Log("공중");
+            //Debug.Log("공중");
             animator.SetBool("AirBorne", true);
         }
     }
@@ -154,9 +153,19 @@ public class animation_T : MonoBehaviour
         if (other.CompareTag("Bokoblin_sword"))
         {
             Debug.Log(other.gameObject);
+            // 0보다 크면
+            if(PlayerManager.instance.HP>0)
+            {
             animator.SetTrigger("Hit");
             PlayerManager.instance.PlayerDamaged();
+            }
         }
+    }
+
+    // Dash ani Event;
+    public bool Dash()
+    {
+        return Camera_PlayerMove.dash_bool = true;
     }
 
     #region 민경님 코드

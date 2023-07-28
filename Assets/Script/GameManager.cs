@@ -90,8 +90,7 @@ public class GameManager : MonoBehaviour
         string path = "D:\\zelda\\Assets\\Screenshots\\Resources\\ending_screenshot.png";
         ScreenCapture.CaptureScreenshot(path);
 
-        // 클리어 타임
-        Debug.Log(Mathf.FloorToInt(clearTime));
+        // 클리어 타임;
         ScoreText[0].text = Mathf.FloorToInt(clearTime).ToString(); // 소수점 버리기
         ScoreText[1].text = (100+ Mathf.FloorToInt(clearTime)).ToString();
 
@@ -206,13 +205,14 @@ public class GameManager : MonoBehaviour
     public GameObject Mobline;
     bool EndUI_flag = false;
     bool boss_enable = true;
+
     void UpdateBoss()
     {
         // 보코블린 잡을 때 게이지 줄어듦
         // 2. 20퍼 남았을 때 보스 출현
         // 3. 종료 후 UI 
          
-        if(BossGage.GetComponent<Slider>().value<=50&& boss_enable)
+        if(BossGage.GetComponent<Slider>().value<=70&& boss_enable)
         {
             boss_enable =false;
             Mobline.SetActive(true);

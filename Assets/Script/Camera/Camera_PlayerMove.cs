@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering.LookDev;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Camera_PlayerMove : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class Camera_PlayerMove : MonoBehaviour
      public float speed = 10;
     float NORMALspeed = 10;
     private float DASHstack = 0;
-    private float DASHspeed = 30;
+    public float DASHspeed = 30;
     private float RUNspeed = 20;
 
     private int ATTACKstack = 0;
@@ -37,28 +39,31 @@ public class Camera_PlayerMove : MonoBehaviour
     //static public bool at = false;
 
     #region 대쉬 어택 기술을 위한 코루틴
-    float ti;
-    static public bool dashattack = false;
-    IEnumerator DashAttack()
-    {
-        while (ti < 2)  // 2초동안 실행
-        {
-            speed = 12;
-            dashattack = true;
-            //Debug.Log("실행");
-            ti += 0.02f;
-            yield return new WaitForSeconds(0.02f);
-        }
-        ti = 0;
-        speed = 5;
-        dashattack = false;
-        yield return null;
-    }
+    float dash_ti;
+    public static bool dash_bool;
+
+    Vector3 dash_dir;   // 대쉬 방향 받기
+    //IEnumerator DashAttack(Vector3 dir)
+    //{
+
+    //    if (dash_ti > 2)
+    //    {
+    //        Debug.Log("실행");
+    //        dash_ti = 0;
+    //        yield return null;
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("ylfgod");
+    //        yield return new WaitForSeconds(0.02f);
+    //        yield return StartCoroutine(DashAttack(dir));
+    //    }
+    //}
     #endregion
+
 
     private void Move()
     {
-
         // Input를 vector2로 받음.
         Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         moveInput.Normalize();
@@ -83,7 +88,7 @@ public class Camera_PlayerMove : MonoBehaviour
             // 대쉬 및 달리기.
             if (Input.GetKey(KeyCode.Z))
             {
-               
+
                 DASHstack += Time.deltaTime;
                 if (DASHstack <= 0.3f)
                 {
@@ -93,7 +98,7 @@ public class Camera_PlayerMove : MonoBehaviour
                     speed = DASHspeed; //대쉬 스피드로 변환.
 
                     /*return*/
-                    ;
+                    
                 }
                 if (DASHstack >= 0.3f)
                 {
@@ -108,33 +113,29 @@ public class Camera_PlayerMove : MonoBehaviour
             {
                 animation_T.instance.animator.SetBool("run", false);
                 DASHstack = 0;
-                speed = NORMALspeed; //정상 스피드
-            }
+                speed = NORMALspeed;
+                //정상 스피드
 
-            //// 캐릭터의 앞방향을 카메라 앞방향으로 설정.
+            } 
 
-            // 회전 값
-            /*
-            Quaternion look = Quaternion.LookRotation(lookdir);
-            transform.rotation = Quaternion.Lerp(transform.rotation, look, Time.deltaTime * 5);
-            */
-
-            
+            // 캐릭터의 앞방향을 카메라 앞방향으로 설정.
             characterBody.forward = moveDir;
+
             // move 상태로 바꿈
-            if (animation_T.instance.state != animation_T.ani_state.attack)
+            // attack 상태가 아닐때 움직임.
+            if (animation_T.instance.state != animation_T.ani_state.attack && !dash_bool)
             {
                 transform.position += moveDir * Time.deltaTime * speed;
             }
-            
-            //transform.position = new Vector3(transform.position.x, characterBody.transform.localPosition.y, transform.position.z);
+
+            // 대쉬 방향 받기
+            dash_dir = moveDir;
         }
         else 
         {      
             // 플레이어 애니메이터 상태가 move가 아닐때 idle로 바꾸고 move = false;
             if (animation_T.instance.animator.GetCurrentAnimatorStateInfo(0).IsName("move"))
-            {
-               
+            {               
                 animation_T.instance.state = animation_T.ani_state.idle;
                 animation_T.instance.animator.SetBool("move", false);
             }
@@ -142,12 +143,34 @@ public class Camera_PlayerMove : MonoBehaviour
         // 대쉬어택 테스트
         if (Input.GetKeyDown(KeyCode.V))
         {
-            StartCoroutine(DashAttack());
+            //StartCoroutine(DashAttack(dash_dir));
+            animation_T.instance.animator.SetBool("DashAttack", true);          
+        }
+
+        if (dash_bool)
+        {
+            dash_ti += Time.deltaTime;
+            if (dash_ti < 2f)
+            {
+                transform.position += dash_dir * Time.deltaTime * 15;
+            }
+            else
+            {
+                dash_bool = false;
+                dash_ti = 0;
+            }
         }
     }
+    public bool DASHBOOL()
+    {
+       
+        return dash_bool = true;
 
+    }
     void LookAround()
     {
+        // 피니쉬어택일때 움직이지 않게 설정.
+        if(!FinishAttack_.Finishattack) {
         // 마우스 x,y 좌표 값 
         Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         Vector3 camAngle = CameraArm.rotation.eulerAngles;
@@ -159,7 +182,7 @@ public class Camera_PlayerMove : MonoBehaviour
         else
             x = Mathf.Clamp(x, 335, 361);
 
-
         CameraArm.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);
+        }
     }
 }
