@@ -40,7 +40,7 @@ public class Camera_PlayerMove : MonoBehaviour
 
     #region 대쉬 어택 기술을 위한 코루틴
     float dash_ti;
-    bool dash_bool;
+    public static bool dash_bool;
 
     Vector3 dash_dir;   // 대쉬 방향 받기
     //IEnumerator DashAttack(Vector3 dir)
@@ -135,8 +135,7 @@ public class Camera_PlayerMove : MonoBehaviour
         {      
             // 플레이어 애니메이터 상태가 move가 아닐때 idle로 바꾸고 move = false;
             if (animation_T.instance.animator.GetCurrentAnimatorStateInfo(0).IsName("move"))
-            {
-               
+            {               
                 animation_T.instance.state = animation_T.ani_state.idle;
                 animation_T.instance.animator.SetBool("move", false);
             }
@@ -145,12 +144,13 @@ public class Camera_PlayerMove : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.V))
         {
             //StartCoroutine(DashAttack(dash_dir));
-            dash_bool = true;
+            animation_T.instance.animator.SetBool("DashAttack", true);          
         }
-        if(dash_bool)
+
+        if (dash_bool)
         {
             dash_ti += Time.deltaTime;
-            if (dash_ti < 2)
+            if (dash_ti < 2f)
             {
                 transform.position += dash_dir * Time.deltaTime * 15;
             }
@@ -159,9 +159,14 @@ public class Camera_PlayerMove : MonoBehaviour
                 dash_bool = false;
                 dash_ti = 0;
             }
-        }      
+        }
     }
+    public bool DASHBOOL()
+    {
+       
+        return dash_bool = true;
 
+    }
     void LookAround()
     {
         // 피니쉬어택일때 움직이지 않게 설정.

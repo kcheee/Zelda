@@ -162,6 +162,12 @@ public class animation_T : MonoBehaviour
         }
     }
 
+    // Dash ani Event;
+    public bool Dash()
+    {
+        return Camera_PlayerMove.dash_bool = true;
+    }
+
     #region ¹Î°æ´Ô ÄÚµå
     void Attackmotion()
     {
