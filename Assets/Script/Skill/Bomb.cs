@@ -30,8 +30,7 @@ public class Bomb : MonoBehaviour
         {
             // 폭탄 반경에 있는 오브젝트 rigidbody 가져옴
             if (cols[i].CompareTag("Bokoblin"))
-            {
-                
+            {                
                 Rigidbody[] rigid = cols[i].GetComponentsInChildren<Rigidbody>();
                 foreach (Rigidbody rb in rigid)
                 {

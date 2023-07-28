@@ -9933,6 +9933,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bokoblin (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 2953078959226718351, guid: 4ca67e00abe9f794ca37f543568b6674,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ca67e00abe9f794ca37f543568b6674, type: 3}
 --- !u!1 &589839081
@@ -9950,7 +9955,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &589839082
 Transform:
   m_ObjectHideFlags: 0
@@ -19553,6 +19558,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bokoblin (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2953078959226718351, guid: 4ca67e00abe9f794ca37f543568b6674,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ca67e00abe9f794ca37f543568b6674, type: 3}
 --- !u!1 &1236947885
@@ -21311,6 +21321,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bokoblin (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2953078959226718351, guid: 4ca67e00abe9f794ca37f543568b6674,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ca67e00abe9f794ca37f543568b6674, type: 3}
@@ -25081,6 +25096,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bokoblin (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2953078959226718351, guid: 4ca67e00abe9f794ca37f543568b6674,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ca67e00abe9f794ca37f543568b6674, type: 3}
@@ -29520,6 +29540,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bokoblin (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2953078959226718351, guid: 4ca67e00abe9f794ca37f543568b6674,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ca67e00abe9f794ca37f543568b6674, type: 3}

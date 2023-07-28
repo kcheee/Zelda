@@ -38,28 +38,7 @@ public class Camera_PlayerMove : MonoBehaviour
     }
     //static public bool at = false;
 
-    #region 대쉬 어택 기술을 위한 코루틴
-    float dash_ti;
-    public static bool dash_bool;
-
-    Vector3 dash_dir;   // 대쉬 방향 받기
-    //IEnumerator DashAttack(Vector3 dir)
-    //{
-
-    //    if (dash_ti > 2)
-    //    {
-    //        Debug.Log("실행");
-    //        dash_ti = 0;
-    //        yield return null;
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("ylfgod");
-    //        yield return new WaitForSeconds(0.02f);
-    //        yield return StartCoroutine(DashAttack(dir));
-    //    }
-    //}
-    #endregion
+    
 
 
     private void Move()
@@ -161,12 +140,34 @@ public class Camera_PlayerMove : MonoBehaviour
             }
         }
     }
-    public bool DASHBOOL()
-    {
-       
-        return dash_bool = true;
+    #region 대쉬 어택 기술을 위한 코루틴
+    float dash_ti;
+    public static bool dash_bool;
 
+    Vector3 dash_dir;   // 대쉬 방향 받기
+    //IEnumerator DashAttack(Vector3 dir)
+    //{
+
+    //    if (dash_ti > 2)
+    //    {
+    //        Debug.Log("실행");
+    //        dash_ti = 0;
+    //        yield return null;
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("ylfgod");
+    //        yield return new WaitForSeconds(0.02f);
+    //        yield return StartCoroutine(DashAttack(dir));
+    //    }
+    //}
+    #endregion
+
+    IEnumerator DashAttack()
+    {
+        yield return null;
     }
+
     void LookAround()
     {
         // 피니쉬어택일때 움직이지 않게 설정.
