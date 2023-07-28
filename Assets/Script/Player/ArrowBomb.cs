@@ -15,7 +15,7 @@ public class ArrowBomb : MonoBehaviour
         // foreach문을 통해서 colls배열에 존재하는 각각에 폭발효과를 적용해준다.
         foreach (Collider coll in cols)
         {
-            Debug.Log(coll);
+            //Debug.Log(coll);
             // 조건문을 사용해서 특정레이어에 속한 오브젝트에만 영향을 줄 수 있다.(ex-플레이어만 날아가도록)
             if (coll.CompareTag("Bokoblin"))
             {

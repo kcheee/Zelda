@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -10,7 +10,6 @@ public class animation_T : MonoBehaviour
 
     public Animator animator;
 
-    //public List<Slash> slashes;
     public enum ani_state
     {
         idle,
@@ -18,7 +17,7 @@ public class animation_T : MonoBehaviour
         dash,
         run,
         attack,
-        charged
+        FinishAttack
     }
 
     public ani_state state;
@@ -43,7 +42,6 @@ public class animation_T : MonoBehaviour
 
     private void Start()
     {
-        //DisableSlashes();
         state = ani_state.idle;
         anistack = 0;
     }
@@ -56,7 +54,7 @@ public class animation_T : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("move"))
             state = ani_state.move;
 
-        if (state == ani_state.attack || G_state == Ground_state.air)
+        if (state == ani_state.attack|| FinishAttack_.Finishattack || G_state == Ground_state.air)
         {
             //AttackCollider.enabled = true;
             animator.applyRootMotion = true;
@@ -66,15 +64,6 @@ public class animation_T : MonoBehaviour
             //AttackCollider.enabled = false;
             animator.applyRootMotion = false;
         }
-
-        //if(state == ani_state.charged||G_state == Ground_state.air)
-        //{
-        //    animator.applyRootMotion = true;
-        //}
-        //else
-        //{
-        //    animator.applyRootMotion = false;
-        //}
         //Attackmotion();
         //Chargedmotion();
         //CheckCharged2Input();
@@ -82,9 +71,7 @@ public class animation_T : MonoBehaviour
 
         AttackCombo();
         CheckGrounded();
-        Chargedmotion();
-
-
+        
     }
 
     private int comboCount = 0; // 현재 콤보 카운트
@@ -144,174 +131,153 @@ public class animation_T : MonoBehaviour
     private void CheckGrounded()
     {
         RaycastHit hitinfo;
-        Vector3 dir = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
-        Debug.DrawRay(dir, -transform.up, Color.red);
-        if (Physics.Raycast(dir, -transform.up, out hitinfo, 1))
+        Vector3 dir = new Vector3(transform.position.x, transform.position.y + 0.1f,transform.position.z);
+        Debug.DrawRay(dir, -transform.up,Color.red);
+        if (Physics.Raycast(dir, -transform.up, out hitinfo,1))
         {
-            if (hitinfo.collider.CompareTag("Floor") || hitinfo.collider.CompareTag("IceMaker"))
+            if (hitinfo.collider.CompareTag("Floor")|| hitinfo.collider.CompareTag("IceMaker"))
             {
                 animator.SetBool("AirBorne", false);
             }
         }
         else
         {
-            Debug.Log("공중");
+            //Debug.Log("공중");
             animator.SetBool("AirBorne", true);
         }
     }
 
-    //강공격
-    private void Chargedmotion()
+
+    private void OnTriggerEnter(Collider other)
     {
-
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (other.CompareTag("Bokoblin_sword"))
         {
-            //Psoundscript.arraysound.ATTACKI();
-            state = ani_state.charged;
-            animator.SetTrigger("charged");
-            //animator.SetTrigger("charged1");
-
-            //if (chargestack == 1 && anistack == 0)
-            //{
-            //    animator.SetTrigger(Chargedmotions[]);
-            //    //isCharged = true;
-            //    //isCharged2WindowActive = true;
-            //    //StartCoroutine(Charged2WindowCoroutine());
-            //}
-            //else if (chargestack == 2 && anistack == 0 && isCharged2Ready)
-            //{
-            //    animator.SetTrigger(Chargedmotions[0]);
-            //    chargestack = 0;
-            //    isCharged = false;
-            //    isCharged2Ready = false;
-            //    isCharged2WindowActive = false;
-            //    //StopCoroutine(Charged2WindowCoroutine());
-            //}
-
-        }
-        if (Input.GetKeyUp(KeyCode.Mouse1))
-        {
-            state = ani_state.charged;
-            animator.SetTrigger("chargedcombo");
+            Debug.Log(other.gameObject);
+            // 0보다 크면
+            if(PlayerManager.instance.HP>0)
+            {
+            animator.SetTrigger("Hit");
+            PlayerManager.instance.PlayerDamaged();
+            }
         }
     }
-    #region 임시
-    //IEnumerator Charged2WindowCoroutine()
-    //{
-    //    yield return new WaitForSeconds(charged2WindowDuration);
 
-    //    isCharged2Ready = true;
-    //    isCharged2WindowActive = false;
-    //}
+    // Dash ani Event;
+    public bool Dash()
+    {
+        return Camera_PlayerMove.dash_bool = true;
+    }
 
-    //IEnumerator SlashAttack()
-    //{
-    //    for(int i=0; i<slashes.Count; i++)
-    //    {
-    //        yield return new WaitForSeconds(slashes[i].delay);
-    //        slashes[i].slashvfx.SetActive(true);
-    //    }
-    //    yield return new WaitForSeconds(0.1f);
-    //    DisableSlashes();
-    //}
-    //void DisableSlashes()
-    //{
-    //    for (int i = 0; i < slashes.Count; i++)
-    //        slashes[i].slashvfx.SetActive(false);
-    //}
-    //[System.Serializable]
-    //public class Slash
-    //{
-    //    public GameObject slashvfx;
-    //    public float delay;
-    //}
-    //#region 민경님 코드
-    //void Attackmotion()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Mouse0))
-    //    {
-    //        anistack++;
+    #region 민경님 코드
+    void Attackmotion()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            anistack++;
 
-    //        if (anistack == 1 && chargestack == 0)
-    //        {
-    //            animator.SetTrigger("attack");
-    //            chargestack = 0;
-    //        }
-    //        else if (anistack == 2 && chargestack == 0)
-    //        {
-    //            animator.SetTrigger("attack2");
-    //        }
-    //        else if (anistack == 3 && chargestack == 0)
-    //        {
-    //            animator.SetTrigger("attack3");
-    //            anistack = 0;
-    //        }
-    //    }
-    //}
+            if (anistack == 1 && chargestack == 0)
+            {
+                animator.SetTrigger("attack");
+                chargestack = 0;
+            }
+            else if (anistack == 2 && chargestack == 0)
+            {
+                animator.SetTrigger("attack2");
+            }
+            else if (anistack == 3 && chargestack == 0)
+            {
+                animator.SetTrigger("attack3");
+                anistack = 0;
+            }
+        }
+    }
 
+    void Chargedmotion()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            chargestack++;
 
+            if (chargestack == 1 && anistack == 0)
+            {
+                animator.SetTrigger("charged");
+                isCharged = true;
+                isCharged2WindowActive = true;
+                StartCoroutine(Charged2WindowCoroutine());
+            }
+            else if (chargestack == 2 && anistack == 0 && isCharged2Ready)
+            {
+                animator.SetTrigger("charged2");
+                chargestack = 0;
+                isCharged = false;
+                isCharged2Ready = false;
+                isCharged2WindowActive = false;
+                StopCoroutine(Charged2WindowCoroutine());
+            }
+        }
+    }
 
-    //void CheckCharged2Input()
-    //{
-    //    if (isCharged && Input.GetKeyDown(KeyCode.Mouse1))
-    //    {
-    //        animator.SetTrigger("charged");
-    //        isCharged = false;
-    //        isCharged2Ready = false;
-    //        isCharged2WindowActive = true;
-    //        StopCoroutine(Charged2WindowCoroutine());
-    //    }
-    //    else if (isCharged2WindowActive && Input.GetKeyDown(KeyCode.Mouse1))
-    //    {
-    //        animator.SetTrigger("charged2");
-    //        isCharged = false;
-    //        isCharged2Ready = false;
-    //        isCharged2WindowActive = false;
-    //        StopCoroutine(Charged2WindowCoroutine());
-    //    }
-    //}
+    void CheckCharged2Input()
+    {
+        if (isCharged && Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            animator.SetTrigger("charged");
+            isCharged = false;
+            isCharged2Ready = false;
+            isCharged2WindowActive = true;
+            StopCoroutine(Charged2WindowCoroutine());
+        }
+        else if (isCharged2WindowActive && Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            animator.SetTrigger("charged2");
+            isCharged = false;
+            isCharged2Ready = false;
+            isCharged2WindowActive = false;
+            StopCoroutine(Charged2WindowCoroutine());
+        }
+    }
 
-    //void Combomotion()
-    //{
-    //    combostack++;
-    //    if (Input.GetKeyDown(KeyCode.Mouse2))
-    //    {
-    //        if (combostack == 1)
-    //        {
-    //            animator.SetTrigger("combo");
-    //        }
-    //        else if (combostack == 2)
-    //        {
-    //            animator.SetTrigger("combo2");
-    //        }
-    //    }
+    void Combomotion()
+    {
+        combostack++;
+        if (Input.GetKeyDown(KeyCode.Mouse2))
+        {
+            if (combostack == 1)
+            {
+                animator.SetTrigger("combo");
+            }
+            else if (combostack == 2)
+            {
+                animator.SetTrigger("combo2");
+            }
+        }
 
-    //}
+    }
 
-    //IEnumerator Charged2WindowCoroutine()
-    //{
-    //    yield return new WaitForSeconds(charged2WindowDuration);
+    IEnumerator Charged2WindowCoroutine()
+    {
+        yield return new WaitForSeconds(charged2WindowDuration);
 
-    //    isCharged2Ready = true;
-    //    isCharged2WindowActive = false;
-    //}
+        isCharged2Ready = true;
+        isCharged2WindowActive = false;
+    }
 
-    //IEnumerator CombomotionCoroutine()
-    //{
-    //    isCombomotionRunning = true;
-    //    animator.SetTrigger("combo");
-    //    print("p");
+    IEnumerator CombomotionCoroutine()
+    {
+        isCombomotionRunning = true;
+        animator.SetTrigger("combo");
+        print("p");
 
-    //    yield return new WaitForSeconds(durationOfCombo);
+        yield return new WaitForSeconds(durationOfCombo);
 
-    //    animator.SetTrigger("combo2");
-    //    isCombomotionRunning = false;
+        animator.SetTrigger("combo2");
+        isCombomotionRunning = false;
 
-    //    anistack = 0;
-    //    chargestack = 0;
-    //    isCharged2Ready = false;
-    //    isCharged = false;
-    //}
+        anistack = 0;
+        chargestack = 0;
+        isCharged2Ready = false;
+        isCharged = false;
+    }
 
     #endregion
 }

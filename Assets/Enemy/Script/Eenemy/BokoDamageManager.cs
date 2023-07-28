@@ -26,7 +26,6 @@ public class BokoDamageManager : MonoBehaviour
                 // 강공격이 아니면
                 if (!Trail.strongatt)
                 {
-                    Debug.Log("실행");
                     rb.AddForce(transform.up * 5 + (-transform.forward * 2.5f), ForceMode.Impulse);
                     RagdollBokoblin.Damage = 4;
                 }

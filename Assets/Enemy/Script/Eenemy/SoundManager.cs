@@ -17,7 +17,7 @@ public class SoundManager : MonoBehaviour
     {
         if(RagdollBokoblin.instance.isBuffSoundPlaying == false)
         {
-            AudioSource.PlayClipAtPoint(audios[0], transform.position);
+            //AudioSource.PlayClipAtPoint(audios[0], transform.position);
             RagdollBokoblin.instance.isBuffSoundPlaying = true;
         }
         else if (RagdollBokoblin.instance.isBuffSoundPlaying)
