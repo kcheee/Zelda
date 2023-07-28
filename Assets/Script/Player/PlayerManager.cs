@@ -69,10 +69,10 @@ public class PlayerManager : MonoBehaviour
     public void Update()
     {
         // 데미지 테스트
-        if(Input.GetKeyDown(KeyCode.N))
-        {
-            PlayerDamaged();
-        }
+        //if(Input.GetKeyDown(KeyCode.N))
+        //{
+        //    PlayerDamaged();
+        //}
         //transform.position= Vector3.zero; 
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.UI;
 using static CoolTimer;
 
@@ -40,6 +41,9 @@ public class SkillManager : MonoBehaviour
 
     public Transform CameraRotation;    // 카메라 회전 값 가져옴. 폭탄 화살 던질때 사용.
     public Transform firePosition;
+    
+    //필살기.
+    public GameObject FinishAttack;
 
     // 활 쏠때 카메라 줌인 불변수
     static public bool bowCamera = false;
@@ -205,6 +209,15 @@ public class SkillManager : MonoBehaviour
             SkillUI.instance.Skillpanel.SetActive(false);
             flag = false; Time.timeScale = 1;
         }
+        #endregion
+
+        #region 필살기
+
+        if(Input.GetKeyDown(KeyCode.N))
+        {
+            FinishAttack.SetActive(true);
+        }
+
         #endregion
     }
 

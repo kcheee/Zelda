@@ -10,5 +10,6 @@ public class FollowCam : MonoBehaviour
     void Update()
     {
         transform.position = Vector3.Lerp(transform.position,followcam.transform.position,Time.deltaTime*10);
+        
     }
 }
