@@ -38,7 +38,28 @@ public class Camera_PlayerMove : MonoBehaviour
     }
     //static public bool at = false;
 
-    
+    #region 대쉬 어택 기술을 위한 코루틴
+    float dash_ti;
+    public static bool dash_bool;
+
+    Vector3 dash_dir;   // 대쉬 방향 받기
+    //IEnumerator DashAttack(Vector3 dir)
+    //{
+
+    //    if (dash_ti > 2)
+    //    {
+    //        Debug.Log("실행");
+    //        dash_ti = 0;
+    //        yield return null;
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("ylfgod");
+    //        yield return new WaitForSeconds(0.02f);
+    //        yield return StartCoroutine(DashAttack(dir));
+    //    }
+    //}
+    #endregion
 
 
     private void Move()
@@ -102,12 +123,13 @@ public class Camera_PlayerMove : MonoBehaviour
 
             // move 상태로 바꿈
             // attack 상태가 아닐때 움직임.
-            if (animation_T.instance.state != animation_T.ani_state.attack && !animation_T.Dash_flag)
+            if (animation_T.instance.state != animation_T.ani_state.attack && !dash_bool)
             {
                 transform.position += moveDir * Time.deltaTime * speed;
             }
 
             // 대쉬 방향 받기
+            dash_dir = moveDir;
         }
         else 
         {      
@@ -125,9 +147,26 @@ public class Camera_PlayerMove : MonoBehaviour
             animation_T.instance.animator.SetBool("DashAttack", true);          
         }
 
-       
+        if (dash_bool)
+        {
+            dash_ti += Time.deltaTime;
+            if (dash_ti < 2f)
+            {
+                transform.position += dash_dir * Time.deltaTime * 15;
+            }
+            else
+            {
+                dash_bool = false;
+                dash_ti = 0;
+            }
+        }
     }
+    public bool DASHBOOL()
+    {
+       
+        return dash_bool = true;
 
+    }
     void LookAround()
     {
         // 피니쉬어택일때 움직이지 않게 설정.

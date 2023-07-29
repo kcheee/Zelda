@@ -36,7 +36,7 @@ public class BokoDamageManager : MonoBehaviour
                 }
             }
 
-           GetComponentInParent<RagdollBokoblin>().DamagedProcess();
+            GetComponentInParent<RagdollBokoblin>().state = RagdollBokoblin.BocoblinState.Damaged;
         }
     }
 

@@ -249,7 +249,7 @@ public class RagdollBokoblin : MonoBehaviour
             // 애니메이터를 활성화 한다.
             anim.enabled = true;
             agent.enabled = true;
-
+            
             anim.SetTrigger("StandUp");
 
             currentTime = 0;
@@ -446,11 +446,11 @@ public class RagdollBokoblin : MonoBehaviour
             UpdateDie();
         }
     }
-
+    
     #region 사망 프로세스
     private void UpdateDie()
     {
-        if (isDie == false)
+        if(isDie == false)
         {
             isDie = true;
 

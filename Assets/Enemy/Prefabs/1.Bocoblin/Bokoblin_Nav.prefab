@@ -3367,7 +3367,7 @@ GameObject:
   - component: {fileID: 2510289592434164298}
   m_Layer: 7
   m_Name: Bokoblin_Nav
-  m_TagString: Bokoblin
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

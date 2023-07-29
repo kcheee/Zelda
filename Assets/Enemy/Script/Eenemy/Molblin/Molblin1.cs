@@ -269,7 +269,7 @@ public class Molblin1 : MonoBehaviour
             }
         }
     }
-    void TwoHandsAttack()
+    private void TwoHandsAttack()
     {
         // 시간을 흐르게 한다.
         currentTime += Time.deltaTime;
