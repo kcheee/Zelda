@@ -37,12 +37,12 @@ public class animation_T : MonoBehaviour
 
     #region dash
 
-    bool flag;
+    public static bool Dash_flag;
     float ti;
 
     IEnumerator dashattack()
     {
-        if (flag)
+        if (Dash_flag)
         {
             yield return new WaitForSeconds(0.1f);
             Collider[] colliders =
@@ -123,15 +123,16 @@ public class animation_T : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            flag = true;
+            Dash_flag = true;
             StartCoroutine(dashattack());
+            animator.SetTrigger("DashAttack");
         }
-        if (flag)
+        if (Dash_flag)
         {
             ti += Time.deltaTime;
             if (ti > 2)
             {
-                flag = false;
+                Dash_flag = false;
                 ti = 0;
             }
             else
@@ -235,7 +236,7 @@ public class animation_T : MonoBehaviour
     // Dash ani Event;
     public bool Dash()
     {
-        return Camera_PlayerMove.dash_bool = true;
+        return animation_T.Dash_flag = true;
     }
 
     #region ¹Î°æ´Ô ÄÚµå
