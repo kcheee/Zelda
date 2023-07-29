@@ -26,8 +26,8 @@ public class PsoundManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(instance);
-            SFX = GetComponent<AudioSource>();
+            //DontDestroyOnLoad(instance);
+            //SFX = GetComponent<AudioSource>();
 
         }
         else

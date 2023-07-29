@@ -12802,8 +12802,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9f7c1e31f08ba704eb5e7bc9b37d411f, type: 3}
   - {fileID: 8300000, guid: 65a5c9198673cf24aaa5c0716d8c54d4, type: 3}
   - {fileID: 8300000, guid: bcdc9dfe978e5044394690f85c422584, type: 3}
+  - {fileID: 8300000, guid: bcdc9dfe978e5044394690f85c422584, type: 3}
   SFXsounds:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 97921349f5a881c4082d3816e588f8a5, type: 3}
+  - {fileID: 8300000, guid: 9f7c1e31f08ba704eb5e7bc9b37d411f, type: 3}
+  - {fileID: 8300000, guid: 903619d731f9eb446a4bfb632d5835cb, type: 3}
+  - {fileID: 8300000, guid: 4e2eb37c5503a7f4daebeb84535b7a77, type: 3}
+  - {fileID: 8300000, guid: 4e2eb37c5503a7f4daebeb84535b7a77, type: 3}
+  Walkingsounds: []
 --- !u!114 &1354998189
 MonoBehaviour:
   m_ObjectHideFlags: 0
