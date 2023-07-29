@@ -33,7 +33,60 @@ public class animation_T : MonoBehaviour
     bool isCharged = false;
     bool isCharged2Ready = false;
     bool isCharged2WindowActive = false;
-    #endregion 
+    #endregion
+
+    #region dash
+
+    public static bool Dash_flag;
+    float ti;
+
+    IEnumerator dashattack()
+    {
+        if(Dash_flag)
+        {
+            yield return new WaitForSeconds(0.1f);
+            Collider[] colliders =
+              Physics.OverlapSphere(this.transform.position, 8);
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                if (colliders[i].CompareTag("Bokoblin"))
+                {
+                    Debug.Log("tl");
+                    Rigidbody[] rigid = colliders[i].GetComponentsInChildren<Rigidbody>();
+                    foreach (Rigidbody rb in rigid)
+                    {
+                        rb.AddForce(transform.up * 2, ForceMode.Impulse);
+                        rb.velocity = gameObject.GetComponent<Rigidbody>().velocity;
+                    }
+                    colliders[i].GetComponentInParent<RagdollBokoblin>().DamagedProcess();
+                }
+            }
+            StartCoroutine(dashattack());
+        }
+        else
+        {
+            Collider[] colliders_ =
+            Physics.OverlapSphere(this.transform.position, 12);
+            for (int i = 0; i < colliders_.Length; i++)
+            {
+                if (colliders_[i].CompareTag("Bokoblin"))
+                {
+                    Rigidbody[] rigid = colliders_[i].GetComponentsInChildren<Rigidbody>();
+                 
+                    foreach (Rigidbody rb in rigid)
+                    {
+                        rb.velocity = gameObject.GetComponent<Rigidbody>().velocity;
+                        //rb.AddForce(transform.forward * 4, ForceMode.Impulse);
+                    }
+                    colliders_[i].GetComponentInParent<RagdollBokoblin>().DamagedProcess();
+
+                }
+            }
+        }
+
+        yield return null;
+    }
+    #endregion
 
     private void Awake()
     {
@@ -54,7 +107,7 @@ public class animation_T : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("move"))
             state = ani_state.move;
 
-        if (state == ani_state.attack|| FinishAttack_.Finishattack || G_state == Ground_state.air)
+        if (state == ani_state.attack || FinishAttack_.Finishattack || G_state == Ground_state.air)
         {
             //AttackCollider.enabled = true;
             animator.applyRootMotion = true;
@@ -69,9 +122,28 @@ public class animation_T : MonoBehaviour
         //CheckCharged2Input();
         //Combomotion();
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Dash_flag = true;
+            StartCoroutine(dashattack());
+            animator.SetTrigger("DashAttack");
+        }
+        if (Dash_flag)
+        {
+            ti += Time.deltaTime;
+            if (ti > 2)
+            {
+                Dash_flag = false;
+                ti = 0;
+            }
+            else
+            {
+                GetComponent<Rigidbody>().velocity = transform.forward * 20;
+            }
+        }
+
         AttackCombo();
         CheckGrounded();
-        
     }
 
     private int comboCount = 0; // ÇöÀç ÄÞº¸ Ä«¿îÆ®
@@ -131,11 +203,11 @@ public class animation_T : MonoBehaviour
     private void CheckGrounded()
     {
         RaycastHit hitinfo;
-        Vector3 dir = new Vector3(transform.position.x, transform.position.y + 0.1f,transform.position.z);
-        Debug.DrawRay(dir, -transform.up,Color.red);
-        if (Physics.Raycast(dir, -transform.up, out hitinfo,1))
+        Vector3 dir = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
+        Debug.DrawRay(dir, -transform.up, Color.red);
+        if (Physics.Raycast(dir, -transform.up, out hitinfo, 1))
         {
-            if (hitinfo.collider.CompareTag("Floor")|| hitinfo.collider.CompareTag("IceMaker"))
+            if (hitinfo.collider.CompareTag("Floor") || hitinfo.collider.CompareTag("IceMaker"))
             {
                 animator.SetBool("AirBorne", false);
             }
@@ -154,10 +226,10 @@ public class animation_T : MonoBehaviour
         {
             Debug.Log(other.gameObject);
             // 0º¸´Ù Å©¸é
-            if(PlayerManager.instance.HP>0)
+            if (PlayerManager.instance.HP > 0)
             {
-            animator.SetTrigger("Hit");
-            PlayerManager.instance.PlayerDamaged();
+                animator.SetTrigger("Hit");
+                PlayerManager.instance.PlayerDamaged();
             }
         }
     }
@@ -165,7 +237,7 @@ public class animation_T : MonoBehaviour
     // Dash ani Event;
     public bool Dash()
     {
-        return Camera_PlayerMove.dash_bool = true;
+        return animation_T.Dash_flag = true;
     }
 
     #region ¹Î°æ´Ô ÄÚµå

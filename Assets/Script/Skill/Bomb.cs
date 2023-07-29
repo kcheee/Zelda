@@ -30,8 +30,7 @@ public class Bomb : MonoBehaviour
         {
             // ÆøÅº ¹Ý°æ¿¡ ÀÖ´Â ¿ÀºêÁ§Æ® rigidbody °¡Á®¿È
             if (cols[i].CompareTag("Bokoblin"))
-            {
-                
+            {                
                 Rigidbody[] rigid = cols[i].GetComponentsInChildren<Rigidbody>();
                 foreach (Rigidbody rb in rigid)
                 {
@@ -42,8 +41,7 @@ public class Bomb : MonoBehaviour
 
                 // ÆøÅº µ¥¹ÌÁö
               RagdollBokoblin.Damage = 4;
-              cols[i].GetComponentInParent<RagdollBokoblin>().state = RagdollBokoblin.BocoblinState.Damaged;
-             
+                cols[i].GetComponentInParent<RagdollBokoblin>().DamagedProcess();
             }
         }
        
