@@ -603,7 +603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BGM: {fileID: 1156683406}
-  stageBGM: {fileID: 8300000, guid: d3e11b129589c3747bb7ef874b9b8e4b, type: 3}
+  stageBGM: {fileID: 0}
   SFX: {fileID: 1816461194}
   SFXsound: {fileID: 0}
 --- !u!1 &83118084
