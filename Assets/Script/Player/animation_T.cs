@@ -42,23 +42,23 @@ public class animation_T : MonoBehaviour
 
     IEnumerator dashattack()
     {
-        if (Dash_flag)
+        if(Dash_flag)
         {
             yield return new WaitForSeconds(0.1f);
             Collider[] colliders =
               Physics.OverlapSphere(this.transform.position, 8);
             for (int i = 0; i < colliders.Length; i++)
-            {          
+            {
                 if (colliders[i].CompareTag("Bokoblin"))
-                {                   
+                {
+                    Debug.Log("tl");
                     Rigidbody[] rigid = colliders[i].GetComponentsInChildren<Rigidbody>();
                     foreach (Rigidbody rb in rigid)
                     {
-
-                        colliders[i].GetComponent<Rigidbody>().AddForce(transform.up * 2, ForceMode.Impulse);
+                        rb.AddForce(transform.up * 2, ForceMode.Impulse);
                         rb.velocity = gameObject.GetComponent<Rigidbody>().velocity;
                     }
-                    colliders[i].GetComponentInParent<RagdollBokoblin>().state = RagdollBokoblin.BocoblinState.Damaged;
+                    colliders[i].GetComponentInParent<RagdollBokoblin>().DamagedProcess();
                 }
             }
             StartCoroutine(dashattack());
@@ -72,12 +72,13 @@ public class animation_T : MonoBehaviour
                 if (colliders_[i].CompareTag("Bokoblin"))
                 {
                     Rigidbody[] rigid = colliders_[i].GetComponentsInChildren<Rigidbody>();
+                 
                     foreach (Rigidbody rb in rigid)
                     {
-                        rb.AddForce(transform.up * 2, ForceMode.Impulse);
                         rb.velocity = gameObject.GetComponent<Rigidbody>().velocity;
+                        //rb.AddForce(transform.forward * 4, ForceMode.Impulse);
                     }
-                    colliders_[i].GetComponentInParent<RagdollBokoblin>().state = RagdollBokoblin.BocoblinState.Damaged;
+                    colliders_[i].GetComponentInParent<RagdollBokoblin>().DamagedProcess();
 
                 }
             }
@@ -137,7 +138,7 @@ public class animation_T : MonoBehaviour
             }
             else
             {
-                GetComponent<Rigidbody>().velocity = transform.forward * 15;
+                GetComponent<Rigidbody>().velocity = transform.forward * 20;
             }
         }
 
