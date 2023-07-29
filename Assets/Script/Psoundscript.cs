@@ -7,7 +7,7 @@ public class Psoundscript : MonoBehaviour
 {
     [SerializeField] AudioClip[] voicesounds = default;
     [SerializeField] AudioClip[] SFXsounds = default;
-    [SerializeField] AudioClip[] Walkingsounds = default;
+    //[SerializeField] AudioClip[] Walkingsounds = default;
     #region 음성효과음
     void chargedstart()
     {

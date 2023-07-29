@@ -268,6 +268,7 @@ public class Molblin1 : MonoBehaviour
                 state = MolblinState.ComboAttack;
             }
         }
+    }
     private void TwoHandsAttack()
     {
         // 시간을 흐르게 한다.
@@ -282,13 +283,13 @@ public class Molblin1 : MonoBehaviour
             isDisturb = false;
             isAttack = true;
 
-                // 양손 공격을 한다.
-                anim.SetBool("Wait", false);
-            }
-            // 공격이 끝나는 시간이 되면
-            if (currentTime >= 1.5f)
-            {
-                //isDisturb = true;
+            // 양손 공격을 한다.
+            anim.SetBool("Wait", false);
+        }
+        // 공격이 끝나는 시간이 되면
+        if (currentTime >= 1.5f)
+        {
+            //isDisturb = true;
             //isDisturb = true;
             isTwoHands = false;
             isDodge = false;
