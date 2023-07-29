@@ -103,6 +103,11 @@ public class Molblin1 : MonoBehaviour
     #region Update
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            UpdateDamaged();
+        }
+
         #region 거리재기
         // 거리를 구한다.
         Vector3 linktransform = link.transform.position;
@@ -261,6 +266,7 @@ public class Molblin1 : MonoBehaviour
     // 양손공격
     public void TwoHandsAttack()
     {
+        anim.SetBool("Move", true);
         agent.destination = link.transform.position;
 
         // 링크와의 거리가 패턴 2 거리 이하가 되면
@@ -274,24 +280,13 @@ public class Molblin1 : MonoBehaviour
 
             // 애니메이션 실행
             anim.SetBool("Move", false);
-            anim.SetBool("TwoHands", true);
-
-            // 시간을 흐르게 한다.
-            currentTime += Time.deltaTime;
-
-            // 공격이 끝나는 시간이 되면
-            if (currentTime >= 3)
-            {
-                anim.SetBool("TwoHands", false);
-                //anim.SetTrigger("AttackDelay");
-                state = MolblinState.AttackDelay;
-                currentTime = 0;
-            }
+            anim.SetBool("TwoHands", true); 
         }
     }
 
     private void ComboAttack()
     {
+        anim.SetBool("Move", true);
         agent.destination = link.transform.position;
 
         // 링크와의 거리가 패턴 2 거리 이하가 되면
@@ -306,22 +301,21 @@ public class Molblin1 : MonoBehaviour
 
             // agent 멈추기
             agent.isStopped = true;
-
-            // 시간을 흐르게 한다.
-            currentTime += Time.deltaTime;
-
-            if (currentTime >= 4)
-            {
-                anim.SetBool("ComboAttack", false);
-                //anim.SetTrigger("AttackDelay");
-                state = MolblinState.AttackDelay;
-                currentTime = 0;
-            }
         }
+    }
+
+    public void OnmyAttackEnd()
+    {
+        anim.SetBool("TwoHands", false);
+        anim.SetBool("ComboAttack", false);
+
+        state = MolblinState.AttackDelay;
     }
 
     private void UpdateAttackDelay()
     {
+        anim.SetBool("Move", false);
+
         isComboAttack = false;
         isTwoHands = false;
 
@@ -381,23 +375,6 @@ public class Molblin1 : MonoBehaviour
                 // 상태 초기화
                 state = MolblinState.Idle;
             }
-            //// 그리고 공격방해가 가능한 상태라면
-            //if (isDisturb == true)
-            //{
-            //    // 모리블린 색 변화
-            //    MaterialChange.instance.DoDamage();
-
-            //    // 애니메이션
-            //    anim.SetTrigger("Damage");
-
-            //    // 상태 초기화
-            //    state = MolblinState.Idle;
-            //}
-            //// 그리고 공격방해가 불가능한 상태라면
-            //else if (isDisturb == false)
-            //{
-            //    print("332423432423423432");
-            //}
         }
 
         // 그게 아니라 체력이 0 이하가 되면
@@ -423,7 +400,7 @@ public class Molblin1 : MonoBehaviour
         {
             isDie = true;
 
-            // SoundManager.instance.OnMyDieSound();
+            SoundManagerMolblin.instance.OnMyDieSound();
 
             // GameManager.instance.KillcntUpdate();
 
@@ -437,19 +414,19 @@ public class Molblin1 : MonoBehaviour
                 rb.AddForce(Vector3.up * power, ForceMode.Impulse);
             }
 
-            // 보스전일때 보코블린 죽으면 점령게이지 줄어듦.
-            if (GameManager.instance.state == GameManager.State.Boss)
-            {
-                // 점령게이지 줄어듦
-                GameManager.instance.BossGage.GetComponent<Slider>().value -= 80;
-            }
+            //// 보스전일때 보코블린 죽으면 점령게이지 줄어듦.
+            //if (GameManager.instance.state == GameManager.State.Boss)
+            //{
+            //    // 점령게이지 줄어듦
+            //    GameManager.instance.BossGage.GetComponent<Slider>().value -= 80;
+            //}
 
             // 색깔을 검게 바꾸고
-            Invoke("DieColor", 3);
+            Invoke("DieColor", 3f);
+            Invoke("BoomSound", 3.7f);
             // 사망이펙트와 함께 게임오브젝트를 파괴한다.
             Invoke("DieEffect", 4);
         }
-
     }
 
     public void DieColor()
@@ -463,6 +440,11 @@ public class Molblin1 : MonoBehaviour
             }
             mesh[i].materials[0].color = Color.black;
         }
+    }
+
+    public void BoomSound()
+    {
+        SoundManagerMolblin.instance.OnMyBoomSound();
     }
 
     public void DieEffect()

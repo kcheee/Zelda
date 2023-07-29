@@ -216,6 +216,8 @@ public class RagdollBokoblin : MonoBehaviour
         // 만약 링크와의 거리가 감지거리보다 가깝고 공격가능거리보다 멀면 이동한다.
         else if (detectDistance > distance && distance > attackPossibleDistance)
         {
+            agent.isStopped = false;
+
             // 링크가 있는 곳으로 이동한다.
             agent.destination = link.transform.position;
 
@@ -249,7 +251,7 @@ public class RagdollBokoblin : MonoBehaviour
             // 애니메이터를 활성화 한다.
             anim.enabled = true;
             agent.enabled = true;
-            
+
             anim.SetTrigger("StandUp");
 
             currentTime = 0;
@@ -318,7 +320,7 @@ public class RagdollBokoblin : MonoBehaviour
 
                 // AttackDistance 까지 달려감
                 agent.destination = link.transform.position;
-
+                agent.speed = 7;
                 // 만약 공격거리보다 가까워지면
                 if (distance <= attackDistance)
                 {
@@ -328,12 +330,12 @@ public class RagdollBokoblin : MonoBehaviour
                     // 애니메이션 실행
                     anim.SetBool("Attack", true);
 
-                    // 시간을 초기화한다.
-                    currentTime = 0;
-
                     isWait = false;
                 }
             }
+
+            // 시간을 초기화한다.
+            currentTime = 0;
         }
     }
 
@@ -373,20 +375,22 @@ public class RagdollBokoblin : MonoBehaviour
     {
         currentTime += Time.deltaTime;
 
+        agent.isStopped = false;
+
         #region 거리재기 및 바라보기
         // 거리를 구한다.
         Vector3 y = link.transform.position;
         y.y = transform.position.y;
         distance = Vector3.Distance(y, transform.position);
 
-        // 링크가 있는 방향을 찾는다.
-        Vector3 linkDir = link.transform.position - transform.position;
-        linkDir.y = 0;
-        linkDir.Normalize();
+        //// 링크가 있는 방향을 찾는다.
+        //Vector3 linkDir = link.transform.position - transform.position;
+        //linkDir.y = 0;
+        //linkDir.Normalize();
 
-        // 링크를 바라본다.
-        Vector3 lookrotation = agent.steeringTarget - transform.position;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), 5 * Time.deltaTime);
+        //// 링크를 바라본다.
+        //Vector3 lookrotation = agent.steeringTarget - transform.position;
+        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), 5 * Time.deltaTime);
         #endregion
 
         // 다음 공격시간까지 대기하는 도중에 링크가 공격거리에서 멀어지면 Idle
@@ -397,6 +401,7 @@ public class RagdollBokoblin : MonoBehaviour
             // 현재시간을 초기화한다.
             currentTime = 0;
             anim.SetBool("AttackWait", false);
+            agent.isStopped = true;
         }
 
         // 4초가 지나면 다시 공격
@@ -415,8 +420,6 @@ public class RagdollBokoblin : MonoBehaviour
 
     public void DamagedProcess()
     {
-        //agent.isStopped = true;
-        agent.enabled = false;
         // 애니메이터를 비활성화 한다.
         anim.enabled = false;
 
@@ -441,35 +444,33 @@ public class RagdollBokoblin : MonoBehaviour
         // 만약 체력이 0이 되면
         else if (currentHP <= 0)
         {
-
+            agent.enabled = false;
             // 사망상태로 바꾼다.
-            UpdateDie();
+            //UpdateDie();
+            state = BocoblinState.Die;
         }
     }
-    
+
     #region 사망 프로세스
     private void UpdateDie()
     {
-        if(isDie == false)
+        if (isDie == false)
         {
             isDie = true;
 
-            AudioSource die = GetComponent<AudioSource>();
-            die.PlayOneShot(die.clip);
+            SoundManager.instance.OnMyDieSound();
 
-            // SoundManager.instance.OnMyDieSound();
-
-            GameManager.instance.KillcntUpdate();
+            //GameManager.instance.KillcntUpdate();
 
             // 보스전일때 보코블린 죽으면 점령게이지 줄어듦.
-            if (GameManager.instance.state == GameManager.State.Boss)
-            {
-                // 점령게이지 줄어듦
-                GameManager.instance.BossGage.GetComponent<Slider>().value -= 1;
-            }
+            //if (GameManager.instance.state == GameManager.State.Boss)
+            //{
+            //    // 점령게이지 줄어듦
+            //    GameManager.instance.BossGage.GetComponent<Slider>().value -= 1;
+            //}
 
             // 색깔을 검게 바꾸고
-            Invoke("DieColor", 3);
+            Invoke("DieColor", 3.5f);
             // 사망이펙트와 함께 게임오브젝트를 파괴한다.
             Invoke("DieEffect", 4);
         }
@@ -487,6 +488,8 @@ public class RagdollBokoblin : MonoBehaviour
             }
             mesh[i].materials[0].color = Color.black;
         }
+
+        SoundManager.instance.OnMyBoomSound();
     }
 
     public void DieEffect()
