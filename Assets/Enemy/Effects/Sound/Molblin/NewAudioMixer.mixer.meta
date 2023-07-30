@@ -1,8 +1,15 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Enemy/Effects/Sound/Molblin/NewAudioMixer.mixer.meta
 guid: 9ad797fc509949b489f051d91dc9154c
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 24100000
+========
+guid: b8a27029274290f42a8a7bbc873ae915
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+>>>>>>>> main:Assets/Player/LinkAnimation/Nodachi_Animset/Animation/Humanoid/attack_03.anim.meta
   userData: 
   assetBundleName: 
   assetBundleVariant: 
