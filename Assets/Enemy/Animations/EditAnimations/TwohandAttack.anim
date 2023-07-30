@@ -92387,7 +92387,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.2
+  - time: 1.1
+    functionName: OnMyClubBoomSound
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.1333333
     functionName: StartTwoHandAttack
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -92408,7 +92415,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.5
+  - time: 1.4666667
     functionName: EndTrail
     data: 
     objectReferenceParameter: {fileID: 0}

@@ -25,13 +25,13 @@ public class WallCheck3 : MonoBehaviour
             }
             for (int j = 0; j < bokos2.Length; j++)
             {
-                bokos1[j].gameObject.GetComponent<RagdollBokoblin>().detectDistance = 40;
-                bokos1[j].gameObject.GetComponent<RagdollBokoblin>().attackPossibleDistance = 32;
+                bokos1[j].gameObject.GetComponent<RagdollBokoblin>().detectDistance = 25;
+                bokos1[j].gameObject.GetComponent<RagdollBokoblin>().attackPossibleDistance = 17;
             }
             for (int k = 0; k < bokos3.Length; k++)
             {
-                bokos1[k].gameObject.GetComponent<RagdollBokoblin>().detectDistance = 55;
-                bokos1[k].gameObject.GetComponent<RagdollBokoblin>().attackPossibleDistance = 43;
+                bokos1[k].gameObject.GetComponent<RagdollBokoblin>().detectDistance = 50;
+                bokos1[k].gameObject.GetComponent<RagdollBokoblin>().attackPossibleDistance = 39;
             }
         }
     }
