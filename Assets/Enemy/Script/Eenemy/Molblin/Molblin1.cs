@@ -45,7 +45,6 @@ public class Molblin1 : MonoBehaviour
 
     // 시간
     float currentTime;
-    public float waitTime;
     public float delayTime = 2;
 
     // 플레이어(링크)
@@ -84,7 +83,7 @@ public class Molblin1 : MonoBehaviour
     bool isChosen;
 
     static public bool anim_rotation = false;
-    
+
     // 다른 스크립트에서 데미지 관리변수
     static public int Damage = 1;
     #endregion
@@ -294,7 +293,7 @@ public class Molblin1 : MonoBehaviour
 
             // 애니메이션 실행
             anim.SetBool("Move", false);
-            anim.SetBool("TwoHands", true); 
+            anim.SetBool("TwoHands", true);
         }
     }
 
@@ -325,24 +324,25 @@ public class Molblin1 : MonoBehaviour
 
         isComboAttack = false;
         isTwoHands = false;
+        isDodge = false;
 
         agent.isStopped = true;
 
         currentTime += Time.deltaTime;
 
-        if (distance < 4)
+        if (currentTime < delayTime && distance < 5)
         {
             anim.SetBool("Move", false);
 
             int randomValue = Random.Range(0, 10);
-            if (randomValue < 5 && isKick == false)
+            if (randomValue < 6 && isKick == false)
             {
                 // 발차기
                 Kick();
                 isKick = true;
             }
 
-            else if (randomValue >= 5 && isDodge == false)
+            else if (randomValue >= 6 && isDodge == false)
             {
                 // 회피
                 Dodge();
@@ -354,6 +354,8 @@ public class Molblin1 : MonoBehaviour
         {
             // 상태를 공격선택으로 바꾼다.
             state = MolblinState.Idle;
+            isKick = false;
+            isDodge = false;
 
             currentTime = 0;
         }
@@ -382,7 +384,7 @@ public class Molblin1 : MonoBehaviour
                 anim.SetTrigger("Damage");
 
                 // 상태 초기화
-                state = MolblinState.Idle;
+                state = MolblinState.AttackDelay;
             }
         }
 
