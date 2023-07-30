@@ -10,8 +10,7 @@ public class SoundManager : MonoBehaviour
         instance = this;
     }
 
-
-    public AudioClip audio;
+    // public AudioClip audioclip;
     public AudioSource[] sources;
 
     public void OnMyBuffSound()
@@ -31,14 +30,14 @@ public class SoundManager : MonoBehaviour
         sources[2].PlayOneShot(sources[2].clip);
     }
 
-    public void OnMyDieSound()
-    {
-        //AudioSource.PlayClipAtPoint(audios[2], transform.position);
-        sources[3].PlayOneShot(sources[3].clip);
-    }
+    //public void OnMyDieSound()
+    //{
+    //    //AudioSource.PlayClipAtPoint(audios[2], transform.position);
+    //    sources[3].PlayOneShot(sources[3].clip);
+    //}
 
-    public void OnMyBoomSound()
-    {
-        sources[4].PlayOneShot(sources[4].clip);
-    }
+    //public void OnMyBoomSound()
+    //{
+    //    sources[4].PlayOneShot(sources[4].clip);
+    //}
 }

@@ -6,7 +6,7 @@ public class BoomSound : MonoBehaviour
 {
     private void Awake()
     {
-        SoundManager.instance.OnMyBoomSound();
+        //SoundManager.instance.OnMyBoomSound();
 
     }
 }
