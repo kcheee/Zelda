@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class Psoundscript : MonoBehaviour
 {
+    public static Psoundscript instance;
+
     [SerializeField] AudioClip[] voicesounds = default;
     [SerializeField] AudioClip[] SFXsounds = default;
+    [SerializeField] AudioClip[] Walkingsounds = default;
     #region 음성효과음
     void chargedstart()
     {
@@ -60,12 +63,12 @@ public class Psoundscript : MonoBehaviour
     {
         PsoundManager.instance.SFX.PlayOneShot(voicesounds[12]);
     }
+    public void BombExplosion()
+    {
+        PsoundManager.instance.SFX.PlayOneShot(voicesounds[13]);
+    }
     #endregion
     #region 효과음
-    void walking()
-    {
-        PsoundManager.instance.SFX.PlayOneShot(SFXsounds[0]);
-    }
     void whirlwindsound()
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[1]);
@@ -81,17 +84,23 @@ public class Psoundscript : MonoBehaviour
     public void iceDestroy()
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[4]);
-    } 
+    }
     void DashATTACKsound()
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[5]);
     }
+
+    #endregion
+    
+    #region 걷기
+    void walking()
+    {
+        PsoundManager.instance.SFX.PlayOneShot(SFXsounds[0]);
+    }
     void running()
     {
-        //this.audio.Volume = 0.1f;
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[6]);
     }
-
     #endregion
 }
 //    [System.Serializable]

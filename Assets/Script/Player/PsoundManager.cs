@@ -5,6 +5,7 @@ using UnityEngine;
 public class PsoundManager : MonoBehaviour
 {
     public static PsoundManager instance;
+
     //[SerializeField] AudioClip[] moveSound = default;
     public AudioSource BGM;
     public AudioClip stageBGM;

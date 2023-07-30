@@ -10,7 +10,7 @@ public class Bomb : MonoBehaviour
     Rigidbody[] rbs;
     public GameObject Bomb_Explosion_Effect;
     public AudioSource BombSFX;
-    public AudioClip BombSound;
+    //public AudioClip BombSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +21,7 @@ public class Bomb : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        BombSFX.GetComponent<AudioSource>().PlayOneShot(BombSound);
+        BombSFX.PlayOneShot(BombSFX.clip);
         Destroy(gameObject);
 
         Instantiate(Bomb_Explosion_Effect, collision.contacts[0].point, Quaternion.identity);
