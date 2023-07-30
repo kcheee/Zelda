@@ -77,13 +77,16 @@ public class Molblin1 : MonoBehaviour
     // bool
     bool isPohyo;
     bool isDodge;
-    bool isAttack;
     bool isTwoHands;
     bool isComboAttack;
     bool isKick;
     public bool isDamaged;
-    static public bool anim_rotation = false;
+    bool isChosen;
 
+    static public bool anim_rotation = false;
+    
+    // 다른 스크립트에서 데미지 관리변수
+    static public int Damage = 1;
     #endregion
 
     #region Start
@@ -103,6 +106,23 @@ public class Molblin1 : MonoBehaviour
     #region Update
     void Update()
     {
+        #region 링크 필살기
+        // 링크가 필살기를 쓸 때 멈추기
+        if (animation_T.instance.state == animation_T.ani_state.FinishAttack)
+        {
+            agent.speed = 0.1f;
+            agent.acceleration = 0.1f;
+            agent.velocity = Vector3.zero;
+            anim.speed = 0.1f;
+        }
+        else
+        {
+            agent.speed = 4.5f;
+            agent.acceleration = 8f;
+            anim.speed = 1f;
+        }
+        #endregion
+
         #region 거리재기
         // 거리를 구한다.
         Vector3 linktransform = link.transform.position;
@@ -225,7 +245,6 @@ public class Molblin1 : MonoBehaviour
         return;
     }
 
-    bool isChosen;
     private void UpdateAttackChoice()
     {
         // 선택 시간 중에 링크가 공격가능 거리 보다 멀어진다면 Idle        
@@ -279,6 +298,7 @@ public class Molblin1 : MonoBehaviour
         }
     }
 
+    // 콤보공격
     private void ComboAttack()
     {
         anim.SetBool("Move", true);
@@ -297,14 +317,6 @@ public class Molblin1 : MonoBehaviour
             // agent 멈추기
             agent.isStopped = true;
         }
-    }
-
-    public void OnmyAttackEnd()
-    {
-        anim.SetBool("TwoHands", false);
-        anim.SetBool("ComboAttack", false);
-
-        state = MolblinState.AttackDelay;
     }
 
     private void UpdateAttackDelay()
@@ -350,17 +362,19 @@ public class Molblin1 : MonoBehaviour
     public void UpdateDamaged()
     {
         // 체력 감소
-        HP--;
+        HP -= Damage;
 
         // 만약 체력이 0 보다 크다면
         if (currentHP > 0)
         {
             if (isTwoHands || isComboAttack)
             {
-                print("332423432423423432");
+                Damage = 1;
             }
             else
             {
+                Damage = 1;
+
                 // 모리블린 색 변화
                 MaterialChange.instance.DoDamage();
 
@@ -380,6 +394,7 @@ public class Molblin1 : MonoBehaviour
         }
     }
 
+    #region Die Porcess
     public float power = 5;
     Rigidbody[] rbs;
     bool isDie;
@@ -388,7 +403,6 @@ public class Molblin1 : MonoBehaviour
     public SkinnedMeshRenderer molClub;
     Transform hipBone;
 
-    #region Die Porcess
     private void UpdateDie()
     {
         if (isDie == false)
@@ -457,10 +471,18 @@ public class Molblin1 : MonoBehaviour
     }
     #endregion
 
-    #region Event
+    #region Events
     public BoxCollider footBoxCollider;
     public BoxCollider clubBoxCollider;
     public TrailRenderer trailRenderer;
+
+    public void OnmyAttackEnd()
+    {
+        anim.SetBool("TwoHands", false);
+        anim.SetBool("ComboAttack", false);
+
+        state = MolblinState.AttackDelay;
+    }
 
     public void StartKick()
     {
@@ -509,6 +531,7 @@ public class Molblin1 : MonoBehaviour
 
     public void PlayHitEffect()
     {
+        SoundManagerMolblin.instance.OnMyClubBoomSound();
         GameObject hitBoom = Instantiate(hitBoomFactory);
         hitBoom.transform.position = trailRenderer.transform.position;
     }

@@ -87,8 +87,11 @@ public class animation_T : MonoBehaviour
 
     private void Update()
     {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !FinishAttack_.Finishattack)
+        {
             state = ani_state.idle;
+        }
+
 
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("move"))
             state = ani_state.move;

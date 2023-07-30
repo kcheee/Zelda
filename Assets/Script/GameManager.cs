@@ -212,7 +212,7 @@ public class GameManager : MonoBehaviour
         // 2. 20퍼 남았을 때 보스 출현
         // 3. 종료 후 UI 
          
-        if(BossGage.GetComponent<Slider>().value<=70&& boss_enable)
+        if(BossGage.GetComponent<Slider>().value<=50&& boss_enable)
         {
             boss_enable =false;
             Mobline.SetActive(true);
