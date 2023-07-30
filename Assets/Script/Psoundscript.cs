@@ -57,9 +57,17 @@ public class Psoundscript : MonoBehaviour
     {
         PsoundManager.instance.SFX.PlayOneShot(voicesounds[11]);
     }
+    void bombExplosion()
+    {
+        PsoundManager.instance.SFX.PlayOneShot(voicesounds[12]);
+    }
+    void downsound()
+    {
+        PsoundManager.instance.SFX.PlayOneShot(voicesounds[13]);
+    }
     #endregion
     #region 효과음
-    void runing()
+    void walking()
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[0]);
     }
@@ -67,23 +75,6 @@ public class Psoundscript : MonoBehaviour
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[1]);
     }
-    //void swordAttacksound()
-    //{
-    //    PsoundManager.instance.SFX.PlayOneShot(SFXsounds[2]);
-    //}
-    //void swordAttacksoundII()
-    //{
-    //    PsoundManager.instance.SFX.PlayOneShot(SFXsounds[3]);
-
-    //}
-    //void swordAttacksoundIII()
-    //{
-    //    PsoundManager.instance.SFX.PlayOneShot(SFXsounds[4]);
-    //}
-    //void swordAttacksoundIIII()
-    //{
-    //    PsoundManager.instance.SFX.PlayOneShot(SFXsounds[5]);
-    //}
     void arrowsound()
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[2]);
@@ -100,13 +91,12 @@ public class Psoundscript : MonoBehaviour
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[5]);
     }
-
-    #endregion
-    #region 걷기효과음
-    void walking()
+    void running()
     {
-        //PsoundManager.instance.SFX.PlayOneShot(Walkingsounds[Random.Range(0, Walkingsounds.Length)]);
+        //this.audio.Volume = 0.1f;
+        PsoundManager.instance.SFX.PlayOneShot(SFXsounds[6]);
     }
+
     #endregion
 }
 //    [System.Serializable]

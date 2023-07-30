@@ -28,7 +28,6 @@ public class PsoundManager : MonoBehaviour
             instance = this;
             //DontDestroyOnLoad(instance);
             //SFX = GetComponent<AudioSource>();
-
         }
         else
             Destroy(gameObject);

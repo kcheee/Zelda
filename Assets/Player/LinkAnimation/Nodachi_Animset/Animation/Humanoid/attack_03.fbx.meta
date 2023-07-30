@@ -60,6 +60,20 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.43713278
+        functionName: attacksoundIIII
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.44660193
+        functionName: StrongAttack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.46417058
         functionName: StartHit
         data: 
@@ -69,13 +83,6 @@ ModelImporter:
         messageOptions: 0
       - time: 0.57079583
         functionName: EndHit
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.44660193
-        functionName: StrongAttack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
