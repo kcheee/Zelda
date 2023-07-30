@@ -37,21 +37,25 @@ public class Psoundscript : MonoBehaviour
     {
         PsoundManager.instance.SFX.PlayOneShot(voicesounds[6]);
     }
-    void archeryStart()
+    void attacksoundIIII()
     {
         PsoundManager.instance.SFX.PlayOneShot(voicesounds[7]);
     }
-    void archeryEnd()
+    void archeryStart()
     {
         PsoundManager.instance.SFX.PlayOneShot(voicesounds[8]);
     }
-    void bombStart()
+    void archeryEnd()
     {
         PsoundManager.instance.SFX.PlayOneShot(voicesounds[9]);
     }
-    void IceUpsound()
+    void bombStart()
     {
         PsoundManager.instance.SFX.PlayOneShot(voicesounds[10]);
+    }
+    void bombThrowing()
+    {
+        PsoundManager.instance.SFX.PlayOneShot(voicesounds[11]);
     }
     #endregion
     #region 효과음
@@ -63,18 +67,40 @@ public class Psoundscript : MonoBehaviour
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[1]);
     }
-    void swordAttacksound()
+    //void swordAttacksound()
+    //{
+    //    PsoundManager.instance.SFX.PlayOneShot(SFXsounds[2]);
+    //}
+    //void swordAttacksoundII()
+    //{
+    //    PsoundManager.instance.SFX.PlayOneShot(SFXsounds[3]);
+
+    //}
+    //void swordAttacksoundIII()
+    //{
+    //    PsoundManager.instance.SFX.PlayOneShot(SFXsounds[4]);
+    //}
+    //void swordAttacksoundIIII()
+    //{
+    //    PsoundManager.instance.SFX.PlayOneShot(SFXsounds[5]);
+    //}
+    void arrowsound()
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[2]);
     }
-    void swordAttacksoundII()
+    void iceCreative()
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[3]);
     }
-    void arrowsound()
+    void iceDestroy()
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[4]);
     }
+    void DashATTACKsound()
+    {
+        PsoundManager.instance.SFX.PlayOneShot(SFXsounds[5]);
+    }
+
     #endregion
     #region 걷기효과음
     void walking()

@@ -22162,24 +22162,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   voicesounds:
-  - {fileID: 8300000, guid: b2f901b1ad9622444a00e7ecea475aca, type: 3}
+  - {fileID: 8300000, guid: abc75dd91175374488631dae881950a6, type: 3}
+  - {fileID: 8300000, guid: 5736311c4acba2a43add79e041c8e9b7, type: 3}
+  - {fileID: 8300000, guid: 8be032cc396b39148b24154b5d0fc96e, type: 3}
   - {fileID: 8300000, guid: 5a2ec047c2440d54b88acf13a651b28f, type: 3}
-  - {fileID: 8300000, guid: b2f901b1ad9622444a00e7ecea475aca, type: 3}
+  - {fileID: 8300000, guid: 02fc511f3c4626b47a140b2d1568e1eb, type: 3}
+  - {fileID: 8300000, guid: 0442b4b65d17264439d5bf281c8a2b7e, type: 3}
+  - {fileID: 8300000, guid: d557a1e4e1613ba4487b735a52073dfe, type: 3}
+  - {fileID: 8300000, guid: c64f5a342d6fc4c428f4d18c50174505, type: 3}
   - {fileID: 8300000, guid: 5a2ec047c2440d54b88acf13a651b28f, type: 3}
-  - {fileID: 8300000, guid: 5a2ec047c2440d54b88acf13a651b28f, type: 3}
-  - {fileID: 8300000, guid: 5a2ec047c2440d54b88acf13a651b28f, type: 3}
-  - {fileID: 8300000, guid: b2f901b1ad9622444a00e7ecea475aca, type: 3}
-  - {fileID: 8300000, guid: 5a2ec047c2440d54b88acf13a651b28f, type: 3}
-  - {fileID: 8300000, guid: 5a2ec047c2440d54b88acf13a651b28f, type: 3}
-  - {fileID: 8300000, guid: b2f901b1ad9622444a00e7ecea475aca, type: 3}
-  - {fileID: 8300000, guid: 5a2ec047c2440d54b88acf13a651b28f, type: 3}
-  - {fileID: 8300000, guid: b2f901b1ad9622444a00e7ecea475aca, type: 3}
+  - {fileID: 8300000, guid: 01b2302b878df6446aaf969ab3f4dc62, type: 3}
+  - {fileID: 8300000, guid: 97197ff4febeb2242b5ef64b84bb2fda, type: 3}
+  - {fileID: 8300000, guid: 6c376425038a4d7499ebe163f6ba31f8, type: 3}
   SFXsounds:
-  - {fileID: 8300000, guid: 9340301979e10b24c9b89e41e4628c2e, type: 3}
+  - {fileID: 8300000, guid: 534384b2c06db2548a04e7e494fb7cf7, type: 3}
   - {fileID: 8300000, guid: bcdc9dfe978e5044394690f85c422584, type: 3}
-  - {fileID: 8300000, guid: 9340301979e10b24c9b89e41e4628c2e, type: 3}
-  - {fileID: 8300000, guid: 9340301979e10b24c9b89e41e4628c2e, type: 3}
-  - {fileID: 8300000, guid: bcdc9dfe978e5044394690f85c422584, type: 3}
+  - {fileID: 8300000, guid: c3f177d278169724ebc6fed28e2b20ec, type: 3}
+  - {fileID: 8300000, guid: cbed9328f22585d4d871f63a88d6765c, type: 3}
+  - {fileID: 8300000, guid: 31b14e007ce52b141aea810aa717cb46, type: 3}
+  - {fileID: 8300000, guid: b3efa947d2ef4d84db11a72e4c32f3f0, type: 3}
 --- !u!1001 &1357441493
 PrefabInstance:
   m_ObjectHideFlags: 0
