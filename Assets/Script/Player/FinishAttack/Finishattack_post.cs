@@ -6,19 +6,18 @@ using UnityEngine.UI;
 
 public class Finishattack_post : MonoBehaviour
 {
-    Volume volume;
+     public Volume volume;
     private void Start()
     {
-        volume = GetComponent<Volume>();
+        
     }
     // Update is called once per frame
     void Update()
-    {
-
-        if(!FinishAttack_.Finishattack)
+    {   
+        if(volume.weight > 0 )
         {
-            if(volume.weight > 0) 
-            volume.weight -= Mathf.Lerp(0, 1, Time.deltaTime * 0.8f);
+        volume.weight -= Mathf.Lerp(0, 1, Time.deltaTime * 1.8f);
         }
+
     }
 }
