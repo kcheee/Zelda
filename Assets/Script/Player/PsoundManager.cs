@@ -18,7 +18,7 @@ public class PsoundManager : MonoBehaviour
         BGM.playOnAwake = true;
         BGM.clip = stageBGM;
         BGM.Play();
-        SFX.clip = SFXsound;
+        //SFX.clip = SFXsound;
         SFX.loop = false;
     }
 
