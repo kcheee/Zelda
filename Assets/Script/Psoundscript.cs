@@ -21,10 +21,10 @@ public class Psoundscript : MonoBehaviour
     {
         PsoundManager.instance.SFX.PlayOneShot(voicesounds[2]);
     }
-    void dashsoundstop()
-    {
-        PsoundManager.instance.SFX.PlayOneShot(voicesounds[3]);
-    }
+    //void dashsoundstop()
+    //{
+    //    PsoundManager.instance.SFX.PlayOneShot(voicesounds[3]);
+    //}
     void attacksound()
     {
         PsoundManager.instance.SFX.PlayOneShot(voicesounds[4]);
