@@ -10,25 +10,34 @@ public class SoundManager : MonoBehaviour
         instance = this;
     }
 
-
-    public AudioClip[] audios;
+    // public AudioClip audioclip;
+    public AudioSource[] sources;
 
     public void OnMyBuffSound()
-    {   
-        AudioSource.PlayClipAtPoint(audios[0], transform.position);
+    {
+        //AudioSource.PlayClipAtPoint(audios[0], transform.position);
+        sources[0].PlayOneShot(sources[0].clip);
     }
 
     public void OnMyAttackSound()
     {
-        AudioSource.PlayClipAtPoint(audios[1], transform.position);
+        //AudioSource.PlayClipAtPoint(audios[1], transform.position);
+        sources[1].PlayOneShot(sources[1].clip);
     }
 
-    public void OnMyDieSound()
+    public void OnMyClubSound()
     {
-        //if(gameObject != null)
-        //{
-        //    Debug.Log(transform.position);
-        //    AudioSource.PlayClipAtPoint(audios[2], transform.position);
-        //}       
+        sources[2].PlayOneShot(sources[2].clip);
     }
+
+    //public void OnMyDieSound()
+    //{
+    //    //AudioSource.PlayClipAtPoint(audios[2], transform.position);
+    //    sources[3].PlayOneShot(sources[3].clip);
+    //}
+
+    //public void OnMyBoomSound()
+    //{
+    //    sources[4].PlayOneShot(sources[4].clip);
+    //}
 }

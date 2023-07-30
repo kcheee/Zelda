@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Enemy/Effects/MolDieEffect.prefab.meta
+guid: 05ca257b3c18260408c77b0a4967e307
+PrefabImporter:
+========
 guid: 4aa8d884ac600174f8fd9536fe1bdee0
 NativeFormatImporter:
+>>>>>>>> main:Assets/Player/LinkAnimation/Nodachi_Animset/Animation/Humanoid/ChargeAttack.anim.meta
   externalObjects: {}
   mainObjectFileID: 7400000
   userData: 

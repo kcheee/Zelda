@@ -78,7 +78,6 @@ public class Molblin1 : MonoBehaviour
     bool isPohyo;
     bool isDodge;
     bool isAttack;
-    bool isDisturb = true;
     bool isTwoHands;
     bool isComboAttack;
     bool isKick;
@@ -106,9 +105,9 @@ public class Molblin1 : MonoBehaviour
     {
         #region 거리재기
         // 거리를 구한다.
-        Vector3 y = link.transform.position;
-        y.y = transform.position.y;
-        distance = Vector3.Distance(y, transform.position);
+        Vector3 linktransform = link.transform.position;
+        linktransform.y = transform.position.y;
+        distance = Vector3.Distance(linktransform, transform.position);
         #endregion
 
         #region 상태함수
@@ -153,9 +152,9 @@ public class Molblin1 : MonoBehaviour
     #endregion
 
     #region States
-
     private void UpdateIdle()
     {
+        isChosen = false;
         agent.isStopped = true;
 
         // 만약 링크와의 거리가 감지 거리보다 가까우면
@@ -168,8 +167,8 @@ public class Molblin1 : MonoBehaviour
                 anim.SetTrigger("Buff");
             }
             currentTime += Time.deltaTime;
-            // 2초가 지나면
-            if (currentTime > 2 && isPohyo)
+            // 1초가 지나면
+            if (currentTime > 1 && isPohyo)
             {
                 agent.isStopped = false;
                 // 상태를 Move 로 변환한다.
@@ -182,7 +181,6 @@ public class Molblin1 : MonoBehaviour
 
     private void Kick()
     {
-
         print("발차기");
         anim.SetTrigger("Kick");
         state = MolblinState.Idle;
@@ -199,17 +197,20 @@ public class Molblin1 : MonoBehaviour
 
     private void UpdateMove()
     {
+        agent.isStopped = false;
         // 만약 링크와의 거리가 감지 거리보다 멀어지면 Idle 상태로 돌아간다.
         if (distance > detectDistance)
         {
             // 상태를 Idle 로 전환한다.
             state = MolblinState.Idle;
             anim.SetBool("Move", false);
+            agent.isStopped = true;
         }
 
         // 만약 링크와의 거리가 감지거리보다 가깝고 공격가능거리보다 멀면 이동한다.
         else if (detectDistance > distance && distance > attackPossibleDistance)
         {
+            agent.isStopped = false;
             anim.SetBool("Move", true);
             // 링크가 있는 곳으로 이동한다.
             agent.destination = link.transform.position;
@@ -221,141 +222,112 @@ public class Molblin1 : MonoBehaviour
             // 공격선택상태로 전환한다.
             state = MolblinState.AttackChoice;
         }
+        return;
     }
 
+    bool isChosen;
     private void UpdateAttackChoice()
     {
-        anim.SetBool("Move", true);
         // 선택 시간 중에 링크가 공격가능 거리 보다 멀어진다면 Idle        
         if (distance > attackPossibleDistance)
         {
             // 상태를 Idle 로 전환한다.
             state = MolblinState.Idle;
             anim.SetBool("Wait", false);
+            anim.SetBool("Move", false);
+            agent.isStopped = true;
         }
 
-        // 50% 확률로 양손공격 실행
-        int attackRandom = Random.Range(0, 2);
-        if (attackRandom == 0 && isComboAttack == false)
+        if (isChosen == false)
         {
-            isTwoHands = true;
+            isChosen = true;
 
-            // 링크 방향으로 이동한다.
-            agent.destination = link.transform.position;
-
-            // 링크와의 거리가 패턴 2 거리 이하가 되면
-            if (distance < pattern2Distance)
+            // 50% 확률로 양손공격 실행
+            int attackRandom = Random.Range(0, 2);
+            if (attackRandom == 0)
             {
-                anim.SetBool("Wait", true);
-                anim.SetBool("Move", false);
+                print("TwoHandsAttack");
                 state = MolblinState.TwoHandsAttack;
             }
-        }
-
-        // 50% 확률로 콤보공격  실행
-        else if (attackRandom == 1 && isTwoHands == false)
-        {
-            isComboAttack = true;
-
-            // 링크 방향으로 이동한다.
-            transform.position += linkDir * speed * Time.deltaTime;
-
-            // 링크와의 거리가 패턴 2 거리 이하가 되면
-            if (distance < pattern3Distance)
+            // 50% 확률로 콤보공격  실행
+            else if (attackRandom == 1)
             {
-                anim.SetBool("Wait", true);
-                anim.SetBool("Move", false);
+                print("ComboAttack");
                 state = MolblinState.ComboAttack;
             }
         }
     }
-    void TwoHandsAttack()
+
+    // 양손공격
+    public void TwoHandsAttack()
     {
-        // 시간을 흐르게 한다.
-        currentTime += Time.deltaTime;
+        anim.SetBool("Move", true);
+        agent.destination = link.transform.position;
 
-        // 1초 후에
-        if (currentTime >= 1)
+        // 링크와의 거리가 패턴 2 거리 이하가 되면
+        if (distance < pattern2Distance)
         {
-            print("양손 공격");
-            anim.SetBool("TwoHands", true);
+            isTwoHands = true;
+            isDodge = true;
 
-            isDisturb = false;
-            isAttack = true;
+            // agent 멈추기
+            agent.isStopped = true;
 
-            // 양손 공격을 한다.
-            anim.SetBool("Wait", false);
+            // 애니메이션 실행
+            anim.SetBool("Move", false);
+            anim.SetBool("TwoHands", true); 
         }
-        // 공격이 끝나는 시간이 되면
-        if (currentTime >= 1.5f)
-        {
-            //isDisturb = true;
-            //isDisturb = true;
-            isTwoHands = false;
-            isDodge = false;
-
-            anim.SetTrigger("AttackDelay");
-            state = MolblinState.AttackDelay;
-
-            currentTime = 0;
-        }
-    }
-
-    public GameObject hitBoomFactory;
-
-    public void PlayHitEffect()
-    {
-        GameObject hitBoom = Instantiate(hitBoomFactory);
-        hitBoom.transform.position = trailRenderer.transform.position;
     }
 
     private void ComboAttack()
     {
-        currentTime += Time.deltaTime;
+        anim.SetBool("Move", true);
+        agent.destination = link.transform.position;
 
-        if (currentTime >= 1)
+        // 링크와의 거리가 패턴 2 거리 이하가 되면
+        if (distance < pattern3Distance)
         {
-            print("콤보 공격");
+            isComboAttack = true;
+            isDodge = true;
 
-            isDisturb = false;
-            isAttack = true;
-
-            // 콤보 공격을 한다.
-            anim.SetBool("Wait", false);
+            // 애니메이션
+            anim.SetBool("Move", false);
             anim.SetBool("ComboAttack", true);
+
+            // agent 멈추기
+            agent.isStopped = true;
         }
+    }
 
-        if (currentTime >= 4)
-        {
+    public void OnmyAttackEnd()
+    {
+        anim.SetBool("TwoHands", false);
+        anim.SetBool("ComboAttack", false);
 
-            isDisturb = true;
-            isComboAttack = false;
-            isDodge = false;
-
-            anim.SetTrigger("AttackDelay");
-            state = MolblinState.AttackDelay;
-
-            currentTime = 0;
-        }
+        state = MolblinState.AttackDelay;
     }
 
     private void UpdateAttackDelay()
     {
-        anim.SetBool("TwoHands", false);
-        anim.SetBool("ComboAttack", false);
+        anim.SetBool("Move", false);
+
+        isComboAttack = false;
+        isTwoHands = false;
+
+        agent.isStopped = true;
 
         currentTime += Time.deltaTime;
 
         if (distance < 4)
         {
             anim.SetBool("Move", false);
-            anim.SetBool("Wait", false);
 
             int randomValue = Random.Range(0, 10);
-            if (randomValue < 5)
+            if (randomValue < 5 && isKick == false)
             {
                 // 발차기
                 Kick();
+                isKick = true;
             }
 
             else if (randomValue >= 5 && isDodge == false)
@@ -383,8 +355,11 @@ public class Molblin1 : MonoBehaviour
         // 만약 체력이 0 보다 크다면
         if (currentHP > 0)
         {
-            // 그리고 공격방해가 가능한 상태라면
-            if (isDisturb == true)
+            if (isTwoHands || isComboAttack)
+            {
+                print("332423432423423432");
+            }
+            else
             {
                 // 모리블린 색 변화
                 MaterialChange.instance.DoDamage();
@@ -394,11 +369,6 @@ public class Molblin1 : MonoBehaviour
 
                 // 상태 초기화
                 state = MolblinState.Idle;
-            }
-            // 그리고 공격방해가 불가능한 상태라면
-            else if (isDisturb == false)
-            {
-                print("332423432423423432");
             }
         }
 
@@ -425,7 +395,7 @@ public class Molblin1 : MonoBehaviour
         {
             isDie = true;
 
-            // SoundManager.instance.OnMyDieSound();
+            SoundManagerMolblin.instance.OnMyDieSound();
 
             // GameManager.instance.KillcntUpdate();
 
@@ -439,19 +409,19 @@ public class Molblin1 : MonoBehaviour
                 rb.AddForce(Vector3.up * power, ForceMode.Impulse);
             }
 
-            // 보스전일때 보코블린 죽으면 점령게이지 줄어듦.
-            if (GameManager.instance.state == GameManager.State.Boss)
-            {
-                // 점령게이지 줄어듦
-                GameManager.instance.BossGage.GetComponent<Slider>().value -= 80;
-            }
+            //// 보스전일때 보코블린 죽으면 점령게이지 줄어듦.
+            //if (GameManager.instance.state == GameManager.State.Boss)
+            //{
+            //    // 점령게이지 줄어듦
+            //    GameManager.instance.BossGage.GetComponent<Slider>().value -= 80;
+            //}
 
             // 색깔을 검게 바꾸고
-            Invoke("DieColor", 3);
+            Invoke("DieColor", 3f);
+            Invoke("BoomSound", 3.7f);
             // 사망이펙트와 함께 게임오브젝트를 파괴한다.
             Invoke("DieEffect", 4);
         }
-
     }
 
     public void DieColor()
@@ -465,6 +435,11 @@ public class Molblin1 : MonoBehaviour
             }
             mesh[i].materials[0].color = Color.black;
         }
+    }
+
+    public void BoomSound()
+    {
+        SoundManagerMolblin.instance.OnMyBoomSound();
     }
 
     public void DieEffect()
@@ -482,7 +457,7 @@ public class Molblin1 : MonoBehaviour
     }
     #endregion
 
-    #region Attack Event
+    #region Event
     public BoxCollider footBoxCollider;
     public BoxCollider clubBoxCollider;
     public TrailRenderer trailRenderer;
@@ -528,6 +503,14 @@ public class Molblin1 : MonoBehaviour
     public void EndTrail()
     {
         trailRenderer.enabled = false;
+    }
+
+    public GameObject hitBoomFactory;
+
+    public void PlayHitEffect()
+    {
+        GameObject hitBoom = Instantiate(hitBoomFactory);
+        hitBoom.transform.position = trailRenderer.transform.position;
     }
     #endregion
 

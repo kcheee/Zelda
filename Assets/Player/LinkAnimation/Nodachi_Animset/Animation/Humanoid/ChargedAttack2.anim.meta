@@ -1,8 +1,15 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/SampleScene - Enemy/NavMesh.asset.meta
+guid: 810217aef1926a3429b8a818931ec080
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 23800000
+========
 guid: 86091ac2f9eb6f64288aa58c9dca088f
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 7400000
+>>>>>>>> main:Assets/Player/LinkAnimation/Nodachi_Animset/Animation/Humanoid/ChargedAttack2.anim.meta
   userData: 
   assetBundleName: 
   assetBundleVariant: 

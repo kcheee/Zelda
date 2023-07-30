@@ -19,7 +19,7 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        slider.transform.forward = link.transform.forward;
-        text.transform.forward = link.transform.forward;
+        slider.transform.forward = Camera.main.transform.forward;
+        text.transform.forward = Camera.main.transform.forward;
     }
 }
