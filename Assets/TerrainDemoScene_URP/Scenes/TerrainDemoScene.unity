@@ -10535,7 +10535,8 @@ AudioSource:
   m_GameObject: {fileID: 726420724}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 2d09afa4e18bc0348998d09950a0a123,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -19827,7 +19828,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: abc75dd91175374488631dae881950a6, type: 3}
   - {fileID: 8300000, guid: 5736311c4acba2a43add79e041c8e9b7, type: 3}
   - {fileID: 8300000, guid: 40d660a59bfac3840b3c5a358d63101e, type: 3}
-  - {fileID: 8300000, guid: 0594f86f76c8df14caf73629192aab26, type: 3}
+  - {fileID: 8300000, guid: 5a2ec047c2440d54b88acf13a651b28f, type: 3}
   - {fileID: 8300000, guid: 02fc511f3c4626b47a140b2d1568e1eb, type: 3}
   - {fileID: 8300000, guid: 0442b4b65d17264439d5bf281c8a2b7e, type: 3}
   - {fileID: 8300000, guid: d557a1e4e1613ba4487b735a52073dfe, type: 3}
@@ -19836,7 +19837,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0594f86f76c8df14caf73629192aab26, type: 3}
   - {fileID: 8300000, guid: 97197ff4febeb2242b5ef64b84bb2fda, type: 3}
   - {fileID: 8300000, guid: 01b2302b878df6446aaf969ab3f4dc62, type: 3}
-  - {fileID: 8300000, guid: 6c376425038a4d7499ebe163f6ba31f8, type: 3}
   - {fileID: 8300000, guid: eb388fe9b804e114ab41fb47e5f4f610, type: 3}
   SFXsounds:
   - {fileID: 8300000, guid: 534384b2c06db2548a04e7e494fb7cf7, type: 3}
@@ -19845,6 +19845,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cbed9328f22585d4d871f63a88d6765c, type: 3}
   - {fileID: 8300000, guid: 31b14e007ce52b141aea810aa717cb46, type: 3}
   - {fileID: 8300000, guid: b3efa947d2ef4d84db11a72e4c32f3f0, type: 3}
+  - {fileID: 8300000, guid: 534384b2c06db2548a04e7e494fb7cf7, type: 3}
 --- !u!1001 &1366898501
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30176,7 +30177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BGM: {fileID: 1095368260}
-  stageBGM: {fileID: 0}
+  stageBGM: {fileID: 8300000, guid: d3e11b129589c3747bb7ef874b9b8e4b, type: 3}
   SFX: {fileID: 726420726}
   SFXsound: {fileID: 0}
 --- !u!1 &2080474762

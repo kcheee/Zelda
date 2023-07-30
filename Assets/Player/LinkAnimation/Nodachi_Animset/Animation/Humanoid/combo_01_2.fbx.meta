@@ -60,7 +60,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.32107022
+      - time: 0.32214433
         functionName: attacksoundII
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -75,7 +75,7 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0.3968093
-        functionName: attacksoundII
+        functionName: EndHit
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

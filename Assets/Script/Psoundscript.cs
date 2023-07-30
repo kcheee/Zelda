@@ -7,7 +7,6 @@ public class Psoundscript : MonoBehaviour
 {
     [SerializeField] AudioClip[] voicesounds = default;
     [SerializeField] AudioClip[] SFXsounds = default;
-    //[SerializeField] AudioClip[] Walkingsounds = default;
     #region 음성효과음
     void chargedstart()
     {
@@ -57,13 +56,9 @@ public class Psoundscript : MonoBehaviour
     {
         PsoundManager.instance.SFX.PlayOneShot(voicesounds[11]);
     }
-    void bombExplosion()
-    {
-        PsoundManager.instance.SFX.PlayOneShot(voicesounds[12]);
-    }
     void downsound()
     {
-        PsoundManager.instance.SFX.PlayOneShot(voicesounds[13]);
+        PsoundManager.instance.SFX.PlayOneShot(voicesounds[12]);
     }
     #endregion
     #region 효과음
@@ -79,14 +74,14 @@ public class Psoundscript : MonoBehaviour
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[2]);
     }
-    void iceCreative()
+    public void iceCreative()
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[3]);
     }
-    void iceDestroy()
+    public void iceDestroy()
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[4]);
-    }
+    } 
     void DashATTACKsound()
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[5]);
