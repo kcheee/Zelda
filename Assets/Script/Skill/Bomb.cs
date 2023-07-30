@@ -19,11 +19,19 @@ public class Bomb : MonoBehaviour
         //rb.AddForce(transform.forward * 20, ForceMode.Impulse);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            BombSFX.PlayOneShot(BombSFX.clip);
+        }
+    }
     private void OnCollisionEnter(Collision collision)
     {
-        BombSFX.PlayOneShot(BombSFX.clip);
+
         Destroy(gameObject);
 
+        //Instatiate(BombSFX.PlayOneShot(BombSFX.clip);
         Instantiate(Bomb_Explosion_Effect, collision.contacts[0].point, Quaternion.identity);
         // 구 반경으로 위치를 가져옴.
         Collider[] cols = Physics.OverlapSphere(collision.contacts[0].point, 20);
