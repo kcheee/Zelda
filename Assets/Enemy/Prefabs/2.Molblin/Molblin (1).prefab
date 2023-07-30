@@ -4185,11 +4185,11 @@ MonoBehaviour:
   state: 0
   speed: 4
   detectDistance: 30
-  attackPossibleDistance: 20
+  attackPossibleDistance: 17
   pattern2Distance: 15
   pattern3Distance: 8
   waitTime: 0.6
-  delayTime: 0.5
+  delayTime: 1
   currentHP: 0
   maxHP: 10
   sliderHP: {fileID: 1922110981}
