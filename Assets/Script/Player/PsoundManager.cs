@@ -5,6 +5,7 @@ using UnityEngine;
 public class PsoundManager : MonoBehaviour
 {
     public static PsoundManager instance;
+
     //[SerializeField] AudioClip[] moveSound = default;
     public AudioSource BGM;
     public AudioClip stageBGM;
@@ -17,7 +18,7 @@ public class PsoundManager : MonoBehaviour
         BGM.playOnAwake = true;
         BGM.clip = stageBGM;
         BGM.Play();
-        SFX.clip = SFXsound;
+        //SFX.clip = SFXsound;
         SFX.loop = false;
     }
 
@@ -28,7 +29,6 @@ public class PsoundManager : MonoBehaviour
             instance = this;
             //DontDestroyOnLoad(instance);
             //SFX = GetComponent<AudioSource>();
-
         }
         else
             Destroy(gameObject);

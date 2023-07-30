@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class Psoundscript : MonoBehaviour
 {
+    public static Psoundscript instance;
+
     [SerializeField] AudioClip[] voicesounds = default;
     [SerializeField] AudioClip[] SFXsounds = default;
-    //[SerializeField] AudioClip[] Walkingsounds = default;
+    [SerializeField] AudioClip[] Walkingsounds = default;
     #region 음성효과음
     void chargedstart()
     {
@@ -21,10 +23,10 @@ public class Psoundscript : MonoBehaviour
     {
         PsoundManager.instance.SFX.PlayOneShot(voicesounds[2]);
     }
-    void dashsoundstop()
-    {
-        PsoundManager.instance.SFX.PlayOneShot(voicesounds[3]);
-    }
+    //void dashsoundstop()
+    //{
+    //    PsoundManager.instance.SFX.PlayOneShot(voicesounds[3]);
+    //}
     void attacksound()
     {
         PsoundManager.instance.SFX.PlayOneShot(voicesounds[4]);
@@ -57,42 +59,29 @@ public class Psoundscript : MonoBehaviour
     {
         PsoundManager.instance.SFX.PlayOneShot(voicesounds[11]);
     }
+    void downsound()
+    {
+        PsoundManager.instance.SFX.PlayOneShot(voicesounds[12]);
+    }
+    public void BombExplosion()
+    {
+        PsoundManager.instance.SFX.PlayOneShot(voicesounds[13]);
+    }
     #endregion
     #region 효과음
-    void runing()
-    {
-        PsoundManager.instance.SFX.PlayOneShot(SFXsounds[0]);
-    }
     void whirlwindsound()
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[1]);
     }
-    //void swordAttacksound()
-    //{
-    //    PsoundManager.instance.SFX.PlayOneShot(SFXsounds[2]);
-    //}
-    //void swordAttacksoundII()
-    //{
-    //    PsoundManager.instance.SFX.PlayOneShot(SFXsounds[3]);
-
-    //}
-    //void swordAttacksoundIII()
-    //{
-    //    PsoundManager.instance.SFX.PlayOneShot(SFXsounds[4]);
-    //}
-    //void swordAttacksoundIIII()
-    //{
-    //    PsoundManager.instance.SFX.PlayOneShot(SFXsounds[5]);
-    //}
     void arrowsound()
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[2]);
     }
-    void iceCreative()
+    public void iceCreative()
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[3]);
     }
-    void iceDestroy()
+    public void iceDestroy()
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[4]);
     }
@@ -102,10 +91,15 @@ public class Psoundscript : MonoBehaviour
     }
 
     #endregion
-    #region 걷기효과음
+    
+    #region 걷기
     void walking()
     {
-        //PsoundManager.instance.SFX.PlayOneShot(Walkingsounds[Random.Range(0, Walkingsounds.Length)]);
+        PsoundManager.instance.SFX.PlayOneShot(SFXsounds[0]);
+    }
+    void running()
+    {
+        PsoundManager.instance.SFX.PlayOneShot(SFXsounds[6]);
     }
     #endregion
 }

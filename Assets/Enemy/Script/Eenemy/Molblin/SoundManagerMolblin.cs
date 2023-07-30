@@ -54,4 +54,10 @@ public class SoundManagerMolblin : MonoBehaviour
         //AudioSource.PlayClipAtPoint(audios[4], transform.position);
         sources[6].PlayOneShot(sources[6].clip);
     }
+
+    public void OnMyClubBoomSound()
+    {
+        //AudioSource.PlayClipAtPoint(audios[4], transform.position);
+        sources[7].PlayOneShot(sources[7].clip);
+    }
 }

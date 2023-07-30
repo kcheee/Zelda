@@ -24,6 +24,7 @@ public class FinishAttack_ : MonoBehaviour
         SecondCam.enabled = true;
         Finishattack = true;
 
+        
     }
 
     private void Update()
