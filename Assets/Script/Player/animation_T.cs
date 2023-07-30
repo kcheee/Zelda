@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static animation_T;
 
 public class animation_T : MonoBehaviour
 {
@@ -17,6 +20,7 @@ public class animation_T : MonoBehaviour
         dash,
         run,
         attack,
+        dashattack,
         FinishAttack
     }
 
@@ -87,9 +91,10 @@ public class animation_T : MonoBehaviour
 
     private void Update()
     {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-            state = ani_state.idle;
-
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")&&!FinishAttack_.Finishattack)       
+            state = ani_state.idle;        
+        
+        
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("move"))
             state = ani_state.move;
 
@@ -117,6 +122,7 @@ public class animation_T : MonoBehaviour
         }
         if (Dash_flag)
         {
+            state = ani_state.dashattack;
             ti += Time.deltaTime;
             if (ti > 2)
             {
@@ -136,6 +142,7 @@ public class animation_T : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
+            state = ani_state.attack;
             animator.SetBool("charged", false);
         }
 
@@ -197,12 +204,35 @@ public class animation_T : MonoBehaviour
     #endregion
     bool isGrounded;
 
+    // 묵시적 형변환 맞나? 아무튼
+    void airCheck(ani_state air_state)
+    {
+        if(air_state != ani_state.dashattack && air_state != ani_state.attack)
+        {
+        animator.SetBool("AirBorne", true);
+        G_state = Ground_state.air;
+        }
+    }
+    void airCheck(SkillManager.Skill_state air_state)
+    {
+        Debug.Log(air_state);
+        if (air_state != SkillManager.Skill_state.skill_bomb
+            && air_state != SkillManager.Skill_state.skill_bowzoom
+            && air_state != SkillManager.Skill_state.skill_bow)
+        {
+            animator.SetBool("AirBorne", true);
+            G_state = Ground_state.air;
+        }
+
+    }
+    bool air_flag = false;
     // 그라운드 체크  공중에 있을때 링크 애니메이션
     private void CheckGrounded()
     {
         RaycastHit hitinfo;
         Vector3 dir = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
         Debug.DrawRay(dir, -transform.up, Color.red);
+        
         if (Physics.Raycast(dir, -transform.up, out hitinfo, 1))
         {
             if (hitinfo.collider.CompareTag("Floor") || hitinfo.collider.CompareTag("IceMaker"))
@@ -211,12 +241,16 @@ public class animation_T : MonoBehaviour
                 G_state = Ground_state.grounded;
             }
         }
-        else
+        // 공중에 뜰때 애니메이션 취소되는것 방지.
+        else if(state != ani_state.dashattack && state != ani_state.attack 
+            && SkillManager.instance.skill_state != SkillManager.Skill_state.skill_bomb
+            && SkillManager.instance.skill_state != SkillManager.Skill_state.skill_bowzoom
+            && SkillManager.instance.skill_state != SkillManager.Skill_state.skill_bow)         
         {
-            //Debug.Log("공중");
-            animator.SetBool("AirBorne", true);
-            G_state = Ground_state.air;
-        }
+                animator.SetBool("AirBorne", true);
+                G_state = Ground_state.air;
+            
+        }      
     }
 
 

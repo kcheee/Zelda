@@ -27,12 +27,12 @@ public class BokoDamageManager : MonoBehaviour
                 if (!Trail.strongatt)
                 {
                     rb.AddForce(transform.up * 5 + (-transform.forward * 2.5f), ForceMode.Impulse);
-                    RagdollBokoblin.Damage = 4;
+                    RagdollBokoblin.Damage = 2;
                 }
                 else
                 {
                     rb.AddForce(-transform.forward * 10 + transform.up * 10, ForceMode.Impulse);
-                    RagdollBokoblin.Damage = 2;
+                    RagdollBokoblin.Damage = 4;
                 }
             }
 

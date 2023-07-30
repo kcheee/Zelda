@@ -185,8 +185,6 @@ public class SkillManager : MonoBehaviour
                     flag_icemaker = true;
                     StartCoroutine(IcemakerGravity());
                     transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-
-                    Debug.Log(gameObject.GetComponent<Animator>().applyRootMotion);
                     rb.velocity = new Vector3(0, 0, 0);
                     //rb.AddForce(transform.up * 15, ForceMode.Impulse);
                     Instantiate(iceskill, new Vector3(transform.position.x, transform.position.y - 0.2f, transform.position.z)

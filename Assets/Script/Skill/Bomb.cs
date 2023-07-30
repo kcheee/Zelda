@@ -20,8 +20,6 @@ public class Bomb : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(gameObject);
-
         Instantiate(Bomb_Explosion_Effect, collision.contacts[0].point, Quaternion.identity);
         // 구 반경으로 위치를 가져옴.
         Collider[] cols = Physics.OverlapSphere(collision.contacts[0].point, 20);
@@ -44,8 +42,6 @@ public class Bomb : MonoBehaviour
                 cols[i].GetComponentInParent<RagdollBokoblin>().DamagedProcess();
             }
         }
-       
-
-
+        Destroy(gameObject);
     }
 }
