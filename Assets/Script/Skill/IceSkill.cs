@@ -10,6 +10,7 @@ public class IceSkill : MonoBehaviour
         // ½ºÅ³ ÄðÅ¸ÀÓ UI On
         CoolTimer.instance.on_Btn();
     }
+    bool flag = false;
     IEnumerator delay()
     {
         yield return new WaitForSeconds(4);
@@ -24,15 +25,21 @@ public class IceSkill : MonoBehaviour
         {
             transform.localScale += new Vector3(0, 1.5f, 0) * Time.deltaTime * 20;
         }
+        else if(!flag)
+        {
+            flag=true;
+            SkillManager.instance.GetComponent<Rigidbody>().AddForce(Vector3.up* 15 , ForceMode.Impulse);
+            StartCoroutine(delay());
+        }
         else
-        {         
-             StartCoroutine(delay());
+        {
+            //SkillManager.instance.GetComponent<Rigidbody>().AddForce(
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Collider[] cols = Physics.OverlapBox(collision.transform.position, new Vector3(6f,7,6f));
+        Collider[] cols = Physics.OverlapBox(collision.transform.position, new Vector3(6f, 7, 6f));
 
         for (int i = 0; i < cols.Length; i++)
         {

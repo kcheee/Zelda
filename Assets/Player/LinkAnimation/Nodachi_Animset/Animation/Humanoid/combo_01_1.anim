@@ -75354,18 +75354,10 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.36666667
+  - time: 0.43333334
     functionName: attacksound
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5
-    functionName: StartSlash
-    data: 
-    objectReferenceParameter: {fileID: 5564095405217601189, guid: 0e917c6846f891447933d95756b9bc17,
-      type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
@@ -75373,14 +75365,6 @@ AnimationClip:
     functionName: StartHit
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.6666667
-    functionName: StopSlash
-    data: 
-    objectReferenceParameter: {fileID: 5564095405217601189, guid: 0e917c6846f891447933d95756b9bc17,
-      type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
