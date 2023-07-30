@@ -145,6 +145,7 @@ public class RagdollBokoblin : MonoBehaviour
     #region States
     private void UpdateIdle()
     {
+        agent.enabled = true;
         agent.isStopped = false;
 
         // 링크와의 거리를 구한다.
@@ -241,6 +242,8 @@ public class RagdollBokoblin : MonoBehaviour
 
     private void UpdateAir()
     {
+        agent.enabled = false;
+
         transform.position = hipBone.position;
 
         // 5초 후에 일어난다.
@@ -320,7 +323,7 @@ public class RagdollBokoblin : MonoBehaviour
 
                 // AttackDistance 까지 달려감
                 agent.destination = link.transform.position;
-                agent.speed = 7;
+                agent.speed = 6;
                 // 만약 공격거리보다 가까워지면
                 if (distance <= attackDistance)
                 {

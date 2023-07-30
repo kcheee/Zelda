@@ -3366,14 +3366,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1193452710, guid: d40e5acc209a9dd48804b16678411adf, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1193452710, guid: d40e5acc209a9dd48804b16678411adf, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1403309472961758050, guid: d40e5acc209a9dd48804b16678411adf,
         type: 3}
       propertyPath: m_Name
@@ -6843,11 +6835,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bokoblin_Nav
-      objectReference: {fileID: 0}
-    - target: {fileID: 6487913916810601489, guid: 8264e143b0adaa747b89ecac146841bc,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6487913916810601502, guid: 8264e143b0adaa747b89ecac146841bc,
         type: 3}

@@ -3676,6 +3676,7 @@ GameObject:
   - component: {fileID: 6487913915942427832}
   - component: {fileID: 6487913915942427839}
   - component: {fileID: 6487913915942427838}
+  - component: {fileID: 6910674933487122024}
   m_Layer: 8
   m_Name: Boko_collider
   m_TagString: Untagged
@@ -3761,6 +3762,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2.0221395, z: 1.1699219}
   m_Center: {x: 0, y: 0, z: -0.08496094}
+--- !u!114 &6910674933487122024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6487913915942427827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12fc71dfceaefa846b0d169dcb1ac7b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6487913916810601489
 GameObject:
   m_ObjectHideFlags: 0
@@ -3834,7 +3847,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 200
-  m_StoppingDistance: 4
+  m_StoppingDistance: 6
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
