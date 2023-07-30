@@ -121,7 +121,8 @@ public class animation_T : MonoBehaviour
         //Chargedmotion();
         //CheckCharged2Input();
         //Combomotion();
-
+        
+        // ´ë½¬
         if (Input.GetKeyDown(KeyCode.R))
         {
             Dash_flag = true;
@@ -141,6 +142,19 @@ public class animation_T : MonoBehaviour
                 GetComponent<Rigidbody>().velocity = transform.forward * 20;
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            animator.SetTrigger("ChargeAttack");
+            animator.SetBool("charged", true);
+            Debug.Log("tl");
+        }
+        if (Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            animator.SetBool("charged", false);
+            Debug.Log("tl22");
+        }
+
 
         AttackCombo();
         CheckGrounded();
@@ -210,12 +224,14 @@ public class animation_T : MonoBehaviour
             if (hitinfo.collider.CompareTag("Floor") || hitinfo.collider.CompareTag("IceMaker"))
             {
                 animator.SetBool("AirBorne", false);
+                G_state = Ground_state.grounded;
             }
         }
         else
         {
             //Debug.Log("°øÁß");
             animator.SetBool("AirBorne", true);
+            G_state = Ground_state.air;
         }
     }
 
@@ -237,8 +253,25 @@ public class animation_T : MonoBehaviour
     // Dash ani Event;
     public bool Dash()
     {
+        //SkillManager.instance.sword_shield[1]
         return animation_T.Dash_flag = true;
     }
+
+    #region ChargeAtk
+    public GameObject ChargeEft;
+
+    #region charge Event
+    public void ChargeAtk()
+    {
+        ChargeEft.SetActive(true);
+    }
+    public void ChargeAtkend()
+    {
+        ChargeEft.SetActive(false);
+    }
+    #endregion
+    #endregion
+
 
     #region ¹Î°æ´Ô ÄÚµå
     void Attackmotion()

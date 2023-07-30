@@ -40,7 +40,7 @@ public class Bomb : MonoBehaviour
                 }
 
                 // ÆøÅº µ¥¹ÌÁö
-              RagdollBokoblin.Damage = 4;
+                RagdollBokoblin.Damage = 4;
                 cols[i].GetComponentInParent<RagdollBokoblin>().DamagedProcess();
             }
         }

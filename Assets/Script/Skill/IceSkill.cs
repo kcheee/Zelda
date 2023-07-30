@@ -49,7 +49,7 @@ public class IceSkill : MonoBehaviour
 
                 // ÆøÅº µ¥¹ÌÁö
                 RagdollBokoblin.Damage = 3;
-                cols[i].GetComponentInParent<RagdollBokoblin>().state = RagdollBokoblin.BocoblinState.Damaged;
+                cols[i].GetComponentInParent<RagdollBokoblin>().DamagedProcess();
 
             }
 
