@@ -146,7 +146,7 @@ public class RagdollBokoblin : MonoBehaviour
     private void UpdateIdle()
     {
         agent.enabled = true;
-        agent.isStopped = false;
+        agent.isStopped = true;
 
         // 링크와의 거리를 구한다.
         Vector3 y = link.transform.position;
@@ -211,6 +211,7 @@ public class RagdollBokoblin : MonoBehaviour
         {
             // 상태를 Idle 로 전환한다.
             state = BocoblinState.Idle;
+            agent.velocity = Vector3.zero;
             anim.SetBool("Move", false);
         }
 
@@ -235,25 +236,26 @@ public class RagdollBokoblin : MonoBehaviour
             state = BocoblinState.Wait;
 
             // 애니메이션
-            anim.SetBool("Wait", true);
+            if (isbuff == false)
+            {
+                anim.SetBool("Wait", true);
+                isbuff = true;
+            }
+            
             anim.SetBool("Move", false);
         }
     }
-
+    bool isbuff;
     private void UpdateAir()
     {
-        agent.enabled = false;
-
-        transform.position = hipBone.position;
-
         // 5초 후에 일어난다.
         currentTime += Time.deltaTime;
 
         if (currentTime > standupTime)
         {
+            transform.position = hipBone.position;
             // 애니메이터를 활성화 한다.
             anim.enabled = true;
-            agent.enabled = true;
 
             anim.SetTrigger("StandUp");
 
@@ -332,6 +334,7 @@ public class RagdollBokoblin : MonoBehaviour
 
                     // 애니메이션 실행
                     anim.SetBool("Attack", true);
+                    anim.SetBool("Run", false);
 
                     isWait = false;
                 }
@@ -344,8 +347,7 @@ public class RagdollBokoblin : MonoBehaviour
 
     private void UpdateAttack()
     {
-        // 애니메이션 실행
-        anim.SetBool("Run", false);
+        // 애니메이션 실행        
         anim.SetBool("Attack", false);
 
         // 보코블린의 상태를 AttackWait 으로 바꾼다.
@@ -405,6 +407,7 @@ public class RagdollBokoblin : MonoBehaviour
             currentTime = 0;
             anim.SetBool("AttackWait", false);
             agent.isStopped = true;
+            agent.velocity = Vector3.zero;
         }
 
         // 4초가 지나면 다시 공격
@@ -442,7 +445,7 @@ public class RagdollBokoblin : MonoBehaviour
             Damage = 1;
 
             // 공중상태로 바꾼다.
-            UpdateAir();
+            state = BocoblinState.Air;
         }
         // 만약 체력이 0이 되면
         else if (currentHP <= 0)
@@ -461,19 +464,22 @@ public class RagdollBokoblin : MonoBehaviour
         {
             isDie = true;
 
-            SoundManager.instance.OnMyDieSound();
+            GameObject dieSound = Instantiate(dieSoundFactory);
+            dieSound.transform.position = transform.position;
+            Destroy(dieSound.gameObject, 2);
 
-            //GameManager.instance.KillcntUpdate();
+            GameManager.instance.KillcntUpdate();
 
             // 보스전일때 보코블린 죽으면 점령게이지 줄어듦.
-            //if (GameManager.instance.state == GameManager.State.Boss)
-            //{
-            //    // 점령게이지 줄어듦
-            //    GameManager.instance.BossGage.GetComponent<Slider>().value -= 1;
-            //}
+            if (GameManager.instance.state == GameManager.State.Boss)
+            {
+                // 점령게이지 줄어듦
+                GameManager.instance.BossGage.GetComponent<Slider>().value -= 1;
+            }
 
             // 색깔을 검게 바꾸고
-            Invoke("DieColor", 3.5f);
+            Invoke("DieColor", 3f);
+            Invoke("BoomSound", 3.7f);
             // 사망이펙트와 함께 게임오브젝트를 파괴한다.
             Invoke("DieEffect", 4);
         }
@@ -491,8 +497,14 @@ public class RagdollBokoblin : MonoBehaviour
             }
             mesh[i].materials[0].color = Color.black;
         }
-
-        SoundManager.instance.OnMyBoomSound();
+    }
+    public GameObject dieSoundFactory;
+    public GameObject boomSoundFactory;
+    public void BoomSound()
+    {
+        GameObject boomSound = Instantiate(boomSoundFactory);
+        boomSound.transform.position = transform.position;
+        Destroy(boomSound.gameObject, 1);
     }
 
     public void DieEffect()

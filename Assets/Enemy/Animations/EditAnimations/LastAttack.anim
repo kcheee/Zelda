@@ -76122,14 +76122,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.9
+  - time: 0.8666667
     functionName: StartComboAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.0333333
+  - time: 1.1333333
     functionName: EndComboAttack
     data: 
     objectReferenceParameter: {fileID: 0}

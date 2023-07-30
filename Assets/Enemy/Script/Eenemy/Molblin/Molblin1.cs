@@ -103,11 +103,6 @@ public class Molblin1 : MonoBehaviour
     #region Update
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            UpdateDamaged();
-        }
-
         #region 거리재기
         // 거리를 구한다.
         Vector3 linktransform = link.transform.position;
