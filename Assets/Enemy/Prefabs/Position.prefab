@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &483581116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 483581117}
+  m_Layer: 7
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &483581117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483581116}
+  m_LocalRotation: {x: -0, y: -0.000000029802315, z: -0, w: 1}
+  m_LocalPosition: {x: -0.000010900199, y: 1.2789986, z: 0.7100127}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6567624864284867430}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &263816597696542529
 GameObject:
   m_ObjectHideFlags: 0
@@ -43459,6 +43490,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6487913916810601496, guid: 8264e143b0adaa747b89ecac146841bc,
+        type: 3}
+      propertyPath: damageSpot
+      value: 
+      objectReference: {fileID: 4041136610588475328}
+    - target: {fileID: 6487913916810601496, guid: 8264e143b0adaa747b89ecac146841bc,
+        type: 3}
+      propertyPath: damageEffectFactory
+      value: 
+      objectReference: {fileID: 141660, guid: 35e1889bd2ab2014b869b6677823db1f, type: 3}
     - target: {fileID: 6487913916810601502, guid: 8264e143b0adaa747b89ecac146841bc,
         type: 3}
       propertyPath: m_RootOrder
@@ -43525,6 +43566,18 @@ Transform:
 --- !u!1 &623657142678113036 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6487913916810601489, guid: 8264e143b0adaa747b89ecac146841bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 5957734029426552605}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4041136610588475328 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7690775830914027741, guid: 8264e143b0adaa747b89ecac146841bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 5957734029426552605}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6567624864284867430 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 687638474651669627, guid: 8264e143b0adaa747b89ecac146841bc,
     type: 3}
   m_PrefabInstance: {fileID: 5957734029426552605}
   m_PrefabAsset: {fileID: 0}

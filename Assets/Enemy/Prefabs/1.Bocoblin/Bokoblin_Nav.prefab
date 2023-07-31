@@ -3612,6 +3612,8 @@ MonoBehaviour:
   club: {fileID: 3251477951484545939}
   trail: {fileID: 2141142834}
   bokoRoot: {fileID: 4737686486638644659}
+  damageEffectFactory: {fileID: 141660, guid: 35e1889bd2ab2014b869b6677823db1f, type: 3}
+  damageSpot: {fileID: 7690775830914027741}
   speed: 0
   runSpeed: 0
   detectDistance: 85

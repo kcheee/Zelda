@@ -20,8 +20,8 @@ public class WallCheck3 : MonoBehaviour
 
             for (int i = 0; i < bokos1.Length; i++)
             {
-                bokos1[i].gameObject.GetComponent<RagdollBokoblin>().detectDistance = 25;
-                bokos1[i].gameObject.GetComponent<RagdollBokoblin>().attackPossibleDistance = 17;
+                bokos1[i].gameObject.GetComponent<RagdollBokoblin>().detectDistance = 20;
+                bokos1[i].gameObject.GetComponent<RagdollBokoblin>().attackPossibleDistance = 12;
             }
             for (int j = 0; j < bokos2.Length; j++)
             {
