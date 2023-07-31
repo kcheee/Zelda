@@ -75217,7 +75217,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 2.1333334
+  - time: 2.1
     functionName: EndComboAttack
     data: 
     objectReferenceParameter: {fileID: 0}
