@@ -10,7 +10,7 @@ public class ArrowBomb : MonoBehaviour
         // 콜라이더를 담을 수 있는 배열을 만든다.
 
         // 반경 10f에 위치한 오브젝트들을 배열에 담는다
-        Collider[] cols = Physics.OverlapSphere(transform.position, 20);
+        Collider[] cols = Physics.OverlapSphere(transform.position, 8);
 
         // foreach문을 통해서 colls배열에 존재하는 각각에 폭발효과를 적용해준다.
         foreach (Collider coll in cols)
@@ -24,7 +24,7 @@ public class ArrowBomb : MonoBehaviour
                 {
                     //rb.velocity = new Vector3(0, 0, 0);
                     //rb.angularVelocity = new Vector3(0, 0, 0);
-                    rb.AddExplosionForce(5 * rb.mass, transform.position, 10, 8 * rb.mass, ForceMode.Impulse);
+                    rb.AddExplosionForce(3 * rb.mass, transform.position, 10, 8 * rb.mass, ForceMode.Impulse);
                 }
 
                 // 폭탄 데미지
@@ -32,9 +32,11 @@ public class ArrowBomb : MonoBehaviour
                 coll.GetComponentInParent<RagdollBokoblin>().state = RagdollBokoblin.BocoblinState.Damaged;
 
             }
-            // 코드 정리.
-            // 검출된 오브젝트들 중에서 8번 레이어에 속한 오브젝트 각각을,
-            // 폭발위치(coll오브젝트위치아님)기준으로 반경 20f까지 100f의 폭발력과 20f의 상향력으로 날려버린다.
+            if (coll.CompareTag("Moblin"))
+            {
+                Molblin1.instance.UpdateDamaged();
+            }
+
         }
     }
 

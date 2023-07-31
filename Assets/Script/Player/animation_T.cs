@@ -17,6 +17,7 @@ public class animation_T : MonoBehaviour
         dash,
         run,
         attack,
+        dashattack,
         FinishAttack
     }
 
@@ -38,7 +39,6 @@ public class animation_T : MonoBehaviour
             {
                 if (colliders[i].CompareTag("Bokoblin"))
                 {
-                    Debug.Log("tl");
                     Rigidbody[] rigid = colliders[i].GetComponentsInChildren<Rigidbody>();
                     foreach (Rigidbody rb in rigid)
                     {
@@ -53,7 +53,7 @@ public class animation_T : MonoBehaviour
         else
         {
             Collider[] colliders_ =
-            Physics.OverlapSphere(this.transform.position, 12);
+            Physics.OverlapSphere(this.transform.position, 10);
             for (int i = 0; i < colliders_.Length; i++)
             {
                 if (colliders_[i].CompareTag("Bokoblin"))
@@ -63,7 +63,7 @@ public class animation_T : MonoBehaviour
                     foreach (Rigidbody rb in rigid)
                     {
                         rb.velocity = gameObject.GetComponent<Rigidbody>().velocity;
-                        //rb.AddForce(transform.forward * 4, ForceMode.Impulse);
+                        rb.AddForce(transform.forward * 8, ForceMode.Impulse);
                     }
                     colliders_[i].GetComponentInParent<RagdollBokoblin>().DamagedProcess();
 
@@ -92,11 +92,11 @@ public class animation_T : MonoBehaviour
             state = ani_state.idle;
         }
 
-
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("move"))
             state = ani_state.move;
 
-        if (state == ani_state.attack || FinishAttack_.Finishattack || G_state == Ground_state.air)
+        if (state == ani_state.attack || FinishAttack_.Finishattack 
+            || G_state == Ground_state.air || SkillManager.instance.skill_state == SkillManager.Skill_state.skill_bomb)
         {
             //AttackCollider.enabled = true;
             animator.applyRootMotion = true;
@@ -106,12 +106,9 @@ public class animation_T : MonoBehaviour
             //AttackCollider.enabled = false;
             animator.applyRootMotion = false;
         }
-        //Attackmotion();
-        //Chargedmotion();
-        //CheckCharged2Input();
-        //Combomotion();
-        
-        // 대쉬
+
+
+        #region 대쉬
         if (Input.GetKeyDown(KeyCode.R))
         {
             Dash_flag = true;
@@ -120,8 +117,9 @@ public class animation_T : MonoBehaviour
         }
         if (Dash_flag)
         {
+            state = ani_state.dashattack;
             ti += Time.deltaTime;
-            if (ti > 2)
+            if (ti > 2.5f)
             {
                 Dash_flag = false;
                 ti = 0;
@@ -131,8 +129,10 @@ public class animation_T : MonoBehaviour
                 GetComponent<Rigidbody>().velocity = transform.forward * 20;
             }
         }
+        #endregion
 
-        if(Input.GetKeyDown(KeyCode.Mouse1))
+        #region 차지어택
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             animator.SetTrigger("ChargeAttack");
             animator.SetBool("charged", true);
@@ -141,10 +141,11 @@ public class animation_T : MonoBehaviour
         {
             animator.SetBool("charged", false);
         }
-
+        #endregion
 
         AttackCombo();
         CheckGrounded();
+
     }
 
     private int comboCount = 0; // 현재 콤보 카운트
@@ -214,9 +215,13 @@ public class animation_T : MonoBehaviour
                 G_state = Ground_state.grounded;
             }
         }
-        else
+        // 공중에 떠있을때 애니메이션 실행 가능하게
+        else if (state != ani_state.dashattack && state != ani_state.attack
+            && SkillManager.instance.skill_state != SkillManager.Skill_state.skill_bomb
+            && SkillManager.instance.skill_state != SkillManager.Skill_state.skill_bowzoom
+            && SkillManager.instance.skill_state != SkillManager.Skill_state.skill_bow)
         {
-            //Debug.Log("공중");
+
             animator.SetBool("AirBorne", true);
             G_state = Ground_state.air;
         }
@@ -253,7 +258,7 @@ public class animation_T : MonoBehaviour
     public GameObject ChargeEft;
 
     #region charge Event
-    public void ChargeAtk()
+    public void chargedstart()
     {
         ChargeEft.SetActive(true);
     }

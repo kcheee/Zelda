@@ -105,6 +105,7 @@ public class SkillManager : MonoBehaviour
     {
         // 부모를 뗌 호로자식..
         Bomb_po.transform.DetachChildren();
+
         // rigidbody 사용해서 공 던지기
         BOMB[Bomb_count].GetComponent<Rigidbody>().useGravity = true;
         // 공 던지는 힘
@@ -217,10 +218,21 @@ public class SkillManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.N))
         {
-            FinishAttack.SetActive(true);
+            if (GameManager.instance.FinishATKGaze.value >= 30) // 필살기 게이지
+                FinishAttack.SetActive(true);
+            
         }
 
         #endregion
+
+        // 활 쏠때 중력 작용 x
+
+        if (skill_state == Skill_state.skill_bow)
+        {
+            rb.useGravity = false;
+            rb.velocity = Vector3.zero;
+        }
+        else rb.useGravity = true;
     }
 
     // 수정 필요 IceSkill에서 제어
@@ -242,7 +254,8 @@ public class SkillManager : MonoBehaviour
         if (collision.collider.CompareTag("IceMaker"))
         {
             // 수정 필요
-            //gameObject.GetComponent<Animator>().applyRootMotion = false;    // 루트모션 해제
+            Debug.Log("tlfgod");
+            rb.AddForce(Vector3.up * 10 , ForceMode.Acceleration);    // 루트모션 해제
         }
     }
 }

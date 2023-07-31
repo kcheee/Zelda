@@ -9,7 +9,7 @@ public class Bomb : MonoBehaviour
     Rigidbody rb;
     Rigidbody[] rbs;
     public GameObject Bomb_Explosion_Effect;
-    public AudioSource BombSFX;
+    public GameObject Bombsound;
     //public AudioClip BombSound;
     // Start is called before the first frame update
     void Start()
@@ -19,13 +19,6 @@ public class Bomb : MonoBehaviour
         //rb.AddForce(transform.forward * 20, ForceMode.Impulse);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            BombSFX.PlayOneShot(BombSFX.clip);
-        }
-    }
     private void OnCollisionEnter(Collision collision)
     {
 
@@ -35,7 +28,11 @@ public class Bomb : MonoBehaviour
         Instantiate(Bomb_Explosion_Effect, collision.contacts[0].point, Quaternion.identity);
         // 구 반경으로 위치를 가져옴.
         Collider[] cols = Physics.OverlapSphere(collision.contacts[0].point, 20);
+        Instantiate(Bombsound, collision.contacts[0].point, Quaternion.identity);
 
+
+        if (Bombsound != null && !Bombsound.gameObject.activeInHierarchy)
+            Bombsound.gameObject.SetActive(true);
         for (int i = 0; i < cols.Length; i++)
         {
             // 폭탄 반경에 있는 오브젝트 rigidbody 가져옴
@@ -53,6 +50,11 @@ public class Bomb : MonoBehaviour
                 RagdollBokoblin.Damage = 5;
                 cols[i].GetComponentInParent<RagdollBokoblin>().DamagedProcess();
             }
+            if (cols[i].CompareTag("Moblin"))
+            {
+                Molblin1.instance.UpdateDamaged();
+            }
+
         }
        
 
