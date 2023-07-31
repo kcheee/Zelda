@@ -432,7 +432,7 @@ public class Molblin1 : MonoBehaviour
 
             SoundManagerMolblin.instance.OnMyDieSound();
 
-            // GameManager.instance.KillcntUpdate();
+            GameManager.instance.KillcntUpdate();
 
             anim.enabled = false;
 
@@ -441,7 +441,7 @@ public class Molblin1 : MonoBehaviour
                 rb.velocity = new Vector3(0, 0, 0);
                 rb.angularVelocity = new Vector3(0, 0, 0);
 
-                rb.AddForce(Vector3.up * power, ForceMode.Impulse);
+                rb.AddForce(Vector3.up * power + Vector3.back * 4, ForceMode.Impulse);
             }
 
             // 보스전일때 보코블린 죽으면 점령게이지 줄어듦.
