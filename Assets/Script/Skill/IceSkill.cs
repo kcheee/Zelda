@@ -27,12 +27,12 @@ public class IceSkill : MonoBehaviour
         else if(!flag)
         {
             flag=true;
-            SkillManager.instance.GetComponent<Rigidbody>().AddForce(Vector3.up* 15 , ForceMode.Impulse);
+            SkillManager.instance.GetComponent<Rigidbody>().AddForce(Vector3.up* 18*20 , ForceMode.Impulse);
             StartCoroutine(delay());
         }
         else
         {
-            //SkillManager.instance.GetComponent<Rigidbody>().AddForce(
+            
         }
     }
 

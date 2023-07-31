@@ -192,10 +192,14 @@ public class GameManager : MonoBehaviour
     // killUI
     public TextMeshProUGUI KillCnt;
     int kiilcnt = 0;
+    public Slider FinishATKGaze;
+
     // 죽으면 이 함수를 불러옴.
     public void KillcntUpdate()
     {
         kiilcnt++;
+        if (FinishATKGaze.value <= FinishATKGaze.maxValue)
+            GameManager.instance.FinishATKGaze.value++;
         KillCnt.text = kiilcnt.ToString();
     }
     #endregion
@@ -212,7 +216,7 @@ public class GameManager : MonoBehaviour
         // 2. 20퍼 남았을 때 보스 출현
         // 3. 종료 후 UI 
          
-        if(BossGage.GetComponent<Slider>().value<=70&& boss_enable)
+        if(BossGage.GetComponent<Slider>().value<=50&& boss_enable)
         {
             boss_enable =false;
             Mobline.SetActive(true);

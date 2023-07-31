@@ -81,6 +81,7 @@ public class RagdollBokoblin : MonoBehaviour
     bool isDie;
     bool isWait;
     bool isEffect;
+    bool isbuff;
 
     // 다른 스크립트에서 데미지 관리변수
     static public int Damage = 1;
@@ -103,6 +104,23 @@ public class RagdollBokoblin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        #region 링크 필살기
+        // 링크가 필살기를 쓸 때 멈추기
+        if (animation_T.instance.state == animation_T.ani_state.FinishAttack)
+        {
+            agent.speed = 0.1f;
+            agent.acceleration = 0.1f;
+            agent.velocity = Vector3.zero;
+            anim.speed = 0.1f;
+        }
+        else
+        {
+            agent.speed = 4.5f;
+            agent.acceleration = 8f;
+            anim.speed = 1f;
+        }
+        #endregion
+
         if (state == BocoblinState.Idle)
         {
             UpdateIdle();
@@ -147,7 +165,6 @@ public class RagdollBokoblin : MonoBehaviour
     {
         agent.enabled = true;
         agent.isStopped = true;
-
         // 링크와의 거리를 구한다.
         Vector3 y = link.transform.position;
         y.y = transform.position.y;
@@ -245,7 +262,7 @@ public class RagdollBokoblin : MonoBehaviour
             anim.SetBool("Move", false);
         }
     }
-    bool isbuff;
+   
     private void UpdateAir()
     {
         // 5초 후에 일어난다.
@@ -256,7 +273,7 @@ public class RagdollBokoblin : MonoBehaviour
             transform.position = hipBone.position;
             // 애니메이터를 활성화 한다.
             anim.enabled = true;
-
+            agent.isStopped = false;
             anim.SetTrigger("StandUp");
 
             currentTime = 0;
@@ -354,28 +371,6 @@ public class RagdollBokoblin : MonoBehaviour
         state = BocoblinState.AttackWait;
     }
 
-    #region 콜라이더 & 트레일 관리
-    public void StartAttack()
-    {
-        club.enabled = true;
-    }
-
-    public void StopAttack()
-    {
-        club.enabled = false;
-    }
-
-    public void StartTrail()
-    {
-        trail.enabled = true;
-    }
-
-    public void StopTrail()
-    {
-        trail.enabled = false;
-    }
-    #endregion
-
     private void UpdateAttackWait()
     {
         currentTime += Time.deltaTime;
@@ -428,6 +423,7 @@ public class RagdollBokoblin : MonoBehaviour
     {
         // 애니메이터를 비활성화 한다.
         anim.enabled = false;
+        agent.isStopped = true;
 
         // 체력 감소.
         currentHP -= Damage;
@@ -457,7 +453,29 @@ public class RagdollBokoblin : MonoBehaviour
         }
     }
 
-    #region 사망 프로세스
+    #region 콜라이더 & 트레일 관리
+    public void StartAttack()
+    {
+        club.enabled = true;
+    }
+
+    public void StopAttack()
+    {
+        club.enabled = false;
+    }
+
+    public void StartTrail()
+    {
+        trail.enabled = true;
+    }
+
+    public void StopTrail()
+    {
+        trail.enabled = false;
+    }
+    #endregion
+
+    #region 사망 
     private void UpdateDie()
     {
         if (isDie == false)
@@ -478,10 +496,10 @@ public class RagdollBokoblin : MonoBehaviour
             }
 
             // 색깔을 검게 바꾸고
-            Invoke("DieColor", 3f);
-            Invoke("BoomSound", 3.7f);
+            Invoke("DieColor", 4f);
+            Invoke("BoomSound", 4.7f);
             // 사망이펙트와 함께 게임오브젝트를 파괴한다.
-            Invoke("DieEffect", 4);
+            Invoke("DieEffect", 5);
         }
     }
 

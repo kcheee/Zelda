@@ -435,6 +435,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: AirBorne
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: Bow_ready
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3742156928208726567}
   m_Solo: 0
@@ -837,7 +840,7 @@ AnimatorStateMachine:
     m_Position: {x: 40, y: -60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3102783328990886590}
-    m_Position: {x: -980, y: 290, z: 0}
+    m_Position: {x: -1000, y: 290, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7666217559151725683}
     m_Position: {x: -990, y: 200, z: 0}
