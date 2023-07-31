@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class IceSkill : MonoBehaviour
 {
+    public AudioSource Icesound;
+    public AudioClip IceMaking;
     private void OnEnable()
     {
+        Icesound.clip = IceMaking;
+        PlayIceMakingSound();
         // ½ºÅ³ ÄðÅ¸ÀÓ UI On
         CoolTimer.instance.on_Btn();
     }
     bool flag = false;
     IEnumerator delay()
     {
+        //Icesound.clip = IceDestroy;
+        //Icesound.Play();
         yield return new WaitForSeconds(4);
         SkillManager.flag_icemaker = false;
         Destroy(gameObject);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (transform.localScale.magnitude < 8f)
@@ -61,4 +66,13 @@ public class IceSkill : MonoBehaviour
 
         }
     }
+    private void OnDisable()
+    {
+        Psoundscript.icetrigger = true;
+    }
+    private void PlayIceMakingSound()
+    {
+        Icesound.PlayOneShot(IceMaking);
+    }
+
 }
