@@ -4,41 +4,28 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-
 public class Bomb : MonoBehaviour
 {
     Rigidbody rb;
     Rigidbody[] rbs;
     public GameObject Bomb_Explosion_Effect;
-    //public AudioSource BombSFX;
-    public GameObject Bombsound;
-
+    public AudioSource BombSFX;
+    //public AudioClip BombSound;
+    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        // rb.AddForce(transform.forward * 20, ForceMode.Impulse);
-    }
 
-    private void Update()
-    {
-        //if (BombSFX != null)
-        //{
-        //    if (!BombSFX.isPlaying) 
-        //        BombSFX.PlayOneShot(BombSFX.clip);
-        //}
+        //rb.AddForce(transform.forward * 20, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+
         Destroy(gameObject);
 
+        //Instatiate(BombSFX.PlayOneShot(BombSFX.clip);
         Instantiate(Bomb_Explosion_Effect, collision.contacts[0].point, Quaternion.identity);
-        Instantiate(Bombsound, collision.contacts[0].point, Quaternion.identity);
-
-
-        if (Bombsound != null && !Bombsound.gameObject.activeInHierarchy)
-            Bombsound.gameObject.SetActive(true);
-
         // ±¸ ¹Ý°æÀ¸·Î À§Ä¡¸¦ °¡Á®¿È.
         Collider[] cols = Physics.OverlapSphere(collision.contacts[0].point, 20);
 
@@ -46,19 +33,27 @@ public class Bomb : MonoBehaviour
         {
             // ÆøÅº ¹Ý°æ¿¡ ÀÖ´Â ¿ÀºêÁ§Æ® rigidbody °¡Á®¿È
             if (cols[i].CompareTag("Bokoblin"))
-            {
+            {                
                 Rigidbody[] rigid = cols[i].GetComponentsInChildren<Rigidbody>();
                 foreach (Rigidbody rb in rigid)
                 {
-                    // rb.velocity = new Vector3(0, 0, 0);
-                    // rb.angularVelocity = new Vector3(0, 0, 0);
+                    //rb.velocity = new Vector3(0, 0, 0);
+                    //rb.angularVelocity = new Vector3(0, 0, 0);
                     rb.AddExplosionForce(15 * rb.mass, collision.contacts[0].point, 20, 15 * rb.mass, ForceMode.Impulse);
                 }
 
                 // ÆøÅº µ¥¹ÌÁö
-                RagdollBokoblin.Damage = 4;
+                RagdollBokoblin.Damage = 5;
                 cols[i].GetComponentInParent<RagdollBokoblin>().DamagedProcess();
             }
+            if (cols[i].CompareTag("Moblin"))
+            {
+                Molblin1.instance.UpdateDamaged();
+            }
+
         }
+       
+
+
     }
 }

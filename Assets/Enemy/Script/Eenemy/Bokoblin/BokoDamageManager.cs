@@ -15,7 +15,7 @@ public class BokoDamageManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //print(other.gameObject.name);       
+        //print(other.gameObject.name);  // 기본 공격, 강공격
         if (other.gameObject.layer == 17)
         {
             // rigidbody
@@ -27,12 +27,12 @@ public class BokoDamageManager : MonoBehaviour
                 if (!Trail.strongatt)
                 {
                     rb.AddForce(transform.up * 5 + (-transform.forward * 2.5f), ForceMode.Impulse);
-                    RagdollBokoblin.Damage = 4;
+                    RagdollBokoblin.Damage = 2;
                 }
                 else
                 {
                     rb.AddForce(-transform.forward * 10 + transform.up * 10, ForceMode.Impulse);
-                    RagdollBokoblin.Damage = 2;
+                    RagdollBokoblin.Damage = 4;
                 }
             }
 

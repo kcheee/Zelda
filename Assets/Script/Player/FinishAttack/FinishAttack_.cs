@@ -19,24 +19,20 @@ public class FinishAttack_ : MonoBehaviour
 
     private void OnEnable()
     {
+        // 게이지 0으로 만듦
+        if (GameManager.instance.FinishATKGaze.value != null)
+            GameManager.instance.FinishATKGaze.value = 0;
         animator.applyRootMotion = true;
         MainCam.enabled = false;
         SecondCam.enabled = true;
         Finishattack = true;
 
-        // 상태
-
-
-        //Camera.main.targetDisplay = 1;
-
-
-        // 보코블린 및 적들 time.scale 조절
-        //Time.timeScale = 0f;
-
+        
     }
 
     private void Update()
     {
+        animation_T.instance.state = animation_T.ani_state.FinishAttack;
         // 어두워지는 효과
         if (volume.weight < 1)
             volume.weight += Mathf.Lerp(0, 1, Time.deltaTime * 0.4f);
@@ -59,6 +55,6 @@ public class FinishAttack_ : MonoBehaviour
             transform.parent.gameObject.SetActive(false);
             Debug.Log("dlrpdho?");
         }
-
+        //gameObject.SetActive(false);
     }
 }
