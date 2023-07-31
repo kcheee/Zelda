@@ -148,7 +148,7 @@ public class animation_T : MonoBehaviour
 
     }
 
-    private int comboCount = 0; // 현재 콤보 카운트
+    public int comboCount = 0; // 현재 콤보 카운트
     private float lastAttackTime = 0f; // 마지막 공격 시간
     public float comboTimeThreshold = 1f; // 콤보 시간 제한
     public string[] attackAnimations; // 공격 애니메이션 이름 배열
