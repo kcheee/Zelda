@@ -9,6 +9,7 @@ TagManager:
   - IceMaker
   - Bokoblin
   - Bokoblin_sword
+  - Moblin
   layers:
   - Default
   - TransparentFX

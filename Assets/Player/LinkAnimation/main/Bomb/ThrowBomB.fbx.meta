@@ -36,8 +36,8 @@ ModelImporter:
       name: throw_bomb
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 57
-      lastFrame: 91
+      firstFrame: 63
+      lastFrame: 124
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

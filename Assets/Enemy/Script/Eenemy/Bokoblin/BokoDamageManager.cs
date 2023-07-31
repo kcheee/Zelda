@@ -15,7 +15,7 @@ public class BokoDamageManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //print(other.gameObject.name);       
+        //print(other.gameObject.name);  // 기본 공격, 강공격
         if (other.gameObject.layer == 17)
         {
             // rigidbody

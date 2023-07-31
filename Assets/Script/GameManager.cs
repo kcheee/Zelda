@@ -192,10 +192,14 @@ public class GameManager : MonoBehaviour
     // killUI
     public TextMeshProUGUI KillCnt;
     int kiilcnt = 0;
+    public Slider FinishATKGaze;
+
     // Á×À¸¸é ÀÌ ÇÔ¼ö¸¦ ºÒ·¯¿È.
     public void KillcntUpdate()
     {
         kiilcnt++;
+        if (FinishATKGaze.value <= FinishATKGaze.maxValue)
+            GameManager.instance.FinishATKGaze.value++;
         KillCnt.text = kiilcnt.ToString();
     }
     #endregion

@@ -19,13 +19,6 @@ public class Bomb : MonoBehaviour
         //rb.AddForce(transform.forward * 20, ForceMode.Impulse);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            BombSFX.PlayOneShot(BombSFX.clip);
-        }
-    }
     private void OnCollisionEnter(Collision collision)
     {
 
@@ -53,6 +46,11 @@ public class Bomb : MonoBehaviour
                 RagdollBokoblin.Damage = 5;
                 cols[i].GetComponentInParent<RagdollBokoblin>().DamagedProcess();
             }
+            if (cols[i].CompareTag("Moblin"))
+            {
+                Molblin1.instance.UpdateDamaged();
+            }
+
         }
        
 
