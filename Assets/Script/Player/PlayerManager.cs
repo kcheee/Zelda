@@ -75,6 +75,11 @@ public class PlayerManager : MonoBehaviour
 
     public void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            potionHeal();
+        }
+
         // 데미지 테스트
         //if(Input.GetKeyDown(KeyCode.N))
         //{

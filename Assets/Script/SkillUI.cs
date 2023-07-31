@@ -31,7 +31,7 @@ public class SkillUI : MonoBehaviour
         }
         if(Input.GetKey(KeyCode.J))
         {
-            if(Input.GetKeyDown(KeyCode.O))
+            if(Input.GetKeyDown(KeyCode.Y))
             {
                 Debug.Log("dlrjstlfgod ");
                 PlayerManager.instance.potionHeal();
