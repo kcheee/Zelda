@@ -123,42 +123,49 @@ public class RagdollBokoblin : MonoBehaviour
         }
         #endregion
 
-        if (state == BocoblinState.Idle)
+        if(GameManager.instance.state == GameManager.State.Victory)
         {
-            UpdateIdle();
+            Victory();
         }
-        else if (state == BocoblinState.Move)
+        else
         {
-            UpdateMove();
-        }
-        else if (state == BocoblinState.Air)
-        {
-            UpdateAir();
-        }
-        else if (state == BocoblinState.Dodge)
-        {
-            UpdateDodge();
-        }
-        else if (state == BocoblinState.Wait)
-        {
-            UpdateWait();
-        }
-        else if (state == BocoblinState.Attack)
-        {
-            UpdateAttack();
-        }
-        else if (state == BocoblinState.AttackWait)
-        {
-            UpdateAttackWait();
-        }
-        else if (state == BocoblinState.Damaged)
-        {
-            DamagedProcess();
-        }
-        else if (state == BocoblinState.Die)
-        {
-            UpdateDie();
-        }
+            if (state == BocoblinState.Idle)
+            {
+                UpdateIdle();
+            }
+            else if (state == BocoblinState.Move)
+            {
+                UpdateMove();
+            }
+            else if (state == BocoblinState.Air)
+            {
+                UpdateAir();
+            }
+            else if (state == BocoblinState.Dodge)
+            {
+                UpdateDodge();
+            }
+            else if (state == BocoblinState.Wait)
+            {
+                UpdateWait();
+            }
+            else if (state == BocoblinState.Attack)
+            {
+                UpdateAttack();
+            }
+            else if (state == BocoblinState.AttackWait)
+            {
+                UpdateAttackWait();
+            }
+            else if (state == BocoblinState.Damaged)
+            {
+                DamagedProcess();
+            }
+            else if (state == BocoblinState.Die)
+            {
+                UpdateDie();
+            }
+        }       
     }
     #endregion
 
@@ -545,5 +552,15 @@ public class RagdollBokoblin : MonoBehaviour
         }
     }
     #endregion
+
+    public void Victory()
+    {
+        agent.isStopped = true;
+        anim.SetBool("Move", false);
+        anim.SetBool("Wait", false);
+        anim.SetBool("Run", false);
+        anim.SetBool("Attack", false);
+        anim.SetBool("AttackWait", false);
+    }
     #endregion
 }
