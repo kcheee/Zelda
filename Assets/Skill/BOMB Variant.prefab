@@ -244,4 +244,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bomb_Explosion_Effect: {fileID: 7717021666642250114, guid: 690e84c706d889844afa0b66a49e204f,
     type: 3}
-  BombSFX: {fileID: 4534756956721382697}
+  Bombsound: {fileID: 5193209797324791817, guid: 2d9b33152ad5da8428485525de7b4ac9,
+    type: 3}

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class IceSkill : MonoBehaviour
 {
-
     private void OnEnable()
     {
         // 스킬 쿨타임 UI On
