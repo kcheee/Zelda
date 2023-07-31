@@ -27,7 +27,15 @@ public class SkillUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.J))
         {
             if (!ItemPanel.activeSelf)
-                ItemPanel.SetActive(true);
+                ItemPanel.SetActive(true);          
+        }
+        if(Input.GetKey(KeyCode.J))
+        {
+            if(Input.GetKeyDown(KeyCode.O))
+            {
+                Debug.Log("dlrjstlfgod ");
+                PlayerManager.instance.potionHeal();
+            }
         }
         // 쿨타임이 지나있으면 스킬창 열림.
         if (CoolTimer.instance.cooltime == CoolTimer.CoolTime.None)
