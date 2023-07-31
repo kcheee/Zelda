@@ -47,6 +47,8 @@ public class RagdollBokoblin : MonoBehaviour
     public BoxCollider club;                // 보코클럽 박스콜라이더 (공격)
     public TrailRenderer trail;             // 보코클럽 트레일 렌더러 (공격)
     public Transform bokoRoot;
+    public GameObject damageEffectFactory;  // 보코블린 데미지이펙트 공장
+    public Transform damageSpot;
 
     // 플레이어(링크)
     GameObject link;
@@ -424,6 +426,9 @@ public class RagdollBokoblin : MonoBehaviour
         // 애니메이터를 비활성화 한다.
         anim.enabled = false;
         agent.isStopped = true;
+
+        GameObject damageEffect = Instantiate(damageEffectFactory);
+        damageEffect.transform.position = damageSpot.position;
 
         // 체력 감소.
         currentHP -= Damage;

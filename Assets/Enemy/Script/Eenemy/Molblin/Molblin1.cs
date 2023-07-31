@@ -45,7 +45,6 @@ public class Molblin1 : MonoBehaviour
 
     // 시간
     float currentTime;
-    public float waitTime;
     public float delayTime = 2;
 
     // 플레이어(링크)
@@ -84,7 +83,7 @@ public class Molblin1 : MonoBehaviour
     bool isChosen;
 
     static public bool anim_rotation = false;
-    
+
     // 다른 스크립트에서 데미지 관리변수
     static public int Damage = 1;
     #endregion
@@ -120,6 +119,40 @@ public class Molblin1 : MonoBehaviour
             agent.speed = 4.5f;
             agent.acceleration = 8f;
             anim.speed = 1f;
+        }
+        #endregion
+
+        #region 발차기 or 회피
+        if (!isDamaged && !isComboAttack && !isTwoHands)
+        {
+            anim.SetBool("Move", false);
+
+            if(7 > distance && distance > 4 && isDodge == false)
+            {
+                // 회피
+                Dodge();
+                isDodge = true;
+            }
+            else if(distance <= 4 && isKick == false)
+            {
+                // 발차기
+                Kick();
+                isKick = true;
+            }
+            //int randomValue = Random.Range(0, 10);
+            //if (randomValue < 6 && isKick == false)
+            //{
+            //    // 발차기
+            //    Kick();
+            //    isKick = true;
+            //}
+
+            //else if (randomValue >= 6 && isDodge == false)
+            //{
+            //    // 회피
+            //    Dodge();
+            //    isDodge = true;
+            //}
         }
         #endregion
 
@@ -294,7 +327,7 @@ public class Molblin1 : MonoBehaviour
 
             // 애니메이션 실행
             anim.SetBool("Move", false);
-            anim.SetBool("TwoHands", true); 
+            anim.SetBool("TwoHands", true);
         }
     }
 
@@ -325,35 +358,19 @@ public class Molblin1 : MonoBehaviour
 
         isComboAttack = false;
         isTwoHands = false;
+        isDodge = false;
 
         agent.isStopped = true;
 
         currentTime += Time.deltaTime;
 
-        if (distance < 4)
-        {
-            anim.SetBool("Move", false);
-
-            int randomValue = Random.Range(0, 10);
-            if (randomValue < 5 && isKick == false)
-            {
-                // 발차기
-                Kick();
-                isKick = true;
-            }
-
-            else if (randomValue >= 5 && isDodge == false)
-            {
-                // 회피
-                Dodge();
-                isDodge = true;
-            }
-        }
-
+        
         if (currentTime >= delayTime)
         {
             // 상태를 공격선택으로 바꾼다.
             state = MolblinState.Idle;
+            isKick = false;
+            isDodge = false;
 
             currentTime = 0;
         }
@@ -361,6 +378,8 @@ public class Molblin1 : MonoBehaviour
 
     public void UpdateDamaged()
     {
+        isDamaged = true;
+
         // 체력 감소
         HP -= Damage;
 
@@ -372,7 +391,7 @@ public class Molblin1 : MonoBehaviour
                 Damage = 1;
             }
             else
-            {
+            {                
                 Damage = 1;
 
                 // 모리블린 색 변화
@@ -382,8 +401,10 @@ public class Molblin1 : MonoBehaviour
                 anim.SetTrigger("Damage");
 
                 // 상태 초기화
-                state = MolblinState.Idle;
+                state = MolblinState.AttackDelay;
             }
+
+            isDamaged = false;
         }
 
         // 그게 아니라 체력이 0 이하가 되면
@@ -423,12 +444,12 @@ public class Molblin1 : MonoBehaviour
                 rb.AddForce(Vector3.up * power, ForceMode.Impulse);
             }
 
-            //// 보스전일때 보코블린 죽으면 점령게이지 줄어듦.
-            //if (GameManager.instance.state == GameManager.State.Boss)
-            //{
-            //    // 점령게이지 줄어듦
-            //    GameManager.instance.BossGage.GetComponent<Slider>().value -= 80;
-            //}
+            // 보스전일때 보코블린 죽으면 점령게이지 줄어듦.
+            if (GameManager.instance.state == GameManager.State.Boss)
+            {
+                // 점령게이지 줄어듦
+                GameManager.instance.BossGage.GetComponent<Slider>().value -= 80;
+            }
 
             // 색깔을 검게 바꾸고
             Invoke("DieColor", 3f);
