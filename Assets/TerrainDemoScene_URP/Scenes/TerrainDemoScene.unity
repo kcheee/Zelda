@@ -22623,7 +22623,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 97197ff4febeb2242b5ef64b84bb2fda, type: 3}
   - {fileID: 8300000, guid: 01b2302b878df6446aaf969ab3f4dc62, type: 3}
   - {fileID: 8300000, guid: eb388fe9b804e114ab41fb47e5f4f610, type: 3}
-  - {fileID: 8300000, guid: 6c376425038a4d7499ebe163f6ba31f8, type: 3}
   SFXsounds:
   - {fileID: 8300000, guid: 534384b2c06db2548a04e7e494fb7cf7, type: 3}
   - {fileID: 8300000, guid: 4e2eb37c5503a7f4daebeb84535b7a77, type: 3}

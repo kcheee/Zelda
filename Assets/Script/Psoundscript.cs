@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class Psoundscript : MonoBehaviour
 {
+    private void Update()
+    {
+        if (icetrigger == true)
+        {
+            iceDestroy();
+            icetrigger = false;
+        }
+    }
     public static Psoundscript instance;
 
     [SerializeField] AudioClip[] voicesounds = default;
@@ -81,6 +89,7 @@ public class Psoundscript : MonoBehaviour
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[3]);
     }
+    public static bool icetrigger = false;
     public void iceDestroy()
     {
         PsoundManager.instance.SFX.PlayOneShot(SFXsounds[4]);
