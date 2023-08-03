@@ -485,7 +485,7 @@ public class Molblin1 : MonoBehaviour
             GameObject dieEffect = Instantiate(dieEffectFactory);
             dieEffect.transform.position = hipBone.position;
             isEffect = true;    // 한번만 실행할 수 있게
-
+            GameManager.instance.BossGage.GetComponent<Slider>().value -= 50;
             // 게임오브젝트를 파괴한다.
             Destroy(gameObject);
         }

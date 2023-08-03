@@ -6,7 +6,7 @@ AudioMixerController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BokoAudioMixer
+  m_Name: NewAudioMixer 1
   m_OutputGroup: {fileID: 0}
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
@@ -16,10 +16,7 @@ AudioMixerController:
   m_EnableSuspend: 1
   m_UpdateMode: 0
   m_ExposedParameters: []
-  m_AudioMixerGroupViews:
-  - guids:
-    - 2d0b88afcb8fbdd4e8f1b32506f15d27
-    name: View
+  m_AudioMixerGroupViews: []
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
@@ -30,10 +27,10 @@ AudioMixerGroupController:
   m_PrefabAsset: {fileID: 0}
   m_Name: Master
   m_AudioMixer: {fileID: 24100000}
-  m_GroupID: 2d0b88afcb8fbdd4e8f1b32506f15d27
+  m_GroupID: b4199580605b2c14395311129fe452a7
   m_Children: []
-  m_Volume: 2c724ff11dd45b645883fbfa23f694c7
-  m_Pitch: da01e2901cf30124a99ad9e70003f5e2
+  m_Volume: f009d5745098b5e48a07e83f3c22dd32
+  m_Pitch: 318b8c21c5c434b41a77e7650a73488b
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 24400004}
@@ -48,9 +45,9 @@ AudioMixerEffectController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_EffectID: ec60e5fd4d738cf4aa73d9d1f3b55b0d
+  m_EffectID: 435e6f2a31fb3524090158794d33ead1
   m_EffectName: Attenuation
-  m_MixLevel: ec0d8fde32738e34d8f88da1b1611e16
+  m_MixLevel: 0e28aec298184a440bbc306fa281ea31
   m_Parameters: []
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
@@ -63,7 +60,7 @@ AudioMixerSnapshotController:
   m_PrefabAsset: {fileID: 0}
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
-  m_SnapshotID: fb15a3fc77596924189a5e3f0e23a8d4
+  m_SnapshotID: 31c45514b224b514d9f862cb377cd7c2
   m_FloatValues:
-    2c724ff11dd45b645883fbfa23f694c7: -22
+    f009d5745098b5e48a07e83f3c22dd32: -39
   m_TransitionOverrides: {}

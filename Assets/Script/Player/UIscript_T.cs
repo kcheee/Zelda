@@ -36,17 +36,14 @@ public class UIscript_T : MonoBehaviour
     //2번이미지 게임시작.
     public void GameScnesCtrl()
     {
-        secondImage.gameObject.SetActive(false);
-        videoPlayer.Play();
-
         //3번 이미지를 등장
         StartCoroutine(LoadingImage());
     }
 
     IEnumerator LoadingImage()
     {
-        yield return new WaitForSeconds(3f);
-        videoPlayer.Stop();
+        yield return new WaitForSeconds(0.5f);
+        secondImage.gameObject.SetActive(false);
         SceneManager.LoadScene(1);//임시. 씬이름. 게임 씬 이름 작성해야지 이동함. 
     }
 }
