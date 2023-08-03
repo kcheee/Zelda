@@ -209,7 +209,7 @@ public class GameManager : MonoBehaviour
     public GameObject Mobline;
     bool EndUI_flag = false;
     bool boss_enable = true;
-
+    public GameObject wave;
     void UpdateBoss()
     {
         // 보코블린 잡을 때 게이지 줄어듦
@@ -220,6 +220,7 @@ public class GameManager : MonoBehaviour
         {
             boss_enable =false;
             Mobline.SetActive(true);
+            wave.SetActive(true);
         }
 
         // 종료 UI 한번만 실행되게 해야함.
