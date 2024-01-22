@@ -77,8 +77,8 @@ Unity 2019.3.26f1
 ### 시연영상   
 [![Video Label](http://img.youtube.com/vi/Ef5GNC-0T00/0.jpg)](https://youtu.be/Ef5GNC-0T00)
 
+### Beta 발표 ppt    
 
-### Beta 발표 ppt   
-   
+[발표 자료](https://drive.google.com/drive/folders/1glPcowwQ053U5jm_5268sYwXsBlw99An)
 
 # 🔍 참고 자료   
