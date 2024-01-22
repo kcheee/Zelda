@@ -79,6 +79,6 @@ Unity 2019.3.26f1
 
 ### Beta 발표 ppt    
 
-[발표 자료](https://drive.google.com/drive/folders/1glPcowwQ053U5jm_5268sYwXsBlw99An)
+[ppt 발표 자료](https://drive.google.com/drive/folders/1glPcowwQ053U5jm_5268sYwXsBlw99An)
 
 # 🔍 참고 자료   
