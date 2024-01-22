@@ -14,7 +14,7 @@ Unity 2019.3.26f1
 
 ### 젤다 무쌍 모작
 
-**Game** : 젤다 무쌍 대재앙의 시대(모작)
+**Game** : 젤다 무쌍 대재앙의 시대(모작)   
 **Game mode**: FPS    
 **Software** : Unity-3D   
 **Language** : C#   
